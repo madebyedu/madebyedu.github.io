@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eduardo Carrasco - Graphic Designer</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header__content">
+            <h6><a href="#">Eduardo Carrasco / Graphic Designer</a></h6>
+            
+            <!-- Desktop Navigation -->
+            <nav class="nav desktop-nav" aria-label="Main navigation">
+                <ul class="nav__list">
+                    <li><a href="#portfolio" class="nav__link">Portfolio</a></li>
+                    <li><a href="#about" class="nav__link">About me</a></li>
+                    <li><a href="#contact" class="nav__link">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <!-- Mobile Hamburger Menu -->
+            <button class="hamburger" aria-label="Toggle mobile menu" aria-expanded="false">
+                <span class="hamburger__line"></span>
+                <span class="hamburger__line"></span>
+                <span class="hamburger__line"></span>
+            </button>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu Overlay -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+        <div class="mobile-menu__content">
+            <ul class="mobile-menu__list">
+                <li><a href="#about" class="mobile-menu__link">About me</a></li>
+                <li><a href="#contact" class="mobile-menu__link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="wrapper">
+                <div class="hero__content">
+                    <div class="hero__text">
+                        <h3>Creative Designer &amp; Visual Storyteller</h3>
+                        <p>Crafting beautiful digital experiences that inspire and engage audiences worldwide</p>
+                    </div>
+                    <img class="hero__image" src="img/hero_img.JPG" alt="Picture of Eduardo Carrasco">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Separator -->
+        <div class="separator">
+            <div class="wrapper">
+                <hr class="separator__line">
+            </div>
+        </div>
+        
+        <!-- Projects Section -->
+        <section class="projects">
+            <div class="wrapper">
+                <div class="projects__grid">
+                    <article class="project-card">
+                        <img class="project-card__image" src="img/project1.jpg" alt="Project1">
+                        <div class="project-card__content">
+                            <h6 class="project-card__title">Volkswagen Group Multi-Brand After-Sales Campaign</h6>
+                            <p class="project-card__description">Digital Ads &amp; Print Design</p>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <img class="project-card__image" src="img/project2.jpg" alt="Project2">
+                        <div class="project-card__content">
+                            <h6 class="project-card__title">Centro Porsche Valladolid Brand & Catalog Design</h6>
+                            <p class="project-card__description">Print &amp; Editorial Design</p>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <img class="project-card__image" src="img/project3.jpg" alt="Project3">
+                        <div class="project-card__content">
+                            <h6 class="project-card__title">Volkswagen Group Telemedicine Brand System</h6>
+                            <p class="project-card__description">Animation &amp; Print Design</p>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <img class="project-card__image" src="img/project4.jpg" alt="Project4">
+                        <div class="project-card__content">
+                            <h6 class="project-card__title">Performance Max Catalunya Motor Branding Campaign</h6>
+                            <p class="project-card__description">Film &amp; Motion Graphics</p>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <img class="project-card__image" src="img/project5.jpg" alt="Project5">
+                        <div class="project-card__content">
+                            <h6 class="project-card__title">Volkswagen Group Vehicle Trade-In Animation</h6>
+                            <p class="project-card__description">Digital Design &amp; Animation</p>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card">
+                        <img class="project-card__image" src="img/project6.jpg" alt="Project6">
+                        <div class="project-card__content">
+                            <h6 class="project-card__title">Independent Editorial Photoshoot</h6>
+                            <p class="project-card__description">Editorial Photography</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script src="app.js"></script>
+</body>
+</html>
