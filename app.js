@@ -65,11 +65,17 @@ class PortfolioApp {
     }
     
     openMobileMenu() {
+        // Save current scroll position
+        const scrollY = window.scrollY;
+        
         this.hamburger.classList.add('active');
         this.hamburger.setAttribute('aria-expanded', 'true');
         this.mobileMenu.classList.add('active');
         this.body.classList.add('menu-open');
         
+        // Lock scroll position
+        this.body.style.top = `-${scrollY}px`;        
+
         // Focus management - focus first menu item
         setTimeout(() => {
             const firstMenuItem = this.mobileMenu.querySelector('.mobile-menu__link');
@@ -80,10 +86,17 @@ class PortfolioApp {
     }
     
     closeMobileMenu() {
+        // Get the scroll position before removing menu-open
+        const scrollY = this.body.style.top;
+        
         this.hamburger.classList.remove('active');
         this.hamburger.setAttribute('aria-expanded', 'false');
         this.mobileMenu.classList.remove('active');
         this.body.classList.remove('menu-open');
+        
+        // Clear the fixed position and restore scroll
+        this.body.style.top = '';
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
         
         // Return focus to hamburger button
         setTimeout(() => {
@@ -147,13 +160,13 @@ class PortfolioApp {
             });
             
             // Add hover effect enhancement
-            card.addEventListener('mouseenter', () => {
-                this.enhanceCardHover(card, true);
-            });
+            // card.addEventListener('mouseenter', () => {
+            //     this.enhanceCardHover(card, true);
+            // });
             
-            card.addEventListener('mouseleave', () => {
-                this.enhanceCardHover(card, false);
-            });
+            // card.addEventListener('mouseleave', () => {
+            //     this.enhanceCardHover(card, false);
+            // });
         });
     }
     
@@ -254,11 +267,58 @@ class PerformanceMonitor {
     }
 }
 
+// Scroll to Top Button functionality
+class ScrollToTopButton {
+  constructor() {
+    this.button = document.getElementById('scrollToTopBtn');
+    this.scrollThreshold = 300; // Show button after scrolling 300px
+    this.init();
+  }
+
+  init() {
+    if (!this.button) return;
+
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', () => {
+      this.toggleButtonVisibility();
+    });
+
+    // Scroll to top when clicked
+    this.button.addEventListener('click', () => {
+      this.scrollToTop();
+    });
+  }
+
+  toggleButtonVisibility() {
+    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop;
+    
+    if (scrollPosition > this.scrollThreshold) {
+      this.button.classList.add('visible');
+    } else {
+      this.button.classList.remove('visible');
+    }
+  }
+
+  scrollToTop() {
+    // Smooth scroll to top
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    
+    // Alternative for older browsers
+    // document.body.scrollTop = 0; // For Safari
+    // document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE
+  }
+}
+
+
 // Initialize the application when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize main app functionality
     new PortfolioApp();
     new SmoothScroll();
+    new ScrollToTopButton();
     
     // Initialize performance monitoring in development
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -273,5 +333,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Export for potential testing or module use
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { PortfolioApp, SmoothScroll, PerformanceMonitor };
+  module.exports = { PortfolioApp, SmoothScroll, PerformanceMonitor, ScrollToTopButton };
 }
