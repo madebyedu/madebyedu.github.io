@@ -319,6 +319,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new PortfolioApp();
     new SmoothScroll();
     new ScrollToTopButton();
+    new ScrollAnimator();
     
     // Initialize performance monitoring in development
     if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
@@ -334,4 +335,26 @@ document.addEventListener('DOMContentLoaded', () => {
 // Export for potential testing or module use
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = { PortfolioApp, SmoothScroll, PerformanceMonitor, ScrollToTopButton };
+}
+
+// Scroll Animation functionality
+class ScrollAnimator {
+  constructor() {
+    this.init();
+  }
+
+  init() {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("show");
+        } else {
+          entry.target.classList.remove("show");
+        }
+      });
+    });
+
+    const hiddenElements = document.querySelectorAll(".todo");
+    hiddenElements.forEach((el) => observer.observe(el));
+  }
 }
