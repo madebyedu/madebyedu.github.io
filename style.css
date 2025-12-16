@@ -592,3 +592,7 @@ textarea.form-control {
 .todo.show {
   opacity: 1;
 }
+
+.hero p.todo {
+  transition-delay: 0.3s;
+}

@@ -344,6 +344,10 @@ class ScrollAnimator {
   }
 
   init() {
+    const options = {
+      threshold: 0.3 // Trigger when 30% of the element is visible
+    };
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -352,7 +356,7 @@ class ScrollAnimator {
           entry.target.classList.remove("show");
         }
       });
-    });
+    }, options);
 
     const hiddenElements = document.querySelectorAll(".todo");
     hiddenElements.forEach((el) => observer.observe(el));
