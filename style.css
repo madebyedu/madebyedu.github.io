@@ -38,6 +38,18 @@
   --space-440: clamp(24.75rem, 23.2692rem + 5.641vw, 27.5rem);
   --space-512: clamp(28.8rem, 27.0769rem + 6.5641vw, 32rem);
 
+  /* text */
+  --line-height-body: 1.6;
+  --line-height-heading: 1.2;
+
+  --font-size-body: clamp(0.9000rem, 0.8462rem + 0.2051vw, 1.0000rem);
+  --font-size-h6: clamp(1.1250rem, 1.0577rem + 0.2564vw, 1.2500rem);
+  --font-size-h5: clamp(1.4063rem, 1.3221rem + 0.3205vw, 1.5625rem);
+  --font-size-h4: clamp(1.7578rem, 1.6526rem + 0.4006vw, 1.9531rem);
+  --font-size-h3: clamp(2.1973rem, 2.0658rem + 0.5008vw, 2.4414rem);
+  --font-size-h2: clamp(2.7466rem, 2.5823rem + 0.6260vw, 3.0518rem);
+  --font-size-h1: clamp(3.4332rem, 3.2278rem + 0.7825vw, 3.8147rem);
+
   /* transition */
   --transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
   --transition-long: all 2s cubic-bezier(.25, .8, .25, 1);
@@ -66,7 +78,7 @@ body {
   color: var(--text);
   background-color: var(--bg-dark);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  line-height: 1.6;
+  line-height: var(--line-height-body);
   overflow-x: hidden;
 }
 
@@ -90,37 +102,32 @@ h6 {
   font-weight: 600;
   letter-spacing: -0.01em;
   max-width: 60ch;
+  line-height: var(--line-height-heading);
 }
 
 p,
 body {
-  font-size: clamp(0.8000rem, 0.6923rem + 0.4103vw, 1.0000rem);
-  line-height: 1.6;
+  font-size: var(--font-size-body);
 }
 
 h6 {
-  font-size: clamp(0.9600rem, 0.8308rem + 0.4923vw, 1.2000rem);
-  line-height: 1.2;
+  font-size: var(--font-size-h6);
 }
 
 h5 {
   font-size: clamp(1.1520rem, 0.9969rem + 0.5908vw, 1.4400rem);
-  line-height: 1.2;
 }
 
 h4 {
   font-size: clamp(1.3824rem, 1.1963rem + 0.7089vw, 1.7280rem);
-  line-height: 1.2;
 }
 
 h3 {
   font-size: clamp(1.6589rem, 1.4356rem + 0.8507vw, 2.0736rem);
-  line-height: 1.2;
 }
 
 h2 {
-  font-size: clamp(1.9907rem, 1.7227rem + 1.0208vw, 2.4883rem);
-  line-height: 1.1;
+  font-size: var(--font-size-h2);
   margin-bottom: clamp(0.5rem, 0.365rem + 0.513vi, 0.75rem);
   text-wrap: balance;
   font-weight: 600;
@@ -128,7 +135,6 @@ h2 {
 
 h1 {
   font-size: clamp(2.3888rem, 2.0672rem + 1.2250vw, 2.9860rem);
-  line-height: 1.2;
 }
 
 p {
@@ -216,7 +222,7 @@ pre code { background: none; padding: 0; } */
   font-weight: 400;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.36);
   border-radius: var(--border-radius-in);
-  font-size: clamp(0.8000rem, 0.6923rem + 0.4103vw, 1.0000rem);
+  /* font-size: clamp(0.8000rem, 0.6923rem + 0.4103vw, 1.0000rem); */
   line-height: 1.2;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   border: 1px solid transparent;
@@ -297,14 +303,14 @@ a.nav__link-contact:hover {
 
 .mobile-menu__link {
   padding: 1rem 2rem;
-  font-size: clamp(1.3824rem, 1.1963rem + 0.7089vw, 1.7280rem);
+  /* font-size: clamp(1.3824rem, 1.1963rem + 0.7089vw, 1.7280rem); */
   display: block;
   min-height: 44px;
   min-width: 44px;
 }
 
 .mobile-menu__link-contact {
-  font-size: clamp(1.3824rem, 1.1963rem + 0.7089vw, 1.7280rem);
+  /* font-size: clamp(1.3824rem, 1.1963rem + 0.7089vw, 1.7280rem); */
   display: block;
   min-height: 44px;
   min-width: 44px;
@@ -434,7 +440,7 @@ body.menu-open {
 }
 
 .project-card__title {
-  font-size: clamp(0.8000rem, 0.6923rem + 0.4103vw, 1.0000rem);
+  /* font-size: clamp(0.8000rem, 0.6923rem + 0.4103vw, 1.0000rem); */
   margin-bottom: var(--space-8);
   font-weight: 600;
   text-wrap: balance;
@@ -459,7 +465,7 @@ body.menu-open {
   font-weight: 400;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.36);
   border-radius: var(--border-radius-in);
-  font-size: clamp(0.8000rem, 0.6923rem + 0.4103vw, 1.0000rem);
+  /* font-size: clamp(0.8000rem, 0.6923rem + 0.4103vw, 1.0000rem); */
   line-height: 1.2;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
