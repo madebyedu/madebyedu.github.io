@@ -80,13 +80,25 @@ body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: var(--line-height-body);
   overflow-x: hidden;
+
+  background-repeat: no-repeat;
+  background-size: 1400px;
+  background-position: 50% 0%;
 }
 
-body {
+/* body {
   background-image: url(img/Background_gradient_V2.png);
   background-repeat: no-repeat;
   background-size: 1400px;
   background-position: 50% 0%;
+} */
+
+body.home-page {
+  background-image: url(img/home-page.webp);
+}
+
+body.contact-page {
+  background-image: url(img/contact-page.webp);
 }
 
 .page-wrapper {
