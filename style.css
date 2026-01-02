@@ -469,7 +469,9 @@ footer {
   row-gap: var(--space-16);
 }
 
-footer p {}
+footer p {
+  text-align: center;
+}
 
 .footer__social {
   display: flex;
