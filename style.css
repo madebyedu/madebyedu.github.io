@@ -167,15 +167,22 @@ main {
   margin: 0 auto;
 }
 
+.header h6 {
+  max-width: 49%;
+  text-wrap: balance;
+}
+
 .header__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--space-32);
 }
 
 .logo {
   font-weight: 600;
   color: var(--text);
+  text-wrap: balance;
 }
 
 /* Desktop nav */
@@ -185,7 +192,7 @@ main {
 
 .nav__list {
   display: flex;
-  gap: var(--space-40);
+  gap: var(--space-32);
 }
 
 .nav__link {
@@ -537,7 +544,7 @@ footer p {
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
+@media (max-width: 815px) {
   .scroll-to-top {
     bottom: 1.5rem;
     right: 1.5rem;
@@ -587,7 +594,7 @@ textarea.form-control {
 }
 
 /* Responsive */
-@media (min-width: 768px) {
+@media (min-width: 815px) {
 
   .desktop-nav {
     display: block;
