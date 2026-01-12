@@ -11,12 +11,12 @@
 :root {
   /* bg-colors */
   --bg-dark: oklch(17% 0.005 271.152);
-  --bg: oklch(22% 0.005 271.152);
-  --bg-light: oklch(28% 0.005 271.152);
+  --bg: oklch(from var(--bg-dark) 22% c h);
+  --bg-light: oklch(from var(--bg-dark) 28% c h);
 
   /* text-colors */
   --text: oklch(98% 0 0);
-  --text-muted: oklch(70% 0 0);
+  --text-muted: oklch(from var(--text) l c h / 0.6);
 
   /* shadows */
   --shadow-s:
@@ -206,7 +206,7 @@ main {
   border: none;
   padding: 0.75rem 1.875rem;
   background-color: var(--text);
-  color: var(--bg);
+  color: var(--bg-dark);
   cursor: pointer;
   font-weight: 600;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.36);
@@ -302,7 +302,7 @@ a.nav__link-contact:hover {
   min-width: 44px;
   padding: 1rem 2.5rem;
   background-color: var(--text);
-  color: var(--bg);
+  color: var(--bg-dark);
   cursor: pointer;
   font-weight: 600;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.36);
@@ -360,7 +360,7 @@ body.menu-open {
 /* Projects */
 
 .projects__grid {
-  --min-col-size: 275px;
+  --min-col-size: 300px;
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(var(--min-col-size), 100%), 1fr));
@@ -368,29 +368,34 @@ body.menu-open {
 }
 
 .project-card {
-  background-color: var(--bg-dark);
-  padding: var(--space-24);
+  /* background-color: var(--bg-dark); */
+  /* padding: var(--space-24); */
   padding-bottom: 0;
-  border-radius: var(--border-radius-out);
+  /* border-radius: var(--border-radius-out); */
   /* box-shadow: var(--shadow-s); */
-  box-shadow: 6px 6px 12px oklch(10% 0.005 271.152),
-    -6px -6px 12px oklch(20% 0.005 271.152);
+  /* box-shadow: 6px 6px 12px oklch(10% 0.005 271.152),
+    -6px -6px 12px oklch(20% 0.005 271.152); */
   overflow: hidden;
   cursor: pointer;
-  transition: var(--transition);
+  /* transition: var(--transition); */
   /* max-width: min(560px, 100%); */
   margin: 0 auto;
 
   display: flex;
   flex-direction: column;
+  gap: var(--space-16);
 }
 
 .project-card:hover {
   /* background-color: var(--bg-light); */
-  transform: var(--transform-scale-s);
+  /* transform: var(--transform-scale-s); */
   /* box-shadow: 10px 10px 28px oklch(12% 0.005 271.152),
              -10px -10px 28px oklch(24% 0.005 271.152); */
   /* background-image: linear-gradient(to bottom, var(--bg-light) 85%, var(--bg)); */
+}
+
+.project-card__media {
+  overflow: hidden;
 }
 
 .project-card__image {
@@ -399,15 +404,23 @@ body.menu-open {
   aspect-ratio: 4/3;
   object-fit: cover;
   object-position: center;
-  border-radius: var(--border-radius-in);
   display: block;
+  transition: var(--transition);
+}
+
+.project-card__image-container {
+  overflow: hidden;
+}
+
+.project-card:hover .project-card__image {
+  transform: scale(1.05);
 }
 
 .project-card__content {
-  padding: var(--space-24) 0;
+  /* padding: var(--space-24) 0; */
 
   display: grid;
-  row-gap: var(--space-24);
+  row-gap: var(--space-8);
 }
 
 .project-card__text {
@@ -489,7 +502,6 @@ footer p {
 .footer__social svg {
   width: 24px;
   height: 24px;
-  filter: invert(1);
 }
 
 
@@ -519,7 +531,7 @@ footer p {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   user-select: none;
-  border-radius: var(--border-radius-in);
+  /* border-radius: var(--border-radius-in); */
 }
 
 .scroll-to-top.visible {
@@ -609,14 +621,20 @@ textarea.form-control {
   }
 
   .project-card {
-    box-shadow: 6px 6px 16px oklch(10% 0.005 271.152),
-      -6px -6px 16px oklch(22% 0.005 271.152);
+    /* box-shadow: 6px 6px 16px oklch(10% 0.005 271.152),
+      -6px -6px 16px oklch(22% 0.005 271.152); */
   }
 
   body {
     background-size: 1600px;
   }
 
+}
+
+@media (min-width: 900px) {
+  .projects__grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 /* Reduced motion */
