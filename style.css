@@ -121,6 +121,7 @@ h6 {
 p {
   font-size: var(--font-size-body);
   text-wrap: balance;
+  font-weight: 300;
 }
 
 h6 {
@@ -146,7 +147,7 @@ a:hover {
 .page-wrapper {
   padding: var(--space-64) var(--space-40);
   display: grid;
-  row-gap: var(--space-64);
+  /* row-gap: var(--space-64); */
   align-items: center;
   justify-items: center;
 }
@@ -364,7 +365,7 @@ body.menu-open {
 
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(var(--min-col-size), 100%), 1fr));
-  gap: var(--space-40);
+  gap: var(--space-72);
 }
 
 .project-card {
@@ -420,7 +421,7 @@ body.menu-open {
   /* padding: var(--space-24) 0; */
 
   display: grid;
-  row-gap: var(--space-8);
+  row-gap: var(--space-24);
 }
 
 .project-card__text {
@@ -470,10 +471,12 @@ footer {
   color: var(--text-muted);
   display: grid;
   row-gap: var(--space-8);
+  padding-top: calc(var(--space-96) * 1.2);
 }
 
 footer p {
   text-align: center;
+  font-size: calc(var(--font-size-body) * 0.8);
 }
 
 .footer__social {
@@ -500,8 +503,8 @@ footer p {
 
 .footer__social img,
 .footer__social svg {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 
 
