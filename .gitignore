@@ -1,0 +1,13 @@
+# Archivos de sistema Mac
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Archivos de sistema Windows (por si colaboras con alguien que use PC)
+Thumbs.db
+
+# Carpetas de configuración personal de VSCode (opcional, pero recomendado)
+.vscode/
+
+# Archivos de logs (errores)
+*.log
