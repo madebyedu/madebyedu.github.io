@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Inter';
-  src: url('fonts/inter-var.woff2') format('woff2');
+  font-family: "Inter";
+  src: url("fonts/inter-var.woff2") format("woff2");
   font-weight: 100 900;
   /* Tells browser this file covers all weights */
   font-display: swap;
@@ -19,20 +19,12 @@
   --text-muted: oklch(from var(--text) l c h / 0.6);
 
   /* shadows */
-  --shadow-s:
-    inset 0 1px 2px #ffffff30,
-    0 1px 2px black,
-    0 2px 4px black;
+  --shadow-s: inset 0 1px 2px #ffffff30, 0 1px 2px black, 0 2px 4px black;
   --shadow-m:
-    inset 0 1px 2px #ffffff50,
-    0 2px 4px #00000030,
-    0 4px 8px #00000015;
+    inset 0 1px 2px #ffffff50, 0 2px 4px #00000030, 0 4px 8px #00000015;
   --shadow-l:
-    inset 0 1px 2px #ffffff70,
-    0 4px 6px #00000030,
-    0 6px 10px #00000015;
-  --shadow-test-s:
-    0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    inset 0 1px 2px #ffffff70, 0 4px 6px #00000030, 0 6px 10px #00000015;
+  --shadow-test-s: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   --shadow-test-l:
     0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 
@@ -54,17 +46,17 @@
   --line-height-body: 1.6;
   --line-height-heading: 1.2;
 
-  --font-size-body: clamp(0.9000rem, 0.8462rem + 0.2051vw, 1.0000rem);
-  --font-size-h6: clamp(1.1250rem, 1.0577rem + 0.2564vw, 1.2500rem);
+  --font-size-body: clamp(0.9rem, 0.8462rem + 0.2051vw, 1rem);
+  --font-size-h6: clamp(1.125rem, 1.0577rem + 0.2564vw, 1.25rem);
   --font-size-h5: clamp(1.4063rem, 1.3221rem + 0.3205vw, 1.5625rem);
   --font-size-h4: clamp(1.7578rem, 1.6526rem + 0.4006vw, 1.9531rem);
   --font-size-h3: clamp(2.1973rem, 2.0658rem + 0.5008vw, 2.4414rem);
-  --font-size-h2: clamp(2.7466rem, 2.5823rem + 0.6260vw, 3.0518rem);
+  --font-size-h2: clamp(2.7466rem, 2.5823rem + 0.626vw, 3.0518rem);
   --font-size-h1: clamp(3.4332rem, 3.2278rem + 0.7825vw, 3.8147rem);
 
   /* transition */
-  --transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
-  --transition-long: all 2s cubic-bezier(.25, .8, .25, 1);
+  --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-long: all 2s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   /* transform */
   --transform-scale-s: scale(1.05);
@@ -89,7 +81,13 @@ html,
 body {
   color: var(--text);
   background-color: var(--bg-dark);
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   line-height: var(--line-height-body);
   overflow-x: hidden;
 
@@ -210,10 +208,18 @@ main {
   color: var(--bg-dark);
   cursor: pointer;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.36);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.24),
+    0 1px 2px rgba(0, 0, 0, 0.36);
   border-radius: var(--border-radius-in);
   line-height: 1.2;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
   border: 1px solid transparent;
 }
 
@@ -306,7 +312,9 @@ a.nav__link-contact:hover {
   color: var(--bg-dark);
   cursor: pointer;
   font-weight: 600;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.36);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.24),
+    0 1px 2px rgba(0, 0, 0, 0.36);
   border-radius: var(--border-radius-in);
   line-height: 1.2;
   border: 1px solid transparent;
@@ -364,7 +372,11 @@ body.menu-open {
   --min-col-size: 300px;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(var(--min-col-size), 100%), 1fr));
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(var(--min-col-size), 100%), 1fr)
+  );
+  grid-template-rows: auto 1fr auto;
   gap: var(--space-72);
 }
 
@@ -380,11 +392,15 @@ body.menu-open {
   cursor: pointer;
   /* transition: var(--transition); */
   /* max-width: min(560px, 100%); */
-  margin: 0 auto;
+  margin: 0;
 
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-16);
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+
+  gap: 0;
+
+  /* gap: var(--space-24); */
 }
 
 .project-card:hover {
@@ -421,12 +437,14 @@ body.menu-open {
   /* padding: var(--space-24) 0; */
 
   display: grid;
-  row-gap: var(--space-24);
+  grid-template-rows: subgrid;
+  grid-row: span 3;
+  /* row-gap: var(--space-24); */
 }
 
 .project-card__text {
   display: grid;
-  row-gap: var(--space-8);
+  /* row-gap: var(--space-8); */
 }
 
 .project-card h6 {
@@ -507,7 +525,6 @@ footer p {
   height: 20px;
 }
 
-
 /* Scroll to Top Button */
 .scroll-to-top {
   position: fixed;
@@ -530,7 +547,9 @@ footer p {
   font-size: 1.5rem;
   font-weight: 600;
   padding: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.24), 0 1px 2px rgba(0, 0, 0, 0.36);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.24),
+    0 1px 2px rgba(0, 0, 0, 0.36);
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   user-select: none;
@@ -567,7 +586,6 @@ footer p {
     font-size: 1.25rem;
   }
 }
-
 
 /* Forms */
 /* .form-control {
@@ -609,7 +627,6 @@ textarea.form-control {
 
 /* Responsive */
 @media (min-width: 755px) {
-
   .desktop-nav {
     display: block;
   }
@@ -631,7 +648,6 @@ textarea.form-control {
   body {
     background-size: 1600px;
   }
-
 }
 
 @media (min-width: 900px) {
@@ -642,7 +658,6 @@ textarea.form-control {
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {
