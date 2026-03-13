@@ -141,6 +141,8 @@ a:hover {
   row-gap: var(--space-64);
   align-items: center;
   justify-items: center;
+  max-width: 2560px;
+  margin: 0 auto;
 }
 
 .wrapper {
