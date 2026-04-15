@@ -81,7 +81,6 @@
 html,
 body {
   color: var(--text);
-  background-color: var(--bg-dark);
   font-family:
     "Inter",
     -apple-system,
@@ -92,9 +91,20 @@ body {
   line-height: var(--line-height-body);
   overflow-x: hidden;
 
-  /* background-repeat: no-repeat;
-  background-size: 1400px;
-  background-position: 50% 0%; */
+  background: linear-gradient(
+    45deg,
+    oklch(8% 0.005 271.152) 16%,
+    oklch(16% 0.005 271.152) 100%
+  );
+}
+
+input,
+button,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+  appearance: none;
 }
 
 h1,
@@ -119,6 +129,14 @@ h6 {
   font-size: var(--font-size-h6);
 }
 
+h4 {
+  font-size: var(--font-size-h4);
+}
+
+h3 {
+  font-size: var(--font-size-h3);
+}
+
 h2 {
   font-size: var(--font-size-h2);
   text-wrap: balance;
@@ -138,11 +156,13 @@ a:hover {
 .page-wrapper {
   padding: var(--space-32) var(--space-24);
   display: grid;
-  row-gap: var(--space-64);
+  row-gap: var(--space-72);
   align-items: center;
   justify-items: center;
   max-width: 2560px;
   margin: 0 auto;
+  min-height: 100dvh;
+  grid-template-rows: auto 1fr auto;
 }
 
 .wrapper {
@@ -196,7 +216,6 @@ main {
 .nav__link-contact {
   position: relative;
   display: inline-block;
-  border: none;
   padding: 0.75rem 1.875rem;
   background-color: var(--text);
   color: var(--bg-dark);
@@ -363,7 +382,7 @@ body.menu-open {
 /* Projects */
 
 .projects__grid {
-  --min-col-size: 360px;
+  --min-col-size: 320px;
 
   display: grid;
   grid-template-columns: repeat(
@@ -373,8 +392,8 @@ body.menu-open {
       1fr
     )
   );
-  grid-template-rows: auto auto auto;
-  row-gap: var(--space-40);
+  /* grid-template-rows: auto auto auto; */
+  row-gap: var(--space-72);
   column-gap: var(--space-24);
 }
 
@@ -396,14 +415,6 @@ body.menu-open {
   /* gap: var(--space-24); */
 
   /* gap: var(--space-24); */
-}
-
-.project-card:hover {
-  /* background-color: var(--bg-light); */
-  /* transform: var(--transform-scale-s); */
-  /* box-shadow: 10px 10px 28px oklch(12% 0.005 271.152),
-             -10px -10px 28px oklch(24% 0.005 271.152); */
-  /* background-image: linear-gradient(to bottom, var(--bg-light) 85%, var(--bg)); */
 }
 
 .project-card__media {
@@ -435,7 +446,7 @@ body.menu-open {
   /* grid-template-rows: subgrid;
   grid-row: span 3; */
   display: grid;
-  row-gap: calc(var(--space-8) * 0, 80);
+  row-gap: calc(var(--space-8) * 0.48);
 }
 
 .project-card h6 {
@@ -487,14 +498,126 @@ body.menu-open {
   width: 100%;
 }
 
-.projectdetails h1 {
+.projectdetails__text h1 {
   text-wrap: pretty;
 }
 
-.projectdetails p {
+.projectdetails__text {
+  display: grid;
+  gap: var(--space-16);
+  padding: var(--space-48) 0;
+}
+
+.projectdetails__text p {
   max-width: 75ch;
   text-wrap: pretty;
   /* margin-bottom: var(--space-24); */
+}
+
+.aboutme-body {
+  display: grid;
+  gap: var(--space-64);
+  justify-self: start;
+  width: 100%;
+}
+
+.aboutme-body img {
+  max-width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  object-position: center;
+}
+
+.aboutme-wrapper {
+  display: grid;
+  max-width: 75ch;
+  gap: var(--space-64);
+}
+
+.aboutme-elements {
+  display: grid;
+  gap: var(--space-16);
+  text-wrap: pretty;
+}
+
+.aboutme-subtext {
+  color: var(--text-muted);
+  font-size: calc(var(--font-size-body) * 0.88);
+}
+
+/* Contact Page Design */
+
+.contact-wrapper {
+  display: grid;
+  gap: var(--space-48);
+  justify-self: start;
+}
+
+.contact-text {
+  display: grid;
+  gap: var(--space-8);
+}
+
+.contact-form {
+  display: grid;
+  gap: var(--space-24);
+}
+
+.contactform-name,
+.contactform-email,
+.contactform-message,
+.contactform-button {
+  display: grid;
+  gap: 1ch;
+}
+
+.contactform-button input {
+  margin-top: var(--space-8);
+  padding: 0.75rem 1.875rem;
+  background-color: var(--text);
+  color: var(--bg-dark);
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.24),
+    0 1px 2px rgba(0, 0, 0, 0.36);
+  border-radius: var(--border-radius-in);
+  line-height: 1.2;
+  border: 1px solid transparent;
+  transition: var(--transition);
+  width: fit-content;
+}
+
+.contactform-button input:hover {
+  background-color: transparent;
+  color: var(--text);
+  border-color: var(--text);
+}
+
+input,
+textarea {
+  background-color: var(--bg);
+  border: none;
+  color: var(--text);
+  padding: 0.8rem;
+  border-radius: var(--border-radius-out);
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--text-muted);
+  /* outline-offset: 2px; */
+}
+
+textarea {
+  resize: block;
+  box-sizing: content-box;
+  height: 3lh;
+}
+
+.contactform-legaltext {
+  color: var(--text-muted);
+  font-size: calc(var(--font-size-body) * 0.72);
 }
 
 footer {
@@ -645,30 +768,27 @@ textarea.form-control {
   .hamburger {
     display: none;
   }
-
-  .hero__image {
-    aspect-ratio: 16/7;
-    object-position: 50% 22%;
-  }
-
-  .project-card {
-    /* box-shadow: 6px 6px 16px oklch(10% 0.005 271.152),
-      -6px -6px 16px oklch(22% 0.005 271.152); */
-  }
-
-  body {
-    background-size: 1600px;
-  }
 }
 
 @media (min-width: 1024px) {
-  .projects__grid {
-    /* grid-template-columns: 1fr 1fr 1fr; */
-  }
-
   .page-wrapper {
     padding: var(--space-40) var(--space-96);
-    /* row-gap: var(--space-64); */
+  }
+}
+
+@media (min-width: 1600px) {
+  .aboutme-body {
+    grid-template-columns: 75ch 1fr;
+    justify-content: space-between;
+  }
+
+  .aboutme-body img {
+    max-width: min(720px, 75%);
+    aspect-ratio: 1/1;
+  }
+
+  .aboutme-img {
+    text-align: end;
   }
 }
 
@@ -710,8 +830,4 @@ textarea.form-control {
 
 .todo.show {
   opacity: 1;
-}
-
-.hero p.todo {
-  /* transition-delay: 0.3s; */
 }

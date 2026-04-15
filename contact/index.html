@@ -18,7 +18,7 @@
       href="img/favicon/apple-touch-icon.png"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../style.css" />
     <link
       rel="preload"
       href="fonts/inter-var.woff2"
@@ -78,124 +78,55 @@
         </div>
       </nav>
 
-      <main>
-        <!-- Hero Section -->
+      <main class="contact-wrapper todo">
+        <section class="contact-text">
+          <h3>Let's chat.</h3>
+          <p>
+            Share your contact details, and I will get back to you as soon as
+            possible.
+          </p>
+        </section>
 
-        <!-- Projects Section -->
-        <section id="projects" class="projects">
-          <div class="wrapper">
-            <div class="projects__grid">
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/hydro-repelent/">
-                    <img
-                      class="project-card__image"
-                      src="img/project1.webp"
-                      alt="Digital ad banner and print layout for Volkswagen Group after-sales campaign featuring branded vehicle service offers."
-                  /></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    Hydro-Repellent Treatment Campaign
-                  </h6>
-                  <p>Digital Ads &amp; Print Design</p>
-                  <a href="/projects/hydro-repelent/">See More ></a>
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/porsche-launch-brochure/">
-                    <img
-                      class="project-card__image"
-                      src="img/project2.webp"
-                      alt="Digital ad banner and print layout for Volkswagen Group after-sales campaign featuring branded vehicle service offers."
-                  /></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    Centro Porsche Launch Brochure
-                  </h6>
-                  <p>Print &amp; Editorial Design</p>
-                  <a href="/projects/porsche-launch-brochure/">See More ></a>
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/employee-healthcare-campaign/">
-                    <img
-                      class="project-card__image"
-                      src="img/project3.webp"
-                      alt="Brand identity and animated interface elements for the Volkswagen Group Telemedicine health service platform."
-                  /></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    Employee Healthcare Campaign
-                  </h6>
-                  <p>Animation &amp; Print Design</p>
-                  <a href="/projects/employee-healthcare-campaign/"
-                    >See More ></a
-                  >
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/brand-identity-video/">
-                    <img
-                      class="project-card__image"
-                      src="img/project4.webp"
-                      alt="Still frame from the Performance Max Catalunya Motor branding film featuring dynamic motion graphics and automotive visuals."
-                    />
-                  </a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    CUPRA Brand Identity Video
-                  </h6>
-                  <p>Film &amp; Motion Graphics</p>
-                  <a href="/projects/brand-identity-video/">See More ></a>
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/social-media-animation/">
-                    <img
-                      class="project-card__image"
-                      src="img/project5.webp"
-                      alt="Digital animation frame illustrating the Volkswagen Group vehicle trade-in process with stylized graphics."
-                    />
-                  </a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    Buyback Social Media Animation
-                  </h6>
-                  <p>Digital Design &amp; Animation</p>
-                  <a href="/projects/social-media-animation/">See More ></a>
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="projects/natural-light-project/">
-                    <img
-                      class="project-card__image"
-                      src="img/project6.webp"
-                      alt="Editorial beauty portrait photograph featuring high-contrast lighting and focus on makeup details."
-                  /></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">Natural Light Project</h6>
-                  <p>Editorial Photography</p>
-                  <a href="projects/natural-light-project/">See More ></a>
-                </div>
-              </article>
-            </div>
+        <form
+          class="contact-form"
+          action="https://api.web3forms.com/submit"
+          method="post"
+        >
+          <input
+            type="hidden"
+            name="access_key"
+            value="8cb16b67-bfb5-4cbe-839e-8334247922ba"
+          />
+          <input
+            type="hidden"
+            name="subject"
+            value="New message from your portfolio"
+          />
+          <input
+            type="hidden"
+            name="from_name"
+            value="Eduardo Carrasco Portfolio"
+          />
+          <div class="contactform-name">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required />
           </div>
+          <div class="contactform-email">
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="contactform-message">
+            <label for="message">Message:</label>
+            <textarea name="message" id="message" required></textarea>
+          </div>
+          <div class="contactform-button">
+            <input type="submit" value="Send Message" />
+          </div>
+        </form>
+        <section class="contact-text">
+          <p class="contactform-legaltext">
+            Your data will only be used to respond to your enquiry.
+          </p>
         </section>
       </main>
 
@@ -286,7 +217,7 @@
       </svg>
     </button>
 
-    <script src="app.js"></script>
+    <script src="../app.js"></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
