@@ -387,3 +387,34 @@ class ScrollAnimator {
     hiddenElements.forEach((el) => observer.observe(el));
   }
 }
+
+// Preventing Form Redirection
+const form = document.getElementById("contact-form");
+const formMessage = document.getElementById("form-message");
+
+form.addEventListener("submit", async function (event) {
+  event.preventDefault(); // stop the page redirect
+
+  const formData = new FormData(form);
+
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      formMessage.textContent = "Message sent! I'll get back to you soon.";
+      formMessage.style.color = "var(--text)";
+      form.reset(); // clear the form fields
+    } else {
+      formMessage.textContent = "Something went wrong. Please try again.";
+      formMessage.style.color = "oklch(65% 0.18 25)"; // a red-ish tone
+    }
+  } catch (error) {
+    formMessage.textContent = "Network error. Please check your connection.";
+    formMessage.style.color = "oklch(65% 0.18 25)";
+  }
+});
