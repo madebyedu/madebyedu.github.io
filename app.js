@@ -8,7 +8,9 @@ class PortfolioApp {
     this.body = document.body;
     this.mobileMenuLinks = document.querySelectorAll(".mobile-menu__link");
 
-    this.init();
+    if (this.mobileMenu) {
+      this.init();
+    }
   }
 
   init() {
