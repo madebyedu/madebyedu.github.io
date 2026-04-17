@@ -14,7 +14,6 @@ class PortfolioApp {
   init() {
     this.bindEvents();
     this.handleKeyboardNavigation();
-    this.addProjectCardInteractivity();
   }
 
   bindEvents() {
@@ -145,82 +144,6 @@ class PortfolioApp {
         }
       }
     });
-  }
-
-  addProjectCardInteractivity() {
-    const projectCards = document.querySelectorAll(".project-card");
-
-    projectCards.forEach((card, index) => {
-      // Make cards keyboard accessible
-      card.setAttribute("tabindex", "0");
-      card.setAttribute("role", "button");
-      card.setAttribute(
-        "aria-label",
-        `View project: ${card.querySelector(".project-card__title").textContent}`,
-      );
-
-      // Add click and keyboard event listeners
-      card.addEventListener("click", () => {
-        this.handleProjectCardClick(card, index);
-      });
-
-      card.addEventListener("keydown", (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          this.handleProjectCardClick(card, index);
-        }
-      });
-
-      // Add hover effect enhancement
-      // card.addEventListener('mouseenter', () => {
-      //     this.enhanceCardHover(card, true);
-      // });
-
-      // card.addEventListener('mouseleave', () => {
-      //     this.enhanceCardHover(card, false);
-      // });
-    });
-  }
-
-  handleProjectCardClick(card, index) {
-    // For demo purposes, we'll show an alert with project info
-    // In a real implementation, this would navigate to a project detail page
-    const title = card.querySelector(".project-card__title").textContent;
-    const description = card.querySelector(
-      ".project-card__description",
-    ).textContent;
-
-    // Add a subtle animation to indicate the click
-    card.style.transform = "scale(0.98)";
-    setTimeout(() => {
-      card.style.transform = "";
-    }, 150);
-
-    // In a real app, you might do something like:
-    // window.location.href = `/project/${index + 1}`;
-    // For now, we'll just log the interaction
-    console.log(`Project clicked: ${title}`);
-
-    // Optional: Show project details in a modal or navigate to project page
-    // this.showProjectModal(title, description);
-  }
-
-  enhanceCardHover(card, isHovering) {
-    const image = card.querySelector(".project-card__image");
-    if (image) {
-      if (isHovering) {
-        image.style.transform = "scale(1.02)";
-      } else {
-        image.style.transform = "scale(1)";
-      }
-    }
-  }
-
-  // Optional method for showing project details
-  showProjectModal(title, description) {
-    // This would create and show a modal with project details
-    // Implementation would depend on specific requirements
-    console.log(`Opening modal for: ${title}`);
   }
 }
 
@@ -425,24 +348,26 @@ function validateField(input) {
 const form = document.getElementById("contact-form");
 const formMessage = document.getElementById("form-message");
 
-// Validate fields on blur and while fixing errors
-const fields = form.querySelectorAll(
-  'input:not([type="hidden"]):not([type="submit"]), textarea',
-);
-fields.forEach((field) => {
-  field.addEventListener("blur", () => {
-    const isValid = validateField(field);
-    if (isValid) {
-      setTimeout(() => {
-        const errorEl = document.getElementById(field.id + "-error");
-        if (errorEl) errorEl.textContent = "";
-      }, 300);
-    }
+if (form) {
+  // Validate fields on blur and while fixing errors
+  const fields = form.querySelectorAll(
+    'input:not([type="hidden"]):not([type="submit"]), textarea',
+  );
+  fields.forEach((field) => {
+    field.addEventListener("blur", () => {
+      const isValid = validateField(field);
+      if (isValid) {
+        setTimeout(() => {
+          const errorEl = document.getElementById(field.id + "-error");
+          if (errorEl) errorEl.textContent = "";
+        }, 300);
+      }
+    });
+    field.addEventListener("input", () => {
+      if (!field.validity.valid) validateField(field);
+    });
   });
-  field.addEventListener("input", () => {
-    if (!field.validity.valid) validateField(field);
-  });
-});
+}
 
 form.addEventListener("submit", async function (event) {
   event.preventDefault();
