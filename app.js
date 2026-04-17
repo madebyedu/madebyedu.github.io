@@ -388,12 +388,71 @@ class ScrollAnimator {
   }
 }
 
+// Form Error Messages
+
+function validateField(input) {
+  const errorEl = document.getElementById(input.id + "-error");
+  if (!errorEl) return true;
+
+  let message = "";
+
+  if (input.validity.valueMissing) {
+    if (input.name === "name") message = "Please enter your name.";
+    if (input.name === "email") message = "Please enter your e-mail.";
+    if (input.name === "message") message = "Please write a message.";
+  } else if (input.validity.typeMismatch) {
+    if (input.name === "email")
+      message = "That doesn't look like a valid e-mail address.";
+  }
+
+  errorEl.textContent = message;
+
+  if (message) {
+    input.setAttribute("aria-describedby", input.id + "-error");
+    clearTimeout(errorEl._hideTimer);
+    errorEl._hideTimer = setTimeout(() => {
+      errorEl.textContent = "";
+      input.removeAttribute("aria-describedby");
+    }, 4000);
+  } else {
+    input.removeAttribute("aria-describedby");
+  }
+
+  return input.validity.valid;
+}
+
 // Preventing Form Redirection
 const form = document.getElementById("contact-form");
 const formMessage = document.getElementById("form-message");
 
+// Validate fields on blur and while fixing errors
+const fields = form.querySelectorAll(
+  'input:not([type="hidden"]):not([type="submit"]), textarea',
+);
+fields.forEach((field) => {
+  field.addEventListener("blur", () => {
+    const isValid = validateField(field);
+    if (isValid) {
+      setTimeout(() => {
+        const errorEl = document.getElementById(field.id + "-error");
+        if (errorEl) errorEl.textContent = "";
+      }, 300);
+    }
+  });
+  field.addEventListener("input", () => {
+    if (!field.validity.valid) validateField(field);
+  });
+});
+
 form.addEventListener("submit", async function (event) {
-  event.preventDefault(); // stop the page redirect
+  event.preventDefault();
+
+  // Validate all fields before sending
+  let isValid = true;
+  fields.forEach((field) => {
+    if (!validateField(field)) isValid = false;
+  });
+  if (!isValid) return; // stop here if any field is invalid
 
   const formData = new FormData(form);
 
@@ -408,10 +467,13 @@ form.addEventListener("submit", async function (event) {
     if (data.success) {
       formMessage.textContent = "Message sent! I'll get back to you soon.";
       formMessage.style.color = "var(--text)";
-      form.reset(); // clear the form fields
+      form.reset();
+      setTimeout(() => {
+        formMessage.textContent = "";
+      }, 5000);
     } else {
       formMessage.textContent = "Something went wrong. Please try again.";
-      formMessage.style.color = "oklch(65% 0.18 25)"; // a red-ish tone
+      formMessage.style.color = "oklch(65% 0.18 25)";
     }
   } catch (error) {
     formMessage.textContent = "Network error. Please check your connection.";
