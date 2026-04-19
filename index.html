@@ -18,7 +18,16 @@
       href="/img/favicon/apple-touch-icon.png"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="preload"
+      href="/style.css"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <noscript><link rel="stylesheet" href="/style.css" /></noscript>
     <link
       rel="preload"
       href="/fonts/inter-var.woff2"
@@ -92,6 +101,7 @@
                       class="project-card__image"
                       src="img/project1.webp"
                       alt="Digital ad banner and print layout for Volkswagen Group after-sales campaign featuring branded vehicle service offers."
+                      fetchpriority="high"
                   /></a>
                 </div>
                 <div class="project-card__content">
@@ -108,7 +118,7 @@
                   <a href="/projects/porsche-launch-brochure/">
                     <img
                       class="project-card__image"
-                      src="img/project2.webp"
+                      src="img/porsche-launch-brochure/a739797.webp"
                       alt="Digital ad banner and print layout for Volkswagen Group after-sales campaign featuring branded vehicle service offers."
                   /></a>
                 </div>
@@ -160,7 +170,7 @@
                 </div>
               </article>
 
-              <article class="project-card todo">
+              <!-- <article class="project-card todo">
                 <div class="project-card__media">
                   <a href="/projects/social-media-animation/">
                     <img
@@ -176,6 +186,25 @@
                   </h6>
                   <p>Digital Design &amp; Animation</p>
                   <a href="/projects/social-media-animation/">See More ></a>
+                </div>
+              </article> -->
+
+              <article class="project-card todo">
+                <div class="project-card__media">
+                  <a href="/projects/business-card-design/">
+                    <img
+                      class="project-card__image"
+                      src="/img/business-card-design/mockup-1.webp"
+                      alt="Digital animation frame illustrating the Volkswagen Group vehicle trade-in process with stylized graphics."
+                    />
+                  </a>
+                </div>
+                <div class="project-card__content">
+                  <h6 class="project-card__title">
+                    OutletCars Business Card Design
+                  </h6>
+                  <p>Print Design</p>
+                  <a href="/projects/business-card-design/">See More ></a>
                 </div>
               </article>
 
@@ -286,7 +315,7 @@
       </svg>
     </button>
 
-    <script src="/app.js"></script>
+    <script src="/app.js" defer></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>

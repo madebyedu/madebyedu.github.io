@@ -21,7 +21,16 @@
       href="/img/favicon/apple-touch-icon.png"
       crossorigin="anonymous"
     />
-    <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="preload"
+      href="/style.css"
+      as="style"
+      onload="
+        this.onload = null;
+        this.rel = 'stylesheet';
+      "
+    />
+    <noscript><link rel="stylesheet" href="/style.css" /></noscript>
     <link
       rel="preload"
       href="/fonts/inter-var.woff2"
@@ -109,11 +118,10 @@
             fast-scrolling environment.
           </p>
           <p>
-            I took full ownership of the creative execution, designing every
-            animation and motion graphic from concept to final delivery. This
-            meant making visual decisions that shaped the tone, pacing, and
-            overall feel of the piece, not just producing assets to someone
-            else's blueprint.
+            I owned the creative execution, designing every animation and motion
+            graphic from concept to final delivery. This meant making visual
+            decisions that shaped the tone, pacing, and overall feel of the
+            piece, not just producing assets to someone else's blueprint.
           </p>
           <p>
             The final video gave the buyback service a polished and recognizable
@@ -121,13 +129,6 @@
             that was easy to understand and quick to watch.
           </p>
         </section>
-        <!-- <img
-          class="todo"
-          src="/img/porsche-launch-brochure/_A739798.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        /> -->
       </main>
 
       <footer class="todo">
@@ -217,7 +218,7 @@
       </svg>
     </button>
 
-    <script src="/app.js"></script>
+    <script src="/app.js" defer></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
