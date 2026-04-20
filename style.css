@@ -90,16 +90,19 @@ body {
     sans-serif;
   line-height: var(--line-height-body);
   overflow-x: hidden;
+}
 
+html {
+  scrollbar-gutter: stable;
+  background-color: oklch(8% 0.005 271.152);
+}
+
+body {
   background: linear-gradient(
     45deg,
     oklch(8% 0.005 271.152) 16%,
     oklch(16% 0.005 271.152) 100%
   );
-}
-
-html {
-  scrollbar-gutter: stable;
 }
 
 input,
