@@ -143,7 +143,7 @@ class SmoothScroll {
         if (href === "#" || href === "#about" || href === "#contact") {
           e.preventDefault();
           console.log(
-            `Navigation to ${href} - This would navigate to the ${href.slice(1)} page in a full implementation`
+            `Navigation to ${href} - This would navigate to the ${href.slice(1)} page in a full implementation`,
           );
           return;
         }
@@ -180,7 +180,7 @@ class PerformanceMonitor {
 // Scroll to Top Button functionality
 class ScrollToTopButton {
   constructor() {
-    this.button = document.getElementById("scrollToTopBtn");
+    this.button = document.getElementById("page-return");
     this.scrollThreshold = 300;
     this.init();
   }
@@ -246,7 +246,6 @@ const form = document.getElementById("contact-form");
 const formMessage = document.getElementById("form-message");
 
 if (form && formMessage) {
-
   function validateField(input) {
     const errorEl = document.getElementById(input.id + "-error");
     if (!errorEl) return true;
@@ -279,7 +278,7 @@ if (form && formMessage) {
   }
 
   const fields = form.querySelectorAll(
-    'input:not([type="hidden"]):not([type="submit"]), textarea'
+    'input:not([type="hidden"]):not([type="submit"]), textarea',
   );
 
   fields.forEach((field) => {
@@ -333,7 +332,6 @@ if (form && formMessage) {
       formMessage.style.color = "oklch(65% 0.18 25)";
     }
   });
-
 } // end form guard
 
 // Initialize the application when DOM is ready

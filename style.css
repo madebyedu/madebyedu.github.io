@@ -716,7 +716,7 @@ footer p {
 }
 
 /* Scroll to Top Button */
-.scroll-to-top {
+.page-return {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
@@ -743,24 +743,23 @@ footer p {
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   user-select: none;
-  /* border-radius: var(--border-radius-in); */
 }
 
-.scroll-to-top.visible {
+.page-return.visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
 
 @media (hover: hover) {
-  .scroll-to-top:hover {
+  .page-return:hover {
     background-color: var(--bg);
     color: var(--text);
     transform: translateY(-4px);
   }
 }
 
-.scroll-to-top__arrow {
+.page-return__arrow {
   display: block;
   width: 20px;
   height: 20px;
@@ -768,7 +767,7 @@ footer p {
 
 /* Responsive adjustments */
 @media (max-width: 755px) {
-  .scroll-to-top {
+  .page-return {
     bottom: 1.5rem;
     right: 1.5rem;
     width: 44px;
