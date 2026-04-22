@@ -1,0 +1,5 @@
+[build.processing.css]
+  minify = true
+
+[build.processing.js]
+  minify = true
