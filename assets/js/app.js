@@ -6,7 +6,7 @@ class PortfolioApp {
     this.hamburger = document.querySelector(".hamburger");
     this.mobileMenu = document.querySelector(".mobile-menu");
     this.body = document.body;
-    this.mobileMenuLinks = document.querySelectorAll(".mobile-menu__link");
+    this.mobileMenuLinks = document.querySelectorAll(".mobile-menu__list a");
 
     if (this.mobileMenu) {
       this.init();
@@ -73,7 +73,9 @@ class PortfolioApp {
     this.body.style.top = `-${scrollY}px`;
 
     setTimeout(() => {
-      const firstMenuItem = this.mobileMenu.querySelector(".mobile-menu__link");
+      const firstMenuItem = this.mobileMenu.querySelector(
+        ".mobile-menu__list a",
+      );
       if (firstMenuItem) {
         firstMenuItem.focus();
       }
@@ -107,8 +109,9 @@ class PortfolioApp {
     this.mobileMenu.addEventListener("keydown", (e) => {
       if (!this.mobileMenu.classList.contains("active")) return;
 
-      const focusableElements =
-        this.mobileMenu.querySelectorAll(".mobile-menu__link");
+      const focusableElements = this.mobileMenu.querySelectorAll(
+        ".mobile-menu__list a",
+      );
       const firstFocusable = focusableElements[0];
       const lastFocusable = focusableElements[focusableElements.length - 1];
 

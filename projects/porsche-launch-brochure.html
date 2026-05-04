@@ -13,41 +13,45 @@
     <link
       rel="icon"
       type="image/png"
-      href="/img/favicon/favicon-96x96.png?v=20260421"
+      href="/assets/img/favicon/favicon-96x96.png?v=20260421"
       sizes="96x96"
     />
     <link
       rel="icon"
       type="image/svg+xml"
-      href="/img/favicon/favicon.svg?v=20260421"
+      href="/assets/img/favicon/favicon.svg?v=20260421"
     />
-    <link rel="shortcut icon" href="/img/favicon/favicon.ico?v=20260421" />
+    <link
+      rel="shortcut icon"
+      href="/assets/img/favicon/favicon.ico?v=20260421"
+    />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/img/favicon/apple-touch-icon.png?v=20260421"
+      href="/assets/img/favicon/apple-touch-icon.png?v=20260421"
     />
-    <link rel="manifest" href="/img/favicon/site.webmanifest?v=20260421" />
-    <link rel="preload" href="/style.css" as="style" />
-    <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="manifest"
+      href="/assets/img/favicon/site.webmanifest?v=20260421"
+    />
+    <link rel="preload" href="/assets/css/style.css" as="style" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <link
       rel="preload"
-      href="/fonts/inter-var.woff2"
+      href="/assets/fonts/inter-var.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
-    <script src="/app.js" defer></script>
+    <script src="/assets/js/app.js" defer></script>
   </head>
 
   <body>
-    <div class="page-wrapper">
-      <!-- Header -->
-      <header class="header">
+    <!-- Header -->
+    <header>
+      <div class="wrapper">
         <div class="header__content">
-          <h6>
-            <a class="logo" href="/">Eduardo Carrasco / Graphic Designer</a>
-          </h6>
+          <a class="logo" href="/">Eduardo Carrasco / Graphic Designer</a>
 
           <!-- Desktop Navigation -->
           <nav class="nav desktop-nav" aria-label="Main navigation">
@@ -55,15 +59,12 @@
               <li>
                 <a href="/#projects" class="nav__link">Portfolio</a>
               </li>
+              <li><a href="/about.html" class="nav__link">About me</a></li>
               <li>
-                <a href="/about/" class="nav__link">About me</a>
-              </li>
-              <li>
-                <a href="/contact/" class="nav__link-contact">Contact</a>
+                <a href="/contact.html" class="btn-primary">Contact</a>
               </li>
             </ul>
           </nav>
-
           <!-- Mobile Hamburger Menu -->
           <button
             class="hamburger"
@@ -75,35 +76,33 @@
             <span class="hamburger__line"></span>
           </button>
         </div>
-      </header>
+      </div>
+    </header>
 
-      <!-- Mobile Menu Overlay -->
-      <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-        <div class="mobile-menu__content">
-          <ul class="mobile-menu__list">
-            <li>
-              <a href="/#projects" class="mobile-menu__link">Portfolio</a>
-            </li>
-            <li>
-              <a href="/about/" class="mobile-menu__link">About me</a>
-            </li>
-            <li>
-              <a href="/contact/" class="mobile-menu__link-contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <!-- Mobile Menu Overlay -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <ul class="mobile-menu__list">
+        <li>
+          <a href="/#projects" class="mobile-menu__link">Portfolio</a>
+        </li>
+        <li><a href="/about.html" class="mobile-menu__link">About me</a></li>
+        <li>
+          <a href="/contact.html" class="btn-primary">Contact</a>
+        </li>
+      </ul>
+    </nav>
 
-      <main class="projectdetails">
+    <main>
+      <div class="wrapper gallery">
         <img
           class=""
-          src="/img/porsche-launch-brochure/a739797.webp"
+          src="/assets/img/porsche-launch-brochure/a739797.webp"
           alt=""
           loading="eager"
           fetchpriority="high"
         />
-        <section class="projectdetails__text todo">
-          <h1>Centro Porsche Valladolid Launch Brochure</h1>
+        <section class="gallery__description todo">
+          <h2>Centro Porsche Launch Brochure</h2>
           <p>
             Centro Porsche Valladolid was the first Porsche dealership opened by
             Volkswagen Group Retail Spain, and as a brand-new business, they had
@@ -127,65 +126,67 @@
         </section>
         <img
           class="todo"
-          src="/img/porsche-launch-brochure/a739798.webp"
+          src="/assets/img/porsche-launch-brochure/a739798.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
           class="todo"
-          src="/img/porsche-launch-brochure/a739800.webp"
+          src="/assets/img/porsche-launch-brochure/a739800.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
           class="todo"
-          src="/img/porsche-launch-brochure/a739802.webp"
+          src="/assets/img/porsche-launch-brochure/a739802.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
           class="todo"
-          src="/img/porsche-launch-brochure/a739853.webp"
+          src="/assets/img/porsche-launch-brochure/a739853.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/img/porsche-launch-brochure/a739854.webp"
+          src="/assets/img/porsche-launch-brochure/a739854.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/img/porsche-launch-brochure/a739858.webp"
+          src="/assets/img/porsche-launch-brochure/a739858.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/img/porsche-launch-brochure/a739860.webp"
+          src="/assets/img/porsche-launch-brochure/a739860.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/img/porsche-launch-brochure/a739862.webp"
+          src="/assets/img/porsche-launch-brochure/a739862.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
         <img
-          src="/img/porsche-launch-brochure/a739864.webp"
+          src="/assets/img/porsche-launch-brochure/a739864.webp"
           alt=""
           loading="lazy"
           decoding="async"
         />
-      </main>
+      </div>
+    </main>
 
-      <footer class="todo">
+    <footer>
+      <div class="wrapper todo">
         <p>
           Copyright &#169; <span id="year"></span> Eduardo Carrasco. All rights
           reserved.
@@ -208,7 +209,6 @@
               />
             </svg>
           </a>
-
           <!-- Behance -->
           <a
             href="https://www.behance.net/madebyedu"
@@ -226,7 +226,6 @@
               />
             </svg>
           </a>
-
           <!-- Instagram -->
           <a
             href="https://www.instagram.com/educarrasco.jpg"
@@ -245,8 +244,8 @@
             </svg>
           </a>
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
 
     <!-- Scroll to Top Button -->
     <button id="page-return" class="page-return" aria-label="Scroll to top">
@@ -268,7 +267,7 @@
       </svg>
     </button>
 
-    <script src="/app.js" defer></script>
+    <script src="/assets/js/app.js" defer></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>

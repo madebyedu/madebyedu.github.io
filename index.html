@@ -11,62 +11,64 @@
     <link
       rel="icon"
       type="image/png"
-      href="/img/favicon/favicon-96x96.png?v=20260421"
+      href="/assets/img/favicon/favicon-96x96.png?v=20260421"
       sizes="96x96"
     />
     <link
       rel="icon"
       type="image/svg+xml"
-      href="/img/favicon/favicon.svg?v=20260421"
+      href="/assets/img/favicon/favicon.svg?v=20260421"
     />
-    <link rel="shortcut icon" href="/img/favicon/favicon.ico?v=20260421" />
+    <link
+      rel="shortcut icon"
+      href="/assets/img/favicon/favicon.ico?v=20260421"
+    />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
-      href="/img/favicon/apple-touch-icon.png?v=20260421"
+      href="/assets/img/favicon/apple-touch-icon.png?v=20260421"
     />
-    <link rel="manifest" href="/img/favicon/site.webmanifest?v=20260421" />
-    <link rel="preload" href="/style.css" as="style" />
-    <link rel="stylesheet" href="/style.css" />
+    <link
+      rel="manifest"
+      href="/assets/img/favicon/site.webmanifest?v=20260421"
+    />
+    <link rel="preload" href="/assets/css/style.css" as="style" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <link
       rel="preload"
       as="image"
-      href="/img/thumbnail/water-repelent_756.webp"
+      href="/assets/img/thumbnail/water-repelent_756.webp"
       type="image/webp"
       fetchpriority="high"
     />
     <link
       rel="preload"
-      href="/fonts/inter-var.woff2"
+      href="/assets/fonts/inter-var.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
-    <script src="/app.js" defer></script>
+    <script src="/assets/js/app.js" defer></script>
   </head>
 
   <body>
-    <div class="page-wrapper">
-      <!-- Header -->
-      <header class="header">
+    <!-- Header -->
+    <header>
+      <div class="wrapper">
         <div class="header__content">
-          <h6>
-            <a class="logo" href="/">Eduardo Carrasco / Graphic Designer</a>
-          </h6>
-
+          <a class="logo" href="/">Eduardo Carrasco / Graphic Designer</a>
           <!-- Desktop Navigation -->
           <nav class="nav desktop-nav" aria-label="Main navigation">
             <ul class="nav__list">
               <li>
                 <a href="/#projects" class="nav__link">Portfolio</a>
               </li>
-              <li><a href="/about/" class="nav__link">About me</a></li>
+              <li><a href="/about.html" class="nav__link">About me</a></li>
               <li>
-                <a href="/contact/" class="nav__link-contact">Contact</a>
+                <a href="/contact.html" class="btn-primary">Contact</a>
               </li>
             </ul>
           </nav>
-
           <!-- Mobile Hamburger Menu -->
           <button
             class="hamburger"
@@ -78,232 +80,171 @@
             <span class="hamburger__line"></span>
           </button>
         </div>
-      </header>
+      </div>
+    </header>
 
-      <!-- Mobile Menu Overlay -->
-      <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
-        <div class="mobile-menu__content">
-          <ul class="mobile-menu__list">
-            <li>
-              <a href="/#projects" class="mobile-menu__link">Portfolio</a>
-            </li>
-            <li><a href="/about/" class="mobile-menu__link">About me</a></li>
-            <li>
-              <a href="/contact/" class="mobile-menu__link-contact">Contact</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+    <!-- Mobile Menu Overlay -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <ul class="mobile-menu__list">
+        <li>
+          <a href="/#projects" class="mobile-menu__link">Portfolio</a>
+        </li>
+        <li><a href="/about.html" class="mobile-menu__link">About me</a></li>
+        <li>
+          <a href="/contact.html" class="btn-primary">Contact</a>
+        </li>
+      </ul>
+    </nav>
 
-      <main>
-        <!-- Hero Section -->
-
-        <!-- Projects Section -->
+    <main>
+      <div class="wrapper">
         <section id="projects" class="projects">
-          <div class="wrapper">
-            <div class="projects__grid">
-              <article class="project-card">
-                <div class="project-card__media">
-                  <a href="/projects/hydro-repelent/">
-                    <picture>
-                      <source
-                        srcset="
-                          /img/thumbnail/water-repelent_756.webp   756w,
-                          /img/thumbnail/water-repelent_1120.webp 1120w
-                        "
-                        type="image/webp" />
-                      <img
-                        class="project-card__image"
-                        src="/img/thumbnail/water-repelent_756.webp"
-                        alt="Mockup of three social media posts for an automotive water-repellent treatment campaign, displayed on a smartphone and background banners featuring the Audi, Volkswagen, and SEAT brands"
-                        width="756"
-                        height="426"
-                        fetchpriority="high" /></picture
-                  ></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    Hydro-Repellent Treatment Campaign
-                  </h6>
-                  <p>Digital Ads &amp; Print Design</p>
-                  <a href="/projects/hydro-repelent/">See More ></a>
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/porsche-launch-brochure/">
-                    <picture>
-                      <source
-                        srcset="
-                          /img/thumbnail/porsche-brochure_756.webp   756w,
-                          /img/thumbnail/porsche-brochure_1120.webp 1120w
-                        "
-                        type="image/webp" />
-                      <img
-                        class="project-card__image"
-                        src="/img/thumbnail/porsche-brochure_756.webp"
-                        alt="Printed marketing brochure for Centro Porsche Valladolid showing the dealership's modern glass facade with a bold red Porsche logo, and the welcome text Bienvenidos a Centro Porsche Valladolid"
-                        width="756"
-                        height="426"
-                        loading="lazy" /></picture
-                  ></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    Centro Porsche Launch Brochure
-                  </h6>
-                  <p>Print &amp; Editorial Design</p>
-                  <a href="/projects/porsche-launch-brochure/">See More ></a>
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/employee-healthcare-campaign/">
-                    <picture>
-                      <source
-                        srcset="
-                          /img/thumbnail/employee-healthcare-campaign_756.webp   756w,
-                          /img/thumbnail/employee-healthcare-campaign_1120.webp 1120w
-                        "
-                        type="image/webp" />
-                      <img
-                        class="project-card__image"
-                        src="/img/thumbnail/employee-healthcare-campaign_756.webp"
-                        alt="Vertical promotional poster for a telemedicine service co-branded with Volkswagen, featuring a smiling doctor, service details in Spanish, and a QR code registration call-to-action"
-                        width="756"
-                        height="426"
-                        loading="lazy" /></picture
-                  ></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    Employee Healthcare Campaign
-                  </h6>
-                  <p>Animation &amp; Print Design</p>
-                  <a href="/projects/employee-healthcare-campaign/"
-                    >See More ></a
-                  >
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/brand-identity-video/">
-                    <picture>
-                      <source
-                        srcset="
-                          /img/thumbnail/brand-identity-video_756.webp   756w,
-                          /img/thumbnail/brand-identity-video_1120.webp 1120w
-                        "
-                        type="image/webp" />
-                      <img
-                        class="project-card__image"
-                        src="/img/thumbnail/brand-identity-video_756.webp"
-                        alt="Title card from a brand identity video for Cupra Catalunya Motor, showing the Cupra logo and the question ¿Cómo nace Cupra Catalunya Motor? in white text on a black background"
-                        width="756"
-                        height="426"
-                        loading="lazy" /></picture
-                  ></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    CUPRA Brand Identity Video
-                  </h6>
-                  <p>Film &amp; Motion Graphics</p>
-                  <a href="/projects/brand-identity-video/">See More ></a>
-                </div>
-              </article>
-
-              <!-- <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/social-media-animation/">
-                    <picture>
-                      <source
-                        srcset="
-                          /img/thumbnail/porsche-brochure_756.webp   756w,
-                          /img/thumbnail/porsche-brochure_1120.webp 1120w
-                        "
-                        type="image/webp" />
-                      <img
-                        class="project-card__image"
-                        src="/img/thumbnail/porsche-brochure_756.webp"
-                        alt=""
-                        width="756"
-                        height="426"
-                        loading="lazy" /></picture
-                  >
-                  </a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    Buyback Social Media Animation
-                  </h6>
-                  <p>Digital Design &amp; Animation</p>
-                  <a href="/projects/social-media-animation/">See More ></a>
-                </div>
-              </article> -->
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="/projects/business-card-design/">
-                    <picture>
-                      <source
-                        srcset="
-                          /img/thumbnail/business-card-design_756.webp   756w,
-                          /img/thumbnail/business-card-design_1120.webp 1120w
-                        "
-                        type="image/webp" />
-                      <img
-                        class="project-card__image"
-                        src="/img/thumbnail/business-card-design_756.webp"
-                        alt="Two-sided business card design for Outlet Cars, showing a bold red front with the company logo and a white back with contact details for Eduardo Carrasco, Digital Manager, including a QR code"
-                        width="756"
-                        height="426"
-                        loading="lazy" /></picture
-                  ></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">
-                    OutletCars Business Card Design
-                  </h6>
-                  <p>Print Design</p>
-                  <a href="/projects/business-card-design/">See More ></a>
-                </div>
-              </article>
-
-              <article class="project-card todo">
-                <div class="project-card__media">
-                  <a href="projects/natural-light-project/">
-                    <picture>
-                      <source
-                        srcset="
-                          /img/thumbnail/natural-light-project_756.webp   756w,
-                          /img/thumbnail/natural-light-project_1120.webp 1120w
-                        "
-                        type="image/webp" />
-                      <img
-                        class="project-card__image"
-                        src="/img/thumbnail/natural-light-project_756.webp"
-                        alt="Close-up portrait of a young woman with auburn hair and a delicate silver necklace, photographed outdoors in natural sunlight against a blurred ocean and blue sky background"
-                        width="756"
-                        height="426"
-                        loading="lazy" /></picture
-                  ></a>
-                </div>
-                <div class="project-card__content">
-                  <h6 class="project-card__title">Natural Light Project</h6>
-                  <p>Editorial Photography</p>
-                  <a href="projects/natural-light-project/">See More ></a>
-                </div>
-              </article>
+          <article>
+            <a href="/projects/hydro-repelent.html">
+              <picture>
+                <source
+                  srcset="
+                    /assets/img/thumbnail/water-repelent_756.webp   756w,
+                    /assets/img/thumbnail/water-repelent_1120.webp 1120w
+                  "
+                  type="image/webp" />
+                <img
+                  class="project__image"
+                  src="/assets/img/thumbnail/water-repelent_756.webp"
+                  alt="Mockup of three social media posts for an automotive water-repellent treatment campaign, displayed on a smartphone and background banners featuring the Audi, Volkswagen, and SEAT brands"
+                  width="756"
+                  height="426"
+                  fetchpriority="high" /></picture
+            ></a>
+            <div class="project__description">
+              <h3>Hydro-Repellent Treatment Campaign</h3>
+              <p>Digital Ads &amp; Print Design</p>
+              <a href="/projects/hydro-repelent.html">See More ></a>
             </div>
-          </div>
+          </article>
+          <article class="todo">
+            <a href="/projects/porsche-launch-brochure.html">
+              <picture>
+                <source
+                  srcset="
+                    /assets/img/thumbnail/porsche-brochure_756.webp   756w,
+                    /assets/img/thumbnail/porsche-brochure_1120.webp 1120w
+                  "
+                  type="image/webp" />
+                <img
+                  class="project__image"
+                  src="/assets/img/thumbnail/porsche-brochure_756.webp"
+                  alt="Printed marketing brochure for Centro Porsche Valladolid showing the dealership's modern glass facade with a bold red Porsche logo, and the welcome text Bienvenidos a Centro Porsche Valladolid"
+                  width="756"
+                  height="426"
+                  loading="lazy" /></picture
+            ></a>
+            <div class="project__description">
+              <h3>Centro Porsche Launch Brochure</h3>
+              <p>Print &amp; Editorial Design</p>
+              <a href="/projects/porsche-launch-brochure.html">See More ></a>
+            </div>
+          </article>
+          <article class="todo">
+            <a href="/projects/employee-healthcare-campaign.html">
+              <picture>
+                <source
+                  srcset="
+                    /assets/img/thumbnail/employee-healthcare-campaign_756.webp   756w,
+                    /assets/img/thumbnail/employee-healthcare-campaign_1120.webp 1120w
+                  "
+                  type="image/webp" />
+                <img
+                  class="project__image"
+                  src="/assets/img/thumbnail/employee-healthcare-campaign_756.webp"
+                  alt="Vertical promotional poster for a telemedicine service co-branded with Volkswagen, featuring a smiling doctor, service details in Spanish, and a QR code registration call-to-action"
+                  width="756"
+                  height="426"
+                  loading="lazy" /></picture
+            ></a>
+            <div class="project__description">
+              <h3>Employee Healthcare Campaign</h3>
+              <p>Animation &amp; Print Design</p>
+              <a href="/projects/employee-healthcare-campaign.html"
+                >See More ></a
+              >
+            </div>
+          </article>
+          <article class="todo">
+            <a href="/projects/brand-identity-video.html">
+              <picture>
+                <source
+                  srcset="
+                    /assets/img/thumbnail/brand-identity-video_756.webp   756w,
+                    /assets/img/thumbnail/brand-identity-video_1120.webp 1120w
+                  "
+                  type="image/webp" />
+                <img
+                  class="project__image"
+                  src="/assets/img/thumbnail/brand-identity-video_756.webp"
+                  alt="Title card from a brand identity video for Cupra Catalunya Motor, showing the Cupra logo and the question ¿Cómo nace Cupra Catalunya Motor? in white text on a black background"
+                  width="756"
+                  height="426"
+                  loading="lazy" /></picture
+            ></a>
+            <div class="project__description">
+              <h3>CUPRA Brand Identity Video</h3>
+              <p>Film &amp; Motion Graphics</p>
+              <a href="/projects/brand-identity-video.html">See More ></a>
+            </div>
+          </article>
+          <article class="todo">
+            <a href="/projects/business-card-design.html">
+              <picture>
+                <source
+                  srcset="
+                    /assets/img/thumbnail/business-card-design_756.webp   756w,
+                    /assets/img/thumbnail/business-card-design_1120.webp 1120w
+                  "
+                  type="image/webp" />
+                <img
+                  class="project__image"
+                  src="/assets/img/thumbnail/business-card-design_756.webp"
+                  alt="Two-sided business card design for Outlet Cars, showing a bold red front with the company logo and a white back with contact details for Eduardo Carrasco, Digital Manager, including a QR code"
+                  width="756"
+                  height="426"
+                  loading="lazy" /></picture
+            ></a>
+            <div class="project__description">
+              <h3>OutletCars Business Card Design</h3>
+              <p>Print Design</p>
+              <a href="/projects/business-card-design.html">See More ></a>
+            </div>
+          </article>
+          <article class="todo">
+            <a href="/projects/natural-light-project.html">
+              <picture>
+                <source
+                  srcset="
+                    /assets/img/thumbnail/natural-light-project_756.webp   756w,
+                    /assets/img/thumbnail/natural-light-project_1120.webp 1120w
+                  "
+                  type="image/webp" />
+                <img
+                  class="project__image"
+                  src="/assets/img/thumbnail/natural-light-project_756.webp"
+                  alt="Close-up portrait of a young woman with auburn hair and a delicate silver necklace, photographed outdoors in natural sunlight against a blurred ocean and blue sky background"
+                  width="756"
+                  height="426"
+                  loading="lazy" /></picture
+            ></a>
+            <div class="project__description">
+              <h3>Natural Light Project</h3>
+              <p>Editorial Photography</p>
+              <a href="/projects/natural-light-project.html">See More ></a>
+            </div>
+          </article>
         </section>
-      </main>
+      </div>
+    </main>
 
-      <footer class="todo">
+    <footer>
+      <div class="wrapper todo">
         <p>
           Copyright &#169; <span id="year"></span> Eduardo Carrasco. All rights
           reserved.
@@ -326,7 +267,6 @@
               />
             </svg>
           </a>
-
           <!-- Behance -->
           <a
             href="https://www.behance.net/madebyedu"
@@ -344,7 +284,6 @@
               />
             </svg>
           </a>
-
           <!-- Instagram -->
           <a
             href="https://www.instagram.com/educarrasco.jpg"
@@ -363,8 +302,8 @@
             </svg>
           </a>
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
 
     <!-- Scroll to Top Button -->
     <button id="page-return" class="page-return" aria-label="Scroll to top">
