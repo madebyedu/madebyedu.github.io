@@ -227,88 +227,58 @@ class ScrollAnimator {
   }
 
   init() {
-    const options = { threshold: 0.2 };
+    const options = {
+      rootMargin: "0px 0px -50px 0px",
+    };
+
+    // We create a counter and a timer to group elements that appear together
+    let delayCounter = 0;
+    let delayTimer = null;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
+          // 1. Assign the current delay to this specific element
+          const delay = delayCounter * 0.15; // 0.15s gap between items
+          entry.target.style.transitionDelay = `${delay}s`;
+
+          // 2. Trigger the animation
           entry.target.classList.add("show");
-        } else {
-          entry.target.classList.remove("show");
+          observer.unobserve(entry.target);
+
+          // 3. Increase the counter for the next item in this batch
+          delayCounter++;
+
+          // 4. Reset the counter after 100 milliseconds.
+          // If you scroll further down later, the next item starts instantly at 0s delay.
+          clearTimeout(delayTimer);
+          delayTimer = setTimeout(() => {
+            delayCounter = 0;
+          }, 100);
         }
       });
     }, options);
 
-    const hiddenElements = document.querySelectorAll(".todo");
+    const hiddenElements = document.querySelectorAll(".animate-on-scroll");
     hiddenElements.forEach((el) => observer.observe(el));
   }
 }
 
-// Form Error Messages — only runs if contact form exists on this page
+// Form Submission Logic
 const form = document.getElementById("contact-form");
 const formMessage = document.getElementById("form-message");
 
 if (form && formMessage) {
-  function validateField(input) {
-    const errorEl = document.getElementById(input.id + "-error");
-    if (!errorEl) return true;
-
-    let message = "";
-
-    if (input.validity.valueMissing) {
-      if (input.name === "name") message = "Please enter your name.";
-      if (input.name === "email") message = "Please enter your e-mail.";
-      if (input.name === "message") message = "Please write a message.";
-    } else if (input.validity.typeMismatch) {
-      if (input.name === "email")
-        message = "That doesn't look like a valid e-mail address.";
-    }
-
-    errorEl.textContent = message;
-
-    if (message) {
-      input.setAttribute("aria-describedby", input.id + "-error");
-      clearTimeout(errorEl._hideTimer);
-      errorEl._hideTimer = setTimeout(() => {
-        errorEl.textContent = "";
-        input.removeAttribute("aria-describedby");
-      }, 4000);
-    } else {
-      input.removeAttribute("aria-describedby");
-    }
-
-    return input.validity.valid;
-  }
-
-  const fields = form.querySelectorAll(
-    'input:not([type="hidden"]):not([type="submit"]), textarea',
-  );
-
-  fields.forEach((field) => {
-    field.addEventListener("blur", () => {
-      const isValid = validateField(field);
-      if (isValid) {
-        setTimeout(() => {
-          const errorEl = document.getElementById(field.id + "-error");
-          if (errorEl) errorEl.textContent = "";
-        }, 300);
-      }
-    });
-
-    field.addEventListener("input", () => {
-      if (!field.validity.valid) validateField(field);
-    });
-  });
-
   form.addEventListener("submit", async function (event) {
+    // 1. Prevent default submission to handle it via JS
     event.preventDefault();
 
-    let isValid = true;
-    fields.forEach((field) => {
-      if (!validateField(field)) isValid = false;
-    });
-    if (!isValid) return;
+    // 2. Check native HTML5 validity (this triggers your CSS :user-invalid states!)
+    if (!form.checkValidity()) {
+      return; // Stop the script if there are errors
+    }
 
+    // 3. If valid, send the data in the background
     const formData = new FormData(form);
 
     try {
@@ -335,7 +305,7 @@ if (form && formMessage) {
       formMessage.style.color = "oklch(65% 0.18 25)";
     }
   });
-} // end form guard
+}
 
 // Initialize the application when DOM is ready
 document.addEventListener("DOMContentLoaded", () => {

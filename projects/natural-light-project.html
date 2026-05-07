@@ -93,15 +93,29 @@
     </nav>
 
     <main>
-      <div class="wrapper gallery">
-        <img
-          class=""
-          src="/assets/img/natural-light-project/Header.webp"
-          alt=""
-          loading="eager"
-          fetchpriority="high"
-        />
-        <section class="gallery__description todo">
+      <div class="wrapper">
+        <picture class="gallery">
+          <source
+            media="(max-width: 599px)"
+            srcset="
+              /assets/img/natural-light-project/natural-light-project_mobile_4x5.webp
+            "
+            type="image/webp" />
+          <source
+            media="(min-width: 600px)"
+            srcset="
+              /assets/img/natural-light-project/natural-light-project_desktop_2x1.webp
+            "
+            type="image/webp" />
+          <img
+            src="/assets/img/natural-light-project/natural-light-project_desktop_2x1.webp"
+            alt=""
+            width="1400"
+            height="700"
+            loading="eager"
+            fetchpriority="high"
+        /></picture>
+        <section class="gallery__description animate-on-scroll">
           <h2>Natural Light Portrait Project</h2>
           <p>
             Directing poses confidently and making the most of natural light
@@ -125,84 +139,84 @@
         </section>
         <section class="img-gallery">
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_9-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_25-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_121-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_139-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_192-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_222-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_249-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_296-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_375-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_395-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_504-1.webp"
             alt=""
             loading="lazy"
             decoding="async"
           />
           <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/natural-light-project/A7III_240728_602-1.webp"
             alt=""
             loading="lazy"
@@ -213,7 +227,7 @@
     </main>
 
     <footer>
-      <div class="wrapper todo">
+      <div class="wrapper animate-on-scroll">
         <p>
           Copyright &#169; <span id="year"></span> Eduardo Carrasco. All rights
           reserved.
@@ -294,7 +308,6 @@
       </svg>
     </button>
 
-    <script src="/assets/js/app.js" defer></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>

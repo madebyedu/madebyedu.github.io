@@ -91,15 +91,29 @@
     </nav>
 
     <main>
-      <div class="wrapper gallery">
-        <img
-          class=""
-          src="/assets/img/business-card-design/mockup-1.webp"
-          alt=""
-          loading="eager"
-          fetchpriority="high"
-        />
-        <section class="gallery__description todo">
+      <div class="wrapper">
+        <picture class="gallery animate-on-scroll">
+          <source
+            media="(max-width: 599px)"
+            srcset="
+              /assets/img/business-card-design/business-card-design_mobile_4x5.webp
+            "
+            type="image/webp" />
+          <source
+            media="(min-width: 600px)"
+            srcset="
+              /assets/img/business-card-design/business-card-design_desktop_2x1.webp
+            "
+            type="image/webp" />
+          <img
+            src="/assets/img/business-card-design/business-card-design_desktop_2x1.webp"
+            alt=""
+            width="1400"
+            height="700"
+            loading="eager"
+            fetchpriority="high"
+        /></picture>
+        <section class="gallery__description animate-on-scroll">
           <h2>OutletCars Business Card Design</h2>
           <p>
             OutletCars was a newly launched brand selling used cars online. As
@@ -117,32 +131,65 @@
             even in its early days.
           </p>
         </section>
-        <img
-          class="todo"
-          src="/assets/img/business-card-design/mockup-2.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-        <img
-          class="todo"
-          src="/assets/img/business-card-design/mockup-3.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
-        <img
-          class="todo"
-          src="/assets/img/business-card-design/mockup-4.webp"
-          alt=""
-          loading="lazy"
-          decoding="async"
-        />
+
+        <picture class="gallery animate-on-scroll">
+          <source
+            media="(max-width: 599px)"
+            srcset="/assets/img/business-card-design/mockup-2_mobile_4x5.webp"
+            type="image/webp" />
+          <source
+            media="(min-width: 600px)"
+            srcset="/assets/img/business-card-design/mockup-2_desktop_2x1.webp"
+            type="image/webp" />
+          <img
+            src="/assets/img/business-card-design/mockup-2_desktop_2x1.webp"
+            alt=""
+            width="1400"
+            height="700"
+            loading="lazy"
+            fetchpriority="async"
+        /></picture>
+
+        <picture class="gallery animate-on-scroll">
+          <source
+            media="(max-width: 599px)"
+            srcset="/assets/img/business-card-design/mockup-3_mobile_4x5.webp"
+            type="image/webp" />
+          <source
+            media="(min-width: 600px)"
+            srcset="/assets/img/business-card-design/mockup-3_desktop_2x1.webp"
+            type="image/webp" />
+          <img
+            src="/assets/img/business-card-design/mockup-3_desktop_2x1.webp"
+            alt=""
+            width="1400"
+            height="700"
+            loading="lazy"
+            fetchpriority="async"
+        /></picture>
+
+        <picture class="gallery animate-on-scroll">
+          <source
+            media="(max-width: 599px)"
+            srcset="/assets/img/business-card-design/mockup-4_mobile_4x5.webp"
+            type="image/webp" />
+          <source
+            media="(min-width: 600px)"
+            srcset="/assets/img/business-card-design/mockup-4_desktop_2x1.webp"
+            type="image/webp" />
+          <img
+            src="/assets/img/business-card-design/mockup-4_desktop_2x1.webp"
+            alt=""
+            width="1400"
+            height="700"
+            loading="lazy"
+            fetchpriority="async"
+        /></picture>
       </div>
     </main>
 
     <footer>
-      <div class="wrapper todo">
+      <div class="wrapper animate-on-scroll">
         <p>
           Copyright &#169; <span id="year"></span> Eduardo Carrasco. All rights
           reserved.
@@ -223,7 +270,6 @@
       </svg>
     </button>
 
-    <script src="/assets/js/app.js"></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>

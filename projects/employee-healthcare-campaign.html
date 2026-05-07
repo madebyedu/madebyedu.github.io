@@ -93,15 +93,29 @@
     </nav>
 
     <main>
-      <div class="wrapper gallery">
-        <img
-          class=""
-          src="/assets/img/employee-healthcare-campaign/healthcare-mockup.webp"
-          alt=""
-          loading="eager"
-          fetchpriority="high"
-        />
-        <section class="gallery__description todo">
+      <div class="wrapper">
+        <picture class="gallery animate-on-scroll">
+          <source
+            media="(max-width: 599px)"
+            srcset="
+              /assets/img/employee-healthcare-campaign/employee-healthcare-campaign_mobile_4x5.webp
+            "
+            type="image/webp" />
+          <source
+            media="(min-width: 600px)"
+            srcset="
+              /assets/img/employee-healthcare-campaign/employee-healthcare-campaign_desktop_2x1.webp
+            "
+            type="image/webp" />
+          <img
+            src="/assets/img/employee-healthcare-campaign/employee-healthcare-campaign_desktop_2x1.webp"
+            alt=""
+            width="1400"
+            height="700"
+            loading="eager"
+            fetchpriority="high"
+        /></picture>
+        <section class="gallery__description animate-on-scroll">
           <h2>Employee Healthcare Campaign</h2>
           <p>
             Volkswagen Group Retail Spain needed to communicate a new healthcare
@@ -125,13 +139,20 @@
           </p>
         </section>
         <!-- <img
-            class="todo"
+            class="animate-on-scroll"
             src="/assets/img/porsche-launch-brochure/_A739798.webp"
             alt=""
             loading="lazy"
             decoding="async"
           /> -->
-        <video autoplay muted loop playsinline preload="none" class="todo">
+        <video
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+          class="animate-on-scroll"
+        >
           <source
             src="/assets/img/employee-healthcare-campaign/desktop-animation.mp4"
             type="video/mp4"
@@ -141,7 +162,7 @@
     </main>
 
     <footer>
-      <div class="wrapper todo">
+      <div class="wrapper animate-on-scroll">
         <p>
           Copyright &#169; <span id="year"></span> Eduardo Carrasco. All rights
           reserved.
@@ -222,7 +243,6 @@
       </svg>
     </button>
 
-    <script src="/assets/js/app.js" defer></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
