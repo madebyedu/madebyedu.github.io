@@ -575,7 +575,7 @@
     }
   }
 
-  .footer__social {
+  .footer__icons {
     display: flex;
     gap: var(--space-s);
     /* justify-content: center; */
