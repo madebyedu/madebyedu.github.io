@@ -93,72 +93,115 @@
     </nav>
 
     <main>
-      <div class="wrapper">
-        <picture class="gallery" data-reveal="rise">
-          <source
-            media="(max-width: 599px)"
-            srcset="
-              /assets/img/employee-healthcare-campaign/employee-healthcare-campaign_mobile_4x5.webp
-            "
-            type="image/webp" />
-          <source
-            media="(min-width: 600px)"
-            srcset="
-              /assets/img/employee-healthcare-campaign/employee-healthcare-campaign_desktop_2x1.webp
-            "
-            type="image/webp" />
-          <img
-            src="/assets/img/employee-healthcare-campaign/employee-healthcare-campaign_desktop_2x1.webp"
-            alt=""
-            width="1400"
-            height="700"
-            loading="eager"
-            fetchpriority="high"
-        /></picture>
-        <section class="gallery__description" data-reveal="rise">
-          <h2>Employee Healthcare Campaign</h2>
+      <article class="wrapper case-study" aria-labelledby="case-title">
+        <header class="case-intro" data-reveal="rise">
+          <h1 id="case-title">Employee Healthcare Campaign</h1>
+          <dl class="case-facts">
+            <div>
+              <dt>Client</dt>
+              <dd>Volkswagen Group Retail Spain</dd>
+            </div>
+            <div>
+              <dt>My role</dt>
+              <dd>Visual direction and campaign design</dd>
+            </div>
+            <div>
+              <dt>Deliverables</dt>
+              <dd>Wall poster, desktop wallpaper and desk brochure</dd>
+            </div>
+          </dl>
+        </header>
+        <div class="case-opening">
+          <section class="case-copy" aria-labelledby="case-challenge" data-reveal="rise">
+            <h2 id="case-challenge">Challenge</h2>
+            <p>
+              Volkswagen Group Retail Spain needed to communicate a new healthcare benefit to
+              their employees and encourage sign-ups. Low awareness of the program meant workers
+              were missing out on a valuable perk, so the materials had to be clear, visible, and
+              trustworthy.
+            </p>
+          </section>
+          <figure class="case-media" data-reveal="rise">
+            <picture>
+              <source
+                media="(max-width: 599px)"
+                srcset="/assets/img/employee-healthcare-campaign/employee-healthcare-campaign_mobile_4x5.webp"
+                type="image/webp"
+               />
+              <source
+                media="(min-width: 600px)"
+                srcset="/assets/img/employee-healthcare-campaign/employee-healthcare-campaign_desktop_2x1.webp"
+                type="image/webp"
+               />
+              <img
+                src="/assets/img/employee-healthcare-campaign/employee-healthcare-campaign_desktop_2x1.webp"
+                alt="Print materials for the employee healthcare campaign."
+                width="1400"
+                height="700"
+                loading="eager"
+                fetchpriority="high"
+               />
+            </picture>
+            <figcaption data-caption-status="placeholder">
+              Placeholder — Explain how the printed materials make the benefit easy to find.
+            </figcaption>
+          </figure>
+        </div>
+        <section class="case-text" aria-labelledby="case-design-decisions" data-reveal="rise">
+          <h2 id="case-design-decisions">Design decisions</h2>
           <p>
-            Volkswagen Group Retail Spain needed to communicate a new healthcare
-            benefit to their employees and encourage sign-ups. Low awareness of
-            the program meant workers were missing out on a valuable perk, so
-            the materials had to be clear, visible, and trustworthy.
-          </p>
-          <p>
-            I handled the full visual direction of the campaign. I chose a color
-            palette that would build confidence and stand out against the
-            workplace environment, while staying consistent with Volkswagen's
-            brand by using the official typography and logo. I designed three
-            formats covering the employee's day: a wall poster for
-            high-visibility areas, a desktop wallpaper for computer screens, and
-            a desk brochure workers could read at their own pace.
-          </p>
-          <p>
-            The campaign drove strong participation, with a large share of
-            employees signing up for the healthcare service after the materials
-            were rolled out.
+            I handled the full visual direction of the campaign. I chose a color palette that
+            would build confidence and stand out against the workplace environment, while staying
+            consistent with Volkswagen's brand by using the official typography and logo. I
+            designed three formats covering the employee's day: a wall poster for high-visibility
+            areas, a desktop wallpaper for computer screens, and a desk brochure workers could
+            read at their own pace.
           </p>
         </section>
-        <!-- <img
-            data-reveal="rise"
-            src="/assets/img/porsche-launch-brochure/_A739798.webp"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          /> -->
-        <video
-          autoplay
-          muted
-          loop
-          playsinline
-          preload="none"
-          data-reveal="rise"
-        >
-          <source
-            src="/assets/img/employee-healthcare-campaign/desktop-animation.mp4"
-            type="video/mp4"
-          />
-        </video>
-      </div>
+        <div class="case-gallery">
+          <figure class="case-media" data-reveal="rise">
+            <video
+              aria-label="Print materials for the employee healthcare campaign."
+              controls
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="none"
+              width="1920"
+              height="1080"
+            >
+              <source
+                src="/assets/img/employee-healthcare-campaign/desktop-animation.mp4"
+                type="video/mp4"
+               />
+            </video>
+            <figcaption data-caption-status="placeholder">
+              Placeholder — Describe how the desktop animation presents the sign-up information.
+            </figcaption>
+          </figure>
+        </div>
+        <section class="case-text" aria-labelledby="case-outcome" data-reveal="rise">
+          <h2 id="case-outcome">Outcome</h2>
+          <p>
+            The campaign brought the healthcare information into three everyday workplace formats:
+            a wall poster, desktop wallpaper and a desk brochure. Together they gave employees
+            several ways to discover the benefit and read the sign-up information.
+          </p>
+        </section>
+        <nav class="case-close" aria-label="Project navigation" data-reveal="rise">
+          <div>
+            <h2>Next project</h2>
+            <a class="case-next" href="/projects/brand-identity-video.html">
+              CUPRA Brand Identity Video
+            </a>
+            <a class="case-selection" href="/#projects">Back to selected work</a>
+          </div>
+          <div class="case-close__links">
+            <p>Have a project in mind? <a href="/contact.html">Let’s talk.</a></p>
+          </div>
+        </nav>
+      </article>
     </main>
 
     <footer>

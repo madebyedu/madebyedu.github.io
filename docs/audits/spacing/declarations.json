@@ -1,0 +1,735 @@
+{
+  "source": "assets/css/style.css",
+  "source_sha256": "15331590e5827eb93d6aaa7edcd658bc3f4c0dab1c13ad7b4da85cca52a863bf",
+  "scope": "Spacing declarations and referenced tokens, including inactive/overridden rules. Not computed layout measurements.",
+  "declaration_count": 121,
+  "unique_expression_count": 67,
+  "declarations": [
+    {
+      "line": 46,
+      "context": "@layer global > :root",
+      "property": "--space-1",
+      "value": "0.25rem"
+    },
+    {
+      "line": 47,
+      "context": "@layer global > :root",
+      "property": "--space-2",
+      "value": "calc(var(--space-1) * 2)"
+    },
+    {
+      "line": 48,
+      "context": "@layer global > :root",
+      "property": "--space-3",
+      "value": "calc(var(--space-1) * 3)"
+    },
+    {
+      "line": 49,
+      "context": "@layer global > :root",
+      "property": "--space-4",
+      "value": "calc(var(--space-1) * 4)"
+    },
+    {
+      "line": 50,
+      "context": "@layer global > :root",
+      "property": "--space-6",
+      "value": "calc(var(--space-1) * 6)"
+    },
+    {
+      "line": 51,
+      "context": "@layer global > :root",
+      "property": "--space-8",
+      "value": "calc(var(--space-1) * 8)"
+    },
+    {
+      "line": 52,
+      "context": "@layer global > :root",
+      "property": "--space-12",
+      "value": "calc(var(--space-1) * 12)"
+    },
+    {
+      "line": 55,
+      "context": "@layer global > :root",
+      "property": "--page-gutter",
+      "value": "clamp(var(--space-8), 2.5vw, 5rem)"
+    },
+    {
+      "line": 56,
+      "context": "@layer global > :root",
+      "property": "--section-gap",
+      "value": "clamp(var(--space-8), 1.75rem + 0.5vw, 2.5rem)"
+    },
+    {
+      "line": 57,
+      "context": "@layer global > :root",
+      "property": "--intro-gap",
+      "value": "clamp(var(--space-4), 0.75rem + 1vw, var(--space-6))"
+    },
+    {
+      "line": 58,
+      "context": "@layer global > :root",
+      "property": "--copy-gap",
+      "value": "clamp(var(--space-2), 0.25rem + 1vw, var(--space-4))"
+    },
+    {
+      "line": 59,
+      "context": "@layer global > :root",
+      "property": "--grid-gap",
+      "value": "clamp(var(--space-4), 0.5rem + 1.5vw, var(--space-8))"
+    },
+    {
+      "line": 61,
+      "context": "@layer global > :root",
+      "property": "--section-heading-gap",
+      "value": "var(--intro-gap)"
+    },
+    {
+      "line": 62,
+      "context": "@layer global > :root",
+      "property": "--related-block-gap",
+      "value": "var(--intro-gap)"
+    },
+    {
+      "line": 63,
+      "context": "@layer global > :root",
+      "property": "--metadata-gap",
+      "value": "var(--space-1)"
+    },
+    {
+      "line": 64,
+      "context": "@layer global > :root",
+      "property": "--media-caption-gap",
+      "value": "var(--copy-gap)"
+    },
+    {
+      "line": 65,
+      "context": "@layer global > :root",
+      "property": "--divider-inset",
+      "value": "var(--intro-gap)"
+    },
+    {
+      "line": 66,
+      "context": "@layer global > :root",
+      "property": "--card-media-gap",
+      "value": "var(--space-4)"
+    },
+    {
+      "line": 67,
+      "context": "@layer global > :root",
+      "property": "--card-action-gap",
+      "value": "var(--space-4)"
+    },
+    {
+      "line": 70,
+      "context": "@layer global > :root",
+      "property": "--field-label-gap",
+      "value": "var(--space-2)"
+    },
+    {
+      "line": 71,
+      "context": "@layer global > :root",
+      "property": "--form-group-gap",
+      "value": "var(--intro-gap)"
+    },
+    {
+      "line": 72,
+      "context": "@layer global > :root",
+      "property": "--field-padding",
+      "value": "0.8rem"
+    },
+    {
+      "line": 73,
+      "context": "@layer global > :root",
+      "property": "--button-padding-block",
+      "value": "var(--space-3)"
+    },
+    {
+      "line": 74,
+      "context": "@layer global > :root",
+      "property": "--button-padding-inline",
+      "value": "1.875rem"
+    },
+    {
+      "line": 76,
+      "context": "@layer global > :root",
+      "property": "--page-inset-block",
+      "value": "var(--space-8)"
+    },
+    {
+      "line": 77,
+      "context": "@layer global > :root",
+      "property": "--header-content-gap",
+      "value": "var(--section-gap)"
+    },
+    {
+      "line": 78,
+      "context": "@layer global > :root",
+      "property": "--navigation-gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 79,
+      "context": "@layer global > :root",
+      "property": "--nav-link-padding-block",
+      "value": "var(--space-2)"
+    },
+    {
+      "line": 81,
+      "context": "@layer global > :root",
+      "property": "--header-text-inset",
+      "value": "var(--space-1)"
+    },
+    {
+      "line": 83,
+      "context": "@layer global > :root",
+      "property": "--footer-content-gap",
+      "value": "calc(2 * (var(--section-gap) + var(--header-text-inset)))"
+    },
+    {
+      "line": 139,
+      "context": "@layer global > *",
+      "property": "margin",
+      "value": "0"
+    },
+    {
+      "line": 140,
+      "context": "@layer global > *",
+      "property": "padding",
+      "value": "0"
+    },
+    {
+      "line": 167,
+      "context": "@layer global > body",
+      "property": "gap",
+      "value": "var(--header-content-gap)"
+    },
+    {
+      "line": 168,
+      "context": "@layer global > body",
+      "property": "padding-block",
+      "value": "var(--page-inset-block)"
+    },
+    {
+      "line": 233,
+      "context": "@layer global > .wrapper",
+      "property": "margin-inline",
+      "value": "auto"
+    },
+    {
+      "line": 242,
+      "context": "@layer global > .page-home",
+      "property": "--home-intro-gap",
+      "value": "clamp(var(--space-4), 1.5vw, 2.5rem)"
+    },
+    {
+      "line": 243,
+      "context": "@layer global > .page-home",
+      "property": "--home-feature-gap",
+      "value": "clamp(var(--space-8), 3vw, 5rem)"
+    },
+    {
+      "line": 249,
+      "context": "@layer global > @media (width >= calc(755 / 16 * 1rem)) > :root",
+      "property": "--header-text-inset",
+      "value": "var(--nav-link-padding-block)"
+    },
+    {
+      "line": 276,
+      "context": "@layer global > input, textarea",
+      "property": "padding",
+      "value": "var(--field-padding)"
+    },
+    {
+      "line": 281,
+      "context": "@layer global > input, textarea > &:focus",
+      "property": "outline-offset",
+      "value": "3px"
+    },
+    {
+      "line": 288,
+      "context": "@layer global > input:user-invalid, textarea:user-invalid",
+      "property": "outline-offset",
+      "value": "2px"
+    },
+    {
+      "line": 299,
+      "context": "@layer global > .btn-primary",
+      "property": "padding",
+      "value": "var(--button-padding-block) var(--button-padding-inline)"
+    },
+    {
+      "line": 341,
+      "context": "@layer global > footer",
+      "property": "padding-block-start",
+      "value": "max( 0rem, calc(var(--footer-content-gap) - var(--header-content-gap)) )"
+    },
+    {
+      "line": 360,
+      "context": "@layer components > a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible",
+      "property": "outline-offset",
+      "value": "4px"
+    },
+    {
+      "line": 371,
+      "context": "@layer components > .layout-spacing, .home-content",
+      "property": "gap",
+      "value": "var(--section-gap)"
+    },
+    {
+      "line": 376,
+      "context": "@layer components > .contactform__intro",
+      "property": "gap",
+      "value": "var(--intro-gap)"
+    },
+    {
+      "line": 406,
+      "context": "@layer components > .nav__list",
+      "property": "gap",
+      "value": "var(--navigation-gap)"
+    },
+    {
+      "line": 411,
+      "context": "@layer components > .nav__link",
+      "property": "padding",
+      "value": "var(--nav-link-padding-block) 0"
+    },
+    {
+      "line": 440,
+      "context": "@layer components > .hamburger",
+      "property": "padding",
+      "value": "0"
+    },
+    {
+      "line": 449,
+      "context": "@layer components > .hamburger__line",
+      "property": "margin",
+      "value": "2px 0"
+    },
+    {
+      "line": 467,
+      "context": "@layer components > .mobile-menu",
+      "property": "--navigation-gap",
+      "value": "var(--space-4)"
+    },
+    {
+      "line": 468,
+      "context": "@layer components > .mobile-menu",
+      "property": "--menu-inset-start",
+      "value": "calc(var(--space-12) * 2)"
+    },
+    {
+      "line": 469,
+      "context": "@layer components > .mobile-menu",
+      "property": "--menu-inset-end",
+      "value": "max( var(--space-12), 8dvh, env(safe-area-inset-bottom) )"
+    },
+    {
+      "line": 475,
+      "context": "@layer components > .mobile-menu",
+      "property": "inset",
+      "value": "0"
+    },
+    {
+      "line": 481,
+      "context": "@layer components > .mobile-menu",
+      "property": "padding",
+      "value": "var(--menu-inset-start) var(--page-gutter) var(--menu-inset-end)"
+    },
+    {
+      "line": 482,
+      "context": "@layer components > .mobile-menu",
+      "property": "padding-inline-end",
+      "value": "max( var(--page-gutter), env(safe-area-inset-right) )"
+    },
+    {
+      "line": 511,
+      "context": "@layer components > .mobile-menu__list",
+      "property": "margin-block-start",
+      "value": "auto"
+    },
+    {
+      "line": 512,
+      "context": "@layer components > .mobile-menu__list",
+      "property": "gap",
+      "value": "var(--navigation-gap)"
+    },
+    {
+      "line": 548,
+      "context": "@layer components > body.menu-open .hamburger",
+      "property": "inset-block-start",
+      "value": "max(var(--page-inset-block), env(safe-area-inset-top))"
+    },
+    {
+      "line": 549,
+      "context": "@layer components > body.menu-open .hamburger",
+      "property": "inset-inline-end",
+      "value": "max(var(--page-gutter), env(safe-area-inset-right))"
+    },
+    {
+      "line": 567,
+      "context": "@layer components > .home-hero",
+      "property": "gap",
+      "value": "var(--home-feature-gap)"
+    },
+    {
+      "line": 568,
+      "context": "@layer components > .home-hero",
+      "property": "padding-block-end",
+      "value": "var(--divider-inset)"
+    },
+    {
+      "line": 574,
+      "context": "@layer components > .home-intro",
+      "property": "gap",
+      "value": "var(--home-intro-gap)"
+    },
+    {
+      "line": 607,
+      "context": "@layer components > .projects",
+      "property": "row-gap",
+      "value": "var(--section-gap)"
+    },
+    {
+      "line": 608,
+      "context": "@layer components > .projects",
+      "property": "column-gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 627,
+      "context": "@layer components > .projects__description",
+      "property": "gap",
+      "value": "var(--metadata-gap)"
+    },
+    {
+      "line": 628,
+      "context": "@layer components > .projects__description",
+      "property": "margin-block-start",
+      "value": "var(--card-media-gap)"
+    },
+    {
+      "line": 638,
+      "context": "@layer components > .projects__description > a",
+      "property": "margin-block-start",
+      "value": "max( 0rem, calc(var(--card-action-gap) - var(--metadata-gap)) )"
+    },
+    {
+      "line": 651,
+      "context": "@layer components > .projects__description .project-link",
+      "property": "gap",
+      "value": "0.5em"
+    },
+    {
+      "line": 680,
+      "context": "@layer components > .featured-project",
+      "property": "--card-media-gap",
+      "value": "var(--intro-gap)"
+    },
+    {
+      "line": 682,
+      "context": "@layer components > .featured-project",
+      "property": "gap",
+      "value": "var(--card-media-gap)"
+    },
+    {
+      "line": 690,
+      "context": "@layer components > .featured-project .projects__description",
+      "property": "margin-block-start",
+      "value": "0"
+    },
+    {
+      "line": 722,
+      "context": "@layer components > .project-carousel",
+      "property": "--carousel-bleed",
+      "value": "var(--page-gutter)"
+    },
+    {
+      "line": 723,
+      "context": "@layer components > .project-carousel",
+      "property": "--focus-padding-start",
+      "value": "var(--space-2)"
+    },
+    {
+      "line": 724,
+      "context": "@layer components > .project-carousel",
+      "property": "--focus-padding-end",
+      "value": "var(--space-4)"
+    },
+    {
+      "line": 725,
+      "context": "@layer components > .project-carousel",
+      "property": "--carousel-label-gap",
+      "value": "var(--space-6)"
+    },
+    {
+      "line": 731,
+      "context": "@layer components > .project-carousel__label",
+      "property": "margin-block-end",
+      "value": "calc(var(--carousel-label-gap) - var(--focus-padding-start))"
+    },
+    {
+      "line": 740,
+      "context": "@layer components > .project-carousel__track",
+      "property": "gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 741,
+      "context": "@layer components > .project-carousel__track",
+      "property": "margin-inline-end",
+      "value": "calc(-1 * var(--carousel-bleed))"
+    },
+    {
+      "line": 742,
+      "context": "@layer components > .project-carousel__track",
+      "property": "padding-inline-end",
+      "value": "var(--carousel-bleed)"
+    },
+    {
+      "line": 743,
+      "context": "@layer components > .project-carousel__track",
+      "property": "padding-block",
+      "value": "var(--focus-padding-start) var(--focus-padding-end)"
+    },
+    {
+      "line": 745,
+      "context": "@layer components > .project-carousel__track",
+      "property": "margin-block-end",
+      "value": "calc(-1 * var(--focus-padding-end))"
+    },
+    {
+      "line": 783,
+      "context": "@layer components > .project-card > .project-link",
+      "property": "margin-block-start",
+      "value": "auto"
+    },
+    {
+      "line": 784,
+      "context": "@layer components > .project-card > .project-link",
+      "property": "padding-block-start",
+      "value": "max( 0rem, calc(var(--card-action-gap) - var(--metadata-gap)) )"
+    },
+    {
+      "line": 791,
+      "context": "@layer components > .project-card > a:focus-visible",
+      "property": "outline-offset",
+      "value": "-2px"
+    },
+    {
+      "line": 834,
+      "context": "@layer components > @media (width < calc(755 / 16 * 1rem)) > .featured-project > .projects__image-link, .project-card > .projects__image-link > &::before",
+      "property": "inset",
+      "value": "0"
+    },
+    {
+      "line": 848,
+      "context": "@layer components > @media (width < calc(755 / 16 * 1rem)) > .featured-project > .projects__image-link, .project-card > .projects__image-link > &:focus-visible::before",
+      "property": "outline-offset",
+      "value": "-2px"
+    },
+    {
+      "line": 861,
+      "context": "@layer components > .projects__image-link::after",
+      "property": "inset",
+      "value": "0"
+    },
+    {
+      "line": 882,
+      "context": "@layer components > .case-study",
+      "property": "gap",
+      "value": "var(--section-gap)"
+    },
+    {
+      "line": 888,
+      "context": "@layer components > .case-intro",
+      "property": "gap",
+      "value": "var(--intro-gap)"
+    },
+    {
+      "line": 897,
+      "context": "@layer components > .case-facts",
+      "property": "gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 902,
+      "context": "@layer components > .case-facts > > div",
+      "property": "gap",
+      "value": "var(--metadata-gap)"
+    },
+    {
+      "line": 915,
+      "context": "@layer components > .case-opening, .case-gallery",
+      "property": "gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 922,
+      "context": "@layer components > .case-copy",
+      "property": "gap",
+      "value": "var(--copy-gap)"
+    },
+    {
+      "line": 929,
+      "context": "@layer components > .case-text",
+      "property": "gap",
+      "value": "var(--copy-gap)"
+    },
+    {
+      "line": 936,
+      "context": "@layer components > .case-media",
+      "property": "gap",
+      "value": "var(--media-caption-gap)"
+    },
+    {
+      "line": 967,
+      "context": "@layer components > .case-close",
+      "property": "gap",
+      "value": "var(--related-block-gap)"
+    },
+    {
+      "line": 969,
+      "context": "@layer components > .case-close",
+      "property": "padding-block-start",
+      "value": "var(--divider-inset)"
+    },
+    {
+      "line": 972,
+      "context": "@layer components > .case-close > h2",
+      "property": "margin-block-end",
+      "value": "var(--copy-gap)"
+    },
+    {
+      "line": 989,
+      "context": "@layer components > .case-selection",
+      "property": "margin-block-start",
+      "value": "var(--related-block-gap)"
+    },
+    {
+      "line": 997,
+      "context": "@layer components > .case-close__links",
+      "property": "gap",
+      "value": "var(--related-block-gap)"
+    },
+    {
+      "line": 1011,
+      "context": "@layer components > @media (width >= calc(755 / 16 * 1rem)) > .case-study, .case-opening, .case-gallery, .case-close",
+      "property": "column-gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 1028,
+      "context": "@layer components > @media (width >= calc(755 / 16 * 1rem)) > .case-facts",
+      "property": "column-gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 1059,
+      "context": "@layer components > .about-page, .about-intro, .about-details, .about-areas",
+      "property": "row-gap",
+      "value": "var(--section-gap)"
+    },
+    {
+      "line": 1060,
+      "context": "@layer components > .about-page, .about-intro, .about-details, .about-areas",
+      "property": "column-gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 1073,
+      "context": "@layer components > .about-intro__copy",
+      "property": "gap",
+      "value": "var(--intro-gap)"
+    },
+    {
+      "line": 1077,
+      "context": "@layer components > .about-section",
+      "property": "gap",
+      "value": "var(--copy-gap)"
+    },
+    {
+      "line": 1081,
+      "context": "@layer components > .about-section > > h2",
+      "property": "margin-block-end",
+      "value": "max( 0rem, calc(var(--section-heading-gap) - var(--copy-gap)) )"
+    },
+    {
+      "line": 1090,
+      "context": "@layer components > .about-practice",
+      "property": "gap",
+      "value": "var(--section-heading-gap)"
+    },
+    {
+      "line": 1129,
+      "context": "@layer components > .about-experience",
+      "property": "gap",
+      "value": "var(--related-block-gap)"
+    },
+    {
+      "line": 1133,
+      "context": "@layer components > .about-experience > li",
+      "property": "gap",
+      "value": "var(--metadata-gap)"
+    },
+    {
+      "line": 1140,
+      "context": "@layer components > .about-area",
+      "property": "gap",
+      "value": "var(--copy-gap)"
+    },
+    {
+      "line": 1142,
+      "context": "@layer components > .about-area",
+      "property": "padding-block-start",
+      "value": "var(--divider-inset)"
+    },
+    {
+      "line": 1147,
+      "context": "@layer components > .about-area > ul",
+      "property": "gap",
+      "value": "var(--copy-gap)"
+    },
+    {
+      "line": 1148,
+      "context": "@layer components > .about-area > ul",
+      "property": "margin-block-start",
+      "value": "auto"
+    },
+    {
+      "line": 1150,
+      "context": "@layer components > .about-area > ul",
+      "property": "padding-block-start",
+      "value": "max( 0rem, calc(var(--related-block-gap) - var(--copy-gap)) )"
+    },
+    {
+      "line": 1185,
+      "context": "@layer components > @media (width >= calc(755 / 16 * 1rem)) > .about-areas",
+      "property": "row-gap",
+      "value": "var(--grid-gap)"
+    },
+    {
+      "line": 1218,
+      "context": "@layer components > .contact-form",
+      "property": "row-gap",
+      "value": "0"
+    },
+    {
+      "line": 1223,
+      "context": "@layer components > .contact-form > > .contact-form__field + .contact-form__field, > .btn-primary, > #form-message:not(:empty)",
+      "property": "margin-block-start",
+      "value": "var(--form-group-gap)"
+    },
+    {
+      "line": 1229,
+      "context": "@layer components > .contact-form__field",
+      "property": "gap",
+      "value": "var(--field-label-gap)"
+    },
+    {
+      "line": 1259,
+      "context": "@layer components > .page-links",
+      "property": "gap",
+      "value": "var(--navigation-gap)"
+    }
+  ]
+}

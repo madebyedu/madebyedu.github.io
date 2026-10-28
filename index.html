@@ -91,22 +91,22 @@
 
     <main>
       <div class="wrapper home-content">
-        <section class="home-intro" data-reveal="rise" aria-labelledby="home-title">
-          <h1 id="home-title">
-            Diseño gráfico, fotografía, edición de vídeo y motion graphics.
-          </h1>
-          <div class="home-intro__text">
-            <p>
-              Me formé en fotografía y aprendí diseño gráfico por mi cuenta.
-              Durante siete años trabajé en un departamento de marketing,
-              diseñando piezas impresas y digitales. Me gusta trabajar con guías
-              visuales y adaptar los diseños a lo que necesita cada formato.
-            </p>
-          </div>
-        </section>
+        <div class="home-hero">
+          <section class="home-intro" data-reveal="rise" aria-labelledby="home-title">
+            <h1 id="home-title">
+              Diseño gráfico, fotografía, edición de vídeo y motion graphics.
+            </h1>
+            <div class="home-intro__text">
+              <p>
+                Me formé en fotografía y aprendí diseño gráfico por mi cuenta.
+                Durante siete años trabajé en un departamento de marketing,
+                diseñando piezas impresas y digitales. Me gusta trabajar con guías
+                visuales y adaptar los diseños a lo que necesita cada formato.
+              </p>
+            </div>
+          </section>
 
-        <section id="projects" class="projects">
-          <article class="featured-project" data-reveal="rise">
+          <article id="projects" class="featured-project" data-reveal="rise">
             <a
               class="projects__image-link"
               href="/projects/porsche-launch-brochure.html"
@@ -135,6 +135,9 @@
               </a>
             </div>
           </article>
+        </div>
+
+        <section class="projects" aria-label="Más proyectos">
 
           <div class="project-carousel" data-project-carousel>
             <p class="project-carousel__label" data-reveal="rise">Más proyectos</p>
@@ -226,6 +229,36 @@
                   <a
                     class="project-link"
                     href="/projects/brand-identity-video.html"
+                  >
+                    <span class="project-link__icon" aria-hidden="true">▸</span>
+                    <span>Ver proyecto</span>
+                  </a>
+                </div>
+              </article>
+
+              <article class="project-card" data-reveal="rise">
+                <a
+                  class="projects__image-link"
+                  href="/projects/business-card-design.html"
+                  aria-labelledby="project-outletcars-title"
+                >
+                  <picture>
+                    <img
+                      src="/assets/img/thumbnail/business-card-design_desktop_2x1.webp"
+                      alt=""
+                      class="projects__image"
+                      width="1400"
+                      height="700"
+                      loading="lazy"
+                      decoding="async"
+                  /></picture>
+                </a>
+                <div class="projects__description">
+                  <h2 id="project-outletcars-title">OutletCars Business Card Design</h2>
+                  <p>Print Design</p>
+                  <a
+                    class="project-link"
+                    href="/projects/business-card-design.html"
                   >
                     <span class="project-link__icon" aria-hidden="true">▸</span>
                     <span>Ver proyecto</span>

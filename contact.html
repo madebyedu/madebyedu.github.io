@@ -91,7 +91,7 @@
     </nav>
 
     <main>
-      <div class="wrapper layout-spacing">
+      <div class="wrapper layout-spacing contact-layout">
         <section class="contactform__intro" data-reveal="rise">
           <h1>Let's chat.</h1>
           <p>
@@ -121,21 +121,21 @@
             name="from_name"
             value="Eduardo Carrasco Portfolio"
           />
-          <div class="contact-form__name">
+          <div class="contact-form__field contact-form__name">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required />
             <span class="contact-form__field-error" id="name-error"
               >Please enter your name.</span
             >
           </div>
-          <div class="contact-form__email">
+          <div class="contact-form__field contact-form__email">
             <label for="email">E-mail:</label>
             <input type="email" id="email" name="email" required />
             <span class="contact-form__field-error" id="email-error"
               >Please enter a valid e-mail address.</span
             >
           </div>
-          <div class="contact-form__message">
+          <div class="contact-form__field contact-form__message">
             <label for="message">Message:</label>
             <textarea name="message" id="message" required></textarea>
             <span class="contact-form__field-error" id="message-error"
@@ -145,7 +145,7 @@
           <button class="btn-primary" type="submit">Send Message</button>
           <p id="form-message" aria-live="polite"></p>
         </form>
-        <section>
+        <section class="contact-layout__legal">
           <p class="contact-form__legal" data-reveal="rise">
             Your data will only be used to respond to your enquiry.
           </p>
