@@ -5,16 +5,39 @@
 - La web está en esta carpeta (`01_live`): HTML, CSS y JavaScript nativos.
 - Las páginas principales son `index.html`, `about.html` y `contact.html`; las fichas están en `projects/`.
 - Los estilos compartidos están en `assets/css/style.css` y el comportamiento en `assets/js/app.js`.
-- Mantén el diseño propio, el sistema visual y las convenciones existentes. No introduzcas Tailwind CSS ni migres el sistema de estilos.
-- Usa Frontend Craft para implementar frontend e Impeccable cuando la tarea pida diseño o revisión visual, si están disponibles.
+- Mantén el diseño propio, el sistema visual y las convenciones existentes. No introduzcas Tailwind CSS ni nuevos frameworks, ni migres el sistema de estilos.
+
+## Skills por defecto
+
+- Aplica estas reglas a las tareas del portfolio salvo indicación expresa del usuario; no es necesario que nombre o invoque Frontend Craft o Impeccable en cada petición.
+- Utiliza Frontend Craft por defecto para programación frontend: HTML, CSS, JavaScript, estructura, componentes, funcionalidades, accesibilidad, rendimiento y mantenimiento.
+- Utiliza Impeccable por defecto para diseño visual, maquetación, distribución, tipografía, colores, espaciados, jerarquía, responsive y revisión estética.
+- Si la tarea combina programación y diseño, utiliza ambas de forma complementaria, repartiendo el trabajo y evitando comprobaciones duplicadas. No actives procedimientos completos innecesarios para cambios triviales.
+- Comprueba su disponibilidad, lee las instrucciones pertinentes y utiliza sus capacidades reales. Si alguna no está disponible o no puedes ejecutarla, indícalo y continúa con las capacidades disponibles, sin afirmar que la has ejecutado. Su uso sigue sujeto a las autorizaciones de seguridad de este archivo.
+
+## Alcance, impacto y coherencia
+
+- Antes de editar código, identifica de forma proporcionada los archivos, páginas, componentes y dependencias que pueden verse afectados. No hagas una auditoría completa de la web para un cambio trivial.
+- Interpreta los cambios de elementos compartidos como aplicables a todas sus apariciones equivalentes, salvo que el usuario limite su alcance. Busca sus usos en las páginas principales y en las fichas de `projects/` antes de modificar cabecera, navegación, footer, enlaces sociales, tipografías, colores, botones, estados interactivos, contenedores, espaciados, animaciones o comportamientos comunes.
+- Para cambios globales, actualiza todas las páginas pertinentes y modifica preferentemente la definición común: variables, reglas CSS o lógica compartida. Evita estilos duplicados y soluciones distintas para elementos equivalentes.
+- Para cambios específicos, limita la intervención a la página, sección o elemento solicitado y sus dependencias necesarias. Cambiar la estructura de Home no autoriza a reestructurar About o Contact ni a rediseñar toda la web.
+- Conserva las diferencias intencionadas y los elementos y comportamientos ajenos a la tarea; no propagues cambios a páginas que no correspondan.
+
+## Diseño responsive
+
+- Toda modificación visual debe contemplar escritorio y móvil, salvo que el usuario la limite expresamente a un dispositivo o tamaño. Respeta los breakpoints y convenciones responsive existentes.
+- Revisa tablets y tamaños intermedios cuando corresponda. Evita desbordamientos horizontales, superposiciones, espacios vacíos innecesarios y textos cortados; conserva la jerarquía visual entre tamaños.
+- Comprueba menús, botones, enlaces, formularios y navegación cuando puedan verse afectados. Respeta la accesibilidad y las preferencias de movimiento reducido.
 
 ## Forma de trabajar
 
 - Lee el estado de Git y los archivos relevantes antes de editar. Conserva los cambios pendientes que no pertenecen a tu tarea.
-- Resuelve detalles rutinarios con criterio propio. Pregunta por decisiones de producto o diseño que cambien sustancialmente el resultado.
+- Resuelve detalles rutinarios con criterio propio y las convenciones existentes. Realiza directamente los cambios pequeños, claros y reversibles cuando la petición autorice la modificación.
+- Para rediseños importantes, cambios de arquitectura, decisiones que afecten a varias funcionalidades o ambigüedades importantes de producto, diseño o alcance, presenta una propuesta breve y espera la aprobación antes de editar.
 - Verifica los flujos afectados en navegador cuando sea posible, incluyendo móvil, escritorio, teclado y consola. No envíes el formulario real de contacto durante una prueba sin autorización.
 - Usa las comprobaciones existentes y comprueba el diff. No presentes como ejecutadas pruebas que no has realizado.
-- Al entregar, explica brevemente qué cambió, cómo lo comprobaste y qué falta verificar.
+- Comprueba los archivos modificados y sus dependencias relevantes, y verifica la coherencia visual y funcional de los elementos compartidos en las páginas afectadas.
+- Al entregar, explica brevemente qué archivos cambiaste, qué páginas se vieron afectadas, qué pruebas realizaste y qué falta verificar. No presentes una revisión de código como prueba visual o funcional ejecutada.
 - No descargues ni ejecutes instaladores, binarios externos o scripts remotos sin autorización explícita del usuario.
 - Antes de modificar permisos o introducir dependencias nuevas, justifica la necesidad y obtén la aprobación explícita del usuario.
 - No incluyas contraseñas, tokens, claves API ni archivos de configuración privada en commits o publicaciones.
@@ -32,8 +55,9 @@
 ## Versiones
 
 - La rama de desarrollo es `dev`; `main` corresponde a la web publicada. Trabaja en `dev` salvo que el usuario pida otra rama. Integra cambios en `main` cuando el usuario solicite publicarlos.
-- Comprueba el diff antes de guardar una versión.
-- Crea commits con un propósito claro cuando guardar versiones forme parte de la tarea autorizada.
+- Comprueba el diff antes de guardar una versión y verifica que el commit incluya exclusivamente los cambios autorizados.
+- Crea commits con un propósito claro solo cuando el usuario haya solicitado esa operación. La solicitud de un commit no autoriza un push, que requiere su propia solicitud y las confirmaciones existentes.
+- Cuando el usuario solicite crear un commit, redacta automáticamente un mensaje profesional en inglés siguiendo Conventional Commits. Selecciona el tipo apropiado según los cambios reales y utiliza un resumen breve y descriptivo. No pidas al usuario que redacte el mensaje. Respeta todas las restricciones de seguridad y publicación de este archivo.
 - Realiza push, pull con integración, merge o publicación cuando formen parte de la petición. No los ejecutes únicamente por haber terminado una edición local.
 - Antes de realizar un push, un merge hacia `main`, una publicación, un borrado de ramas o cualquier operación potencialmente destructiva, solicita la confirmación explícita del usuario para esa operación.
 - Nunca utilices force push sin autorización específica del usuario.
