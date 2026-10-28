@@ -7,13 +7,18 @@ class PortfolioApp {
     this.mobileMenu = document.querySelector(".mobile-menu");
     this.body = document.body;
     this.mobileMenuLinks = document.querySelectorAll(".mobile-menu__list a");
+    this.focusTimer = null;
 
-    if (this.mobileMenu) {
+    if (this.mobileMenu && this.hamburger) {
       this.init();
     }
   }
 
   init() {
+    this.mobileMenu.inert = true;
+    this.mobileMenu.setAttribute("aria-hidden", "true");
+    this.hamburger.setAttribute("aria-controls", this.mobileMenu.id);
+    this.hamburger.setAttribute("aria-label", "Open mobile menu");
     this.bindEvents();
     this.handleKeyboardNavigation();
   }
@@ -68,16 +73,20 @@ class PortfolioApp {
     const scrollY = window.scrollY;
     this.hamburger.classList.add("active");
     this.hamburger.setAttribute("aria-expanded", "true");
+    this.hamburger.setAttribute("aria-label", "Close mobile menu");
+    this.mobileMenu.inert = false;
+    this.mobileMenu.setAttribute("aria-hidden", "false");
     this.mobileMenu.classList.add("active");
     this.body.classList.add("menu-open");
     this.body.style.top = `-${scrollY}px`;
 
-    setTimeout(() => {
+    clearTimeout(this.focusTimer);
+    this.focusTimer = setTimeout(() => {
       const firstMenuItem = this.mobileMenu.querySelector(
         ".mobile-menu__list a",
       );
       if (firstMenuItem) {
-        firstMenuItem.focus();
+        firstMenuItem.focus({ preventScroll: true });
       }
     }, 100);
   }
@@ -86,19 +95,28 @@ class PortfolioApp {
     const scrollY = this.body.style.top;
     this.hamburger.classList.remove("active");
     this.hamburger.setAttribute("aria-expanded", "false");
+    this.hamburger.setAttribute("aria-label", "Open mobile menu");
+    this.mobileMenu.inert = true;
+    this.mobileMenu.setAttribute("aria-hidden", "true");
     this.mobileMenu.classList.remove("active");
     this.body.classList.remove("menu-open");
     this.body.style.top = "";
-    window.scrollTo(0, parseInt(scrollY || "0") * -1);
+    window.scrollTo({ top: parseInt(scrollY || "0", 10) * -1, behavior: "instant" });
 
-    setTimeout(() => {
-      this.hamburger.focus();
+    clearTimeout(this.focusTimer);
+    this.focusTimer = setTimeout(() => {
+      const focusTarget = window.matchMedia(
+        "(width >= calc(755 / 16 * 1rem))",
+      ).matches
+        ? document.querySelector(".desktop-nav a")
+        : this.hamburger;
+      focusTarget?.focus({ preventScroll: true });
     }, 100);
   }
 
   handleResize() {
     if (
-      window.innerWidth >= 768 &&
+      window.matchMedia("(width >= calc(755 / 16 * 1rem))").matches &&
       this.mobileMenu.classList.contains("active")
     ) {
       this.closeMobileMenu();
@@ -106,12 +124,10 @@ class PortfolioApp {
   }
 
   handleKeyboardNavigation() {
-    this.mobileMenu.addEventListener("keydown", (e) => {
+    document.addEventListener("keydown", (e) => {
       if (!this.mobileMenu.classList.contains("active")) return;
 
-      const focusableElements = this.mobileMenu.querySelectorAll(
-        ".mobile-menu__list a",
-      );
+      const focusableElements = [this.hamburger, ...this.mobileMenuLinks];
       const firstFocusable = focusableElements[0];
       const lastFocusable = focusableElements[focusableElements.length - 1];
 
@@ -180,87 +196,152 @@ class PerformanceMonitor {
   }
 }
 
-// Scroll to Top Button functionality
-class ScrollToTopButton {
+// Shared entrance preset. Add data-reveal="rise" to a content block on any page.
+class RevealAnimator {
   constructor() {
-    this.button = document.getElementById("page-return");
-    this.scrollThreshold = 300;
-    this.init();
-  }
+    this.elements = [...document.querySelectorAll('[data-reveal="rise"]')];
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (reducedMotion.matches || !("IntersectionObserver" in window)) return;
 
-  init() {
-    if (!this.button) return;
+    this.observer = new IntersectionObserver((entries) => {
+      let index = 0;
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        this.reveal(entry.target, Math.min(index++, 3));
+      }
+    }, { rootMargin: "0px 0px 40px 0px" });
 
-    window.addEventListener("scroll", () => {
-      this.toggleButtonVisibility();
+    this.elements.forEach((element) => {
+      element.classList.add("reveal-pending");
+      this.observer.observe(element);
     });
 
-    this.button.addEventListener("click", () => {
-      this.scrollToTop();
+    // Keyboard navigation must never land in invisible content.
+    document.addEventListener("focusin", (event) => {
+      const element = event.target.closest('[data-reveal="rise"]');
+      if (element) {
+        this.reveal(element);
+        element.getAnimations().forEach((animation) => animation.finish());
+      }
+    });
+
+    reducedMotion.addEventListener("change", (event) => {
+      if (event.matches) this.elements.forEach((element) => this.reveal(element));
     });
   }
 
-  toggleButtonVisibility() {
-    const scrollPosition =
-      window.scrollY ??
-      window.pageYOffset ??
-      document.documentElement.scrollTop ??
-      document.body.scrollTop ??
-      0;
-
-    if (scrollPosition > this.scrollThreshold) {
-      this.button.classList.add("visible");
-    } else {
-      this.button.classList.remove("visible");
-    }
-  }
-
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  reveal(element, index = 0) {
+    if (!element.classList.contains("reveal-pending")) return;
+    element.style.setProperty("--reveal-delay", `calc(var(--reveal-step) * ${index})`);
+    element.classList.remove("reveal-pending");
+    element.classList.add("is-revealed");
+    this.observer.unobserve(element);
   }
 }
 
-// Scroll Animation functionality
-class ScrollAnimator {
-  constructor() {
-    this.init();
+// Native horizontal scrolling, keyboard navigation and mouse dragging.
+class ProjectCarousel {
+  constructor(root) {
+    this.root = root;
+    this.track = root.querySelector(".project-carousel__track");
+    this.cards = [...root.querySelectorAll(".project-card")];
+    this.drag = null;
+    this.suppressClick = false;
+
+    if (!this.track || !this.cards.length) return;
+    this.track.addEventListener("keydown", (event) => {
+      if (event.target !== this.track) return;
+      const destinations = {
+        ArrowLeft: this.track.scrollLeft - this.step,
+        ArrowRight: this.track.scrollLeft + this.step,
+        Home: 0,
+        End: this.track.scrollWidth,
+      };
+      if (!(event.key in destinations)) return;
+      event.preventDefault();
+      this.scrollTo(destinations[event.key]);
+    });
+    this.bindDragging();
+    this.resizeObserver = new ResizeObserver(() => this.updateBleed());
+    this.resizeObserver.observe(this.root);
+    window.addEventListener("resize", () => this.updateBleed());
+    this.updateBleed();
   }
 
-  init() {
-    const options = {
-      rootMargin: "0px 0px -50px 0px",
+  get step() {
+    const gap = parseFloat(getComputedStyle(this.track).columnGap) || 0;
+    return this.cards[0].getBoundingClientRect().width + gap;
+  }
+
+  scrollTo(left) {
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    this.track.scrollTo({ left, behavior: reducedMotion ? "instant" : "smooth" });
+  }
+
+  updateBleed() {
+    // Extend to the viewport edge, capped by the visual frame defined in CSS.
+    const bounds = this.root.getBoundingClientRect();
+    const viewportRight = document.documentElement.clientWidth;
+    const maximumWidth = parseFloat(getComputedStyle(this.root).maxWidth);
+    const frameRight = Number.isFinite(maximumWidth)
+      ? bounds.left + (bounds.width + maximumWidth) / 2
+      : viewportRight;
+    const bleed = Math.max(0, Math.min(viewportRight, frameRight) - bounds.right);
+    this.root.style.setProperty("--carousel-bleed", `${bleed}px`);
+  }
+
+  bindDragging() {
+    this.track.addEventListener("dragstart", (event) => event.preventDefault());
+    this.track.addEventListener("pointerdown", (event) => {
+      if (
+        event.pointerType !== "mouse" || event.button !== 0 ||
+        event.ctrlKey || event.metaKey || event.altKey || event.shiftKey
+      ) return;
+      this.suppressClick = false;
+      this.drag = {
+        pointerId: event.pointerId,
+        startX: event.clientX,
+        scrollLeft: this.track.scrollLeft,
+        moved: false,
+      };
+    });
+    this.track.addEventListener("pointermove", (event) => {
+      if (!this.drag || this.drag.pointerId !== event.pointerId) return;
+      const distance = event.clientX - this.drag.startX;
+      if (!this.drag.moved && Math.abs(distance) < 8) return;
+      if (!this.drag.moved) {
+        this.drag.moved = true;
+        this.track.classList.add("is-dragging");
+        this.track.setPointerCapture(event.pointerId);
+      }
+      event.preventDefault();
+      this.track.scrollLeft = this.drag.scrollLeft - distance;
+    });
+    const finish = (event) => {
+      if (!this.drag || this.drag.pointerId !== event.pointerId) return;
+      this.suppressClick = this.drag.moved;
+      this.drag = null;
+      this.track.classList.remove("is-dragging");
+      if (this.track.hasPointerCapture(event.pointerId)) {
+        this.track.releasePointerCapture(event.pointerId);
+      }
+      // The synthetic click following pointerup must not open a dragged card.
+      setTimeout(() => {
+        this.suppressClick = false;
+      }, 0);
     };
-
-    // We create a counter and a timer to group elements that appear together
-    let delayCounter = 0;
-    let delayTimer = null;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // 1. Assign the current delay to this specific element
-          const delay = delayCounter * 0.15; // 0.15s gap between items
-          entry.target.style.transitionDelay = `${delay}s`;
-
-          // 2. Trigger the animation
-          entry.target.classList.add("show");
-          observer.unobserve(entry.target);
-
-          // 3. Increase the counter for the next item in this batch
-          delayCounter++;
-
-          // 4. Reset the counter after 100 milliseconds.
-          // If you scroll further down later, the next item starts instantly at 0s delay.
-          clearTimeout(delayTimer);
-          delayTimer = setTimeout(() => {
-            delayCounter = 0;
-          }, 100);
-        }
-      });
-    }, options);
-
-    const hiddenElements = document.querySelectorAll(".animate-on-scroll");
-    hiddenElements.forEach((el) => observer.observe(el));
+    this.track.addEventListener("pointerup", finish);
+    this.track.addEventListener("pointercancel", finish);
+    this.track.addEventListener("pointerleave", (event) => {
+      if (this.drag && !this.drag.moved) finish(event);
+    });
+    this.track.addEventListener("click", (event) => {
+      if (!this.suppressClick) return;
+      event.preventDefault();
+      event.stopPropagation();
+    }, true);
   }
 }
 
@@ -291,18 +372,18 @@ if (form && formMessage) {
 
       if (data.success) {
         formMessage.textContent = "Message sent! I'll get back to you soon.";
-        formMessage.style.color = "var(--text)";
+        formMessage.style.color = "var(--color-success)";
         form.reset();
         setTimeout(() => {
           formMessage.textContent = "";
         }, 5000);
       } else {
         formMessage.textContent = "Something went wrong. Please try again.";
-        formMessage.style.color = "oklch(65% 0.18 25)";
+        formMessage.style.color = "var(--color-error)";
       }
     } catch (error) {
       formMessage.textContent = "Network error. Please check your connection.";
-      formMessage.style.color = "oklch(65% 0.18 25)";
+      formMessage.style.color = "var(--color-error)";
     }
   });
 }
@@ -311,8 +392,10 @@ if (form && formMessage) {
 document.addEventListener("DOMContentLoaded", () => {
   new PortfolioApp();
   new SmoothScroll();
-  new ScrollToTopButton();
-  new ScrollAnimator();
+  new RevealAnimator();
+  document.querySelectorAll("[data-project-carousel]").forEach((root) => {
+    new ProjectCarousel(root);
+  });
 
   if (
     window.location.hostname === "localhost" ||
@@ -331,6 +414,6 @@ if (typeof module !== "undefined" && module.exports) {
     PortfolioApp,
     SmoothScroll,
     PerformanceMonitor,
-    ScrollToTopButton,
+    ProjectCarousel,
   };
 }
