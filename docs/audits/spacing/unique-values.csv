@@ -1,0 +1,68 @@
+﻿expression,properties,css_lines,contexts
+-2px,outline-offset,791 | 848,"L791 @layer components > .project-card > a:focus-visible / outline-offset | L848 @layer components > @media (width < calc(755 / 16 * 1rem)) > .featured-project > .projects__image-link, .project-card > .projects__image-link > &:focus-visible::before / outline-offset"
+0,inset | margin | margin-block-start | padding | row-gap,139 | 140 | 440 | 475 | 690 | 834 | 861 | 1218,"L139 @layer global > * / margin | L140 @layer global > * / padding | L440 @layer components > .hamburger / padding | L475 @layer components > .mobile-menu / inset | L690 @layer components > .featured-project .projects__description / margin-block-start | L834 @layer components > @media (width < calc(755 / 16 * 1rem)) > .featured-project > .projects__image-link, .project-card > .projects__image-link > &::before / inset | L861 @layer components > .projects__image-link::after / inset | L1218 @layer components > .contact-form / row-gap"
+0.25rem,--space-1,46,L46 @layer global > :root / --space-1
+0.5em,gap,651,L651 @layer components > .projects__description .project-link / gap
+0.8rem,--field-padding,72,L72 @layer global > :root / --field-padding
+1.875rem,--button-padding-inline,74,L74 @layer global > :root / --button-padding-inline
+2px,outline-offset,288,"L288 @layer global > input:user-invalid, textarea:user-invalid / outline-offset"
+2px 0,margin,449,L449 @layer components > .hamburger__line / margin
+3px,outline-offset,281,"L281 @layer global > input, textarea > &:focus / outline-offset"
+4px,outline-offset,360,"L360 @layer components > a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible / outline-offset"
+auto,margin-block-start | margin-inline,233 | 511 | 783 | 1148,L233 @layer global > .wrapper / margin-inline | L511 @layer components > .mobile-menu__list / margin-block-start | L783 @layer components > .project-card > .project-link / margin-block-start | L1148 @layer components > .about-area > ul / margin-block-start
+calc(-1 * var(--carousel-bleed)),margin-inline-end,741,L741 @layer components > .project-carousel__track / margin-inline-end
+calc(-1 * var(--focus-padding-end)),margin-block-end,745,L745 @layer components > .project-carousel__track / margin-block-end
+calc(2 * (var(--section-gap) + var(--header-text-inset))),--footer-content-gap,83,L83 @layer global > :root / --footer-content-gap
+calc(var(--carousel-label-gap) - var(--focus-padding-start)),margin-block-end,731,L731 @layer components > .project-carousel__label / margin-block-end
+calc(var(--space-1) * 12),--space-12,52,L52 @layer global > :root / --space-12
+calc(var(--space-1) * 2),--space-2,47,L47 @layer global > :root / --space-2
+calc(var(--space-1) * 3),--space-3,48,L48 @layer global > :root / --space-3
+calc(var(--space-1) * 4),--space-4,49,L49 @layer global > :root / --space-4
+calc(var(--space-1) * 6),--space-6,50,L50 @layer global > :root / --space-6
+calc(var(--space-1) * 8),--space-8,51,L51 @layer global > :root / --space-8
+calc(var(--space-12) * 2),--menu-inset-start,468,L468 @layer components > .mobile-menu / --menu-inset-start
+"clamp(var(--space-2), 0.25rem + 1vw, var(--space-4))",--copy-gap,58,L58 @layer global > :root / --copy-gap
+"clamp(var(--space-4), 0.5rem + 1.5vw, var(--space-8))",--grid-gap,59,L59 @layer global > :root / --grid-gap
+"clamp(var(--space-4), 0.75rem + 1vw, var(--space-6))",--intro-gap,57,L57 @layer global > :root / --intro-gap
+"clamp(var(--space-4), 1.5vw, 2.5rem)",--home-intro-gap,242,L242 @layer global > .page-home / --home-intro-gap
+"clamp(var(--space-8), 1.75rem + 0.5vw, 2.5rem)",--section-gap,56,L56 @layer global > :root / --section-gap
+"clamp(var(--space-8), 2.5vw, 5rem)",--page-gutter,55,L55 @layer global > :root / --page-gutter
+"clamp(var(--space-8), 3vw, 5rem)",--home-feature-gap,243,L243 @layer global > .page-home / --home-feature-gap
+"max( 0rem, calc(var(--card-action-gap) - var(--metadata-gap)) )",margin-block-start | padding-block-start,638 | 784,L638 @layer components > .projects__description > a / margin-block-start | L784 @layer components > .project-card > .project-link / padding-block-start
+"max( 0rem, calc(var(--footer-content-gap) - var(--header-content-gap)) )",padding-block-start,341,L341 @layer global > footer / padding-block-start
+"max( 0rem, calc(var(--related-block-gap) - var(--copy-gap)) )",padding-block-start,1150,L1150 @layer components > .about-area > ul / padding-block-start
+"max( 0rem, calc(var(--section-heading-gap) - var(--copy-gap)) )",margin-block-end,1081,L1081 @layer components > .about-section > > h2 / margin-block-end
+"max( var(--page-gutter), env(safe-area-inset-right) )",inset-inline-end | padding-inline-end,482 | 549,L482 @layer components > .mobile-menu / padding-inline-end | L549 @layer components > body.menu-open .hamburger / inset-inline-end
+"max( var(--space-12), 8dvh, env(safe-area-inset-bottom) )",--menu-inset-end,469,L469 @layer components > .mobile-menu / --menu-inset-end
+"max(var(--page-inset-block), env(safe-area-inset-top))",inset-block-start,548,L548 @layer components > body.menu-open .hamburger / inset-block-start
+var(--button-padding-block) var(--button-padding-inline),padding,299,L299 @layer global > .btn-primary / padding
+var(--card-media-gap),gap | margin-block-start,628 | 682,L628 @layer components > .projects__description / margin-block-start | L682 @layer components > .featured-project / gap
+var(--carousel-bleed),padding-inline-end,742,L742 @layer components > .project-carousel__track / padding-inline-end
+var(--copy-gap),--media-caption-gap | gap | margin-block-end,64 | 922 | 929 | 972 | 1077 | 1140 | 1147,L64 @layer global > :root / --media-caption-gap | L922 @layer components > .case-copy / gap | L929 @layer components > .case-text / gap | L972 @layer components > .case-close > h2 / margin-block-end | L1077 @layer components > .about-section / gap | L1140 @layer components > .about-area / gap | L1147 @layer components > .about-area > ul / gap
+var(--divider-inset),padding-block-end | padding-block-start,568 | 969 | 1142,L568 @layer components > .home-hero / padding-block-end | L969 @layer components > .case-close / padding-block-start | L1142 @layer components > .about-area / padding-block-start
+var(--field-label-gap),gap,1229,L1229 @layer components > .contact-form__field / gap
+var(--field-padding),padding,276,"L276 @layer global > input, textarea / padding"
+var(--focus-padding-start) var(--focus-padding-end),padding-block,743,L743 @layer components > .project-carousel__track / padding-block
+var(--form-group-gap),margin-block-start,1223,"L1223 @layer components > .contact-form > > .contact-form__field + .contact-form__field, > .btn-primary, > #form-message:not(:empty) / margin-block-start"
+var(--grid-gap),--navigation-gap | column-gap | gap | row-gap,78 | 608 | 740 | 897 | 915 | 1011 | 1028 | 1060 | 1185,"L78 @layer global > :root / --navigation-gap | L608 @layer components > .projects / column-gap | L740 @layer components > .project-carousel__track / gap | L897 @layer components > .case-facts / gap | L915 @layer components > .case-opening, .case-gallery / gap | L1011 @layer components > @media (width >= calc(755 / 16 * 1rem)) > .case-study, .case-opening, .case-gallery, .case-close / column-gap | L1028 @layer components > @media (width >= calc(755 / 16 * 1rem)) > .case-facts / column-gap | L1060 @layer components > .about-page, .about-intro, .about-details, .about-areas / column-gap | L1185 @layer components > @media (width >= calc(755 / 16 * 1rem)) > .about-areas / row-gap"
+var(--header-content-gap),gap,167,L167 @layer global > body / gap
+var(--home-feature-gap),gap,567,L567 @layer components > .home-hero / gap
+var(--home-intro-gap),gap,574,L574 @layer components > .home-intro / gap
+var(--intro-gap),--card-media-gap | --divider-inset | --form-group-gap | --related-block-gap | --section-heading-gap | gap,61 | 62 | 65 | 71 | 376 | 680 | 888 | 1073,L61 @layer global > :root / --section-heading-gap | L62 @layer global > :root / --related-block-gap | L65 @layer global > :root / --divider-inset | L71 @layer global > :root / --form-group-gap | L376 @layer components > .contactform__intro / gap | L680 @layer components > .featured-project / --card-media-gap | L888 @layer components > .case-intro / gap | L1073 @layer components > .about-intro__copy / gap
+var(--media-caption-gap),gap,936,L936 @layer components > .case-media / gap
+var(--menu-inset-start) var(--page-gutter) var(--menu-inset-end),padding,481,L481 @layer components > .mobile-menu / padding
+var(--metadata-gap),gap,627 | 902 | 1133,L627 @layer components > .projects__description / gap | L902 @layer components > .case-facts > > div / gap | L1133 @layer components > .about-experience > li / gap
+var(--nav-link-padding-block),--header-text-inset,249,L249 @layer global > @media (width >= calc(755 / 16 * 1rem)) > :root / --header-text-inset
+var(--nav-link-padding-block) 0,padding,411,L411 @layer components > .nav__link / padding
+var(--navigation-gap),gap,406 | 512 | 1259,L406 @layer components > .nav__list / gap | L512 @layer components > .mobile-menu__list / gap | L1259 @layer components > .page-links / gap
+var(--page-gutter),--carousel-bleed,722,L722 @layer components > .project-carousel / --carousel-bleed
+var(--page-inset-block),padding-block,168,L168 @layer global > body / padding-block
+var(--related-block-gap),gap | margin-block-start,967 | 989 | 997 | 1129,L967 @layer components > .case-close / gap | L989 @layer components > .case-selection / margin-block-start | L997 @layer components > .case-close__links / gap | L1129 @layer components > .about-experience / gap
+var(--section-gap),--header-content-gap | gap | row-gap,77 | 371 | 607 | 882 | 1059,"L77 @layer global > :root / --header-content-gap | L371 @layer components > .layout-spacing, .home-content / gap | L607 @layer components > .projects / row-gap | L882 @layer components > .case-study / gap | L1059 @layer components > .about-page, .about-intro, .about-details, .about-areas / row-gap"
+var(--section-heading-gap),gap,1090,L1090 @layer components > .about-practice / gap
+var(--space-1),--header-text-inset | --metadata-gap,63 | 81,L63 @layer global > :root / --metadata-gap | L81 @layer global > :root / --header-text-inset
+var(--space-2),--field-label-gap | --focus-padding-start | --nav-link-padding-block,70 | 79 | 723,L70 @layer global > :root / --field-label-gap | L79 @layer global > :root / --nav-link-padding-block | L723 @layer components > .project-carousel / --focus-padding-start
+var(--space-3),--button-padding-block,73,L73 @layer global > :root / --button-padding-block
+var(--space-4),--card-action-gap | --card-media-gap | --focus-padding-end | --navigation-gap,66 | 67 | 467 | 724,L66 @layer global > :root / --card-media-gap | L67 @layer global > :root / --card-action-gap | L467 @layer components > .mobile-menu / --navigation-gap | L724 @layer components > .project-carousel / --focus-padding-end
+var(--space-6),--carousel-label-gap,725,L725 @layer components > .project-carousel / --carousel-label-gap
+var(--space-8),--page-inset-block,76,L76 @layer global > :root / --page-inset-block

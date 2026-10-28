@@ -41,30 +41,57 @@
 
     --ch-width-body: 65ch;
 
-    /* Espaciado: unidad fija y escala responsive que duplica cada paso.
-       Los detalles usan múltiplos de --space-unit para conservar su medida
-       cuando la escala responsive crece a partir de 600px. */
-    --space-unit: 0.25rem;
-    --space-xs: calc(var(--space-unit) * 2);
-    --space-s: calc(var(--space-xs) * 2);
-    --space-m: calc(var(--space-s) * 2);
+    /* Escala fija de 4px: los pasos no cambian en los breakpoints.
+       Los componentes consumen las relaciones semánticas siguientes. */
+    --space-1: 0.25rem;
+    --space-2: calc(var(--space-1) * 2);
+    --space-3: calc(var(--space-1) * 3);
+    --space-4: calc(var(--space-1) * 4);
+    --space-6: calc(var(--space-1) * 6);
+    --space-8: calc(var(--space-1) * 8);
+    --space-12: calc(var(--space-1) * 12);
 
-    /* Margen lateral común a todas las páginas. */
-    --page-gutter: 32px;
-    --button-padding-block: 0.75rem;
+    /* Ritmo fluido por anchura; la altura se reserva para funciones de viewport. */
+    --page-gutter: clamp(var(--space-8), 2.5vw, 5rem);
+    --section-gap: clamp(var(--space-8), 1.75rem + 0.5vw, 2.5rem);
+    --intro-gap: clamp(var(--space-4), 0.75rem + 1vw, var(--space-6));
+    --copy-gap: clamp(var(--space-2), 0.25rem + 1vw, var(--space-4));
+    --grid-gap: clamp(var(--space-4), 0.5rem + 1.5vw, var(--space-8));
+
+    --section-heading-gap: var(--intro-gap);
+    --related-block-gap: var(--intro-gap);
+    --metadata-gap: var(--space-1);
+    --media-caption-gap: var(--copy-gap);
+    --divider-inset: var(--intro-gap);
+    --card-media-gap: var(--space-4);
+    --card-action-gap: var(--space-4);
+
+    /* Dimensiones ópticas de controles conservadas; ritmo de campos independiente. */
+    --field-label-gap: var(--space-2);
+    --form-group-gap: var(--intro-gap);
+    --field-padding: 0.8rem;
+    --button-padding-block: var(--space-3);
+    --button-padding-inline: 1.875rem;
+
+    --page-inset-block: var(--space-8);
+    --header-content-gap: var(--section-gap);
+    --navigation-gap: var(--grid-gap);
+    --nav-link-padding-block: var(--space-2);
     /* Diferencia entre el borde inferior de la cabecera y el texto del nombre. */
-    --header-text-inset: 0.25rem;
+    --header-text-inset: var(--space-1);
+    /* Distancia mínima completa: incluye el gap que ya aporta body. */
+    --footer-content-gap: calc(2 * (var(--section-gap) + var(--header-text-inset)));
 
     /* Retícula editorial común a About y a las fichas de proyecto. */
     --layout-left-share: 0.55;
     --layout-columns:
-      minmax(0, calc((100% - var(--space-m)) * var(--layout-left-share)))
+      minmax(0, calc((100% - var(--grid-gap)) * var(--layout-left-share)))
       minmax(0, 1fr);
     --layout-right-axis: calc(
-      (100% - var(--space-m)) * var(--layout-left-share) + var(--space-m)
+      (100% - var(--grid-gap)) * var(--layout-left-share) + var(--grid-gap)
     );
     --layout-three-columns:
-      repeat(2, minmax(0, calc(var(--layout-right-axis) / 2 - var(--space-m))))
+      repeat(2, minmax(0, calc(var(--layout-right-axis) / 2 - var(--grid-gap))))
       minmax(0, 1fr);
 
     /* Colores */
@@ -99,10 +126,6 @@
 
     /* Bordes */
     --border-radius-in: 2px;
-
-    @media (width >= calc(600 / 16 * 1rem)) {
-      --space-xs: calc(var(--space-unit) * 4);
-    }
   }
 
   /* 2. Reset y documento */
@@ -141,8 +164,8 @@
     min-height: 100dvh;
     grid-template-rows: auto 1fr auto;
     align-content: start;
-    gap: var(--space-m);
-    padding-block: var(--space-m);
+    gap: var(--header-content-gap);
+    padding-block: var(--page-inset-block);
     overflow-x: clip;
   }
 
@@ -214,12 +237,16 @@
     align-self: start;
   }
 
-  /* Márgenes y ritmo vertical compartidos por todas las páginas en escritorio. */
+  /* Home conserva más aire alrededor del titular grande y del destacado. */
+  .page-home {
+    --home-intro-gap: clamp(var(--space-4), 1.5vw, 2.5rem);
+    --home-feature-gap: clamp(var(--space-8), 3vw, 5rem);
+  }
+
+  /* La navegación cambia de estructura; la escala de espaciado permanece fluida. */
   @media (width >= calc(755 / 16 * 1rem)) {
     :root {
-      --page-gutter: clamp(2rem, 2.5vw, 5rem);
-      --header-text-inset: calc(var(--space-unit) * 2);
-      --space-m: clamp(1.5rem, 3dvh, 3rem);
+      --header-text-inset: var(--nav-link-padding-block);
     }
 
     /* La portada crece con el ancho y conserva la jerarquía entre proyectos. */
@@ -246,7 +273,7 @@
     background-color: var(--bg);
     border: 1px solid var(--border-control);
     color: var(--text);
-    padding: 0.8rem;
+    padding: var(--field-padding);
     border-radius: var(--border-radius-in);
 
     &:focus {
@@ -269,7 +296,7 @@
 
   .btn-primary {
     display: block;
-    padding: var(--button-padding-block) 1.875rem;
+    padding: var(--button-padding-block) var(--button-padding-inline);
     line-height: var(--line-height-body);
     background-color: var(--accent);
     color: var(--bg-dark);
@@ -300,10 +327,6 @@
   }
 
   form {
-    .btn-primary {
-      margin-block-start: var(--space-xs);
-    }
-
     @media (width >= calc(600 / 16 * 1rem)) {
       .btn-primary {
         width: fit-content;
@@ -314,8 +337,11 @@
   /* 6. Estructura del footer */
   footer {
     color: var(--text-muted);
-    /* El espacio visible antes del footer duplica el de cabecera a contenido. */
-    padding-block-start: calc(var(--space-m) + 2 * var(--header-text-inset));
+    /* Descuenta el gap de body para que una sola variable controle el total. */
+    padding-block-start: max(
+      0rem,
+      calc(var(--footer-content-gap) - var(--header-content-gap))
+    );
   }
 }
 
@@ -342,12 +368,12 @@
   .layout-spacing,
   .home-content {
     display: grid;
-    gap: var(--space-m);
+    gap: var(--section-gap);
   }
 
   .contactform__intro {
     display: grid;
-    gap: calc(var(--space-unit) * 2);
+    gap: var(--intro-gap);
   }
 
   .contact-form__legal {
@@ -377,12 +403,12 @@
 
   .nav__list {
     display: flex;
-    gap: var(--space-s);
+    gap: var(--navigation-gap);
     align-items: center;
   }
 
   .nav__link {
-    padding: calc(var(--space-unit) * 2) 0;
+    padding: var(--nav-link-padding-block) 0;
     display: inline-block;
     font-weight: var(--font-weight-regular);
     line-height: var(--line-height-body);
@@ -438,6 +464,13 @@
   }
 
   .mobile-menu {
+    --navigation-gap: var(--space-4);
+    --menu-inset-start: calc(var(--space-12) * 2);
+    --menu-inset-end: max(
+      var(--space-12),
+      8dvh,
+      env(safe-area-inset-bottom)
+    );
     position: fixed;
     inset: 0;
     background-color: var(--bg-dark);
@@ -445,16 +478,10 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    padding: calc(var(--space-unit) * 24) calc(var(--space-unit) * 8)
-      calc(var(--space-unit) * 12);
+    padding: var(--menu-inset-start) var(--page-gutter) var(--menu-inset-end);
     padding-inline-end: max(
-      calc(var(--space-unit) * 8),
+      var(--page-gutter),
       env(safe-area-inset-right)
-    );
-    padding-block-end: max(
-      calc(var(--space-unit) * 12),
-      8dvh,
-      env(safe-area-inset-bottom)
     );
     overflow-y: auto;
     opacity: 0;
@@ -482,14 +509,14 @@
     flex-shrink: 0;
     max-width: 100%;
     margin-block-start: auto;
-    gap: calc(var(--space-unit) * 4);
+    gap: var(--navigation-gap);
     text-align: end;
   }
 
   /* Animamos cada fila para conservar los estados hover y foco de sus enlaces. */
   .mobile-menu__list > li {
     opacity: 0;
-    transform: translateY(calc(var(--space-unit) * 6));
+    transform: translateY(var(--space-6));
     transition:
       opacity var(--duration-interaction) ease,
       transform calc(var(--duration-interaction) * 2) cubic-bezier(0.16, 1, 0.3, 1);
@@ -518,8 +545,8 @@
   /* La X permanece accesible aunque se abra el menú con la página desplazada. */
   body.menu-open .hamburger {
     position: fixed;
-    inset-block-start: max(var(--space-m), env(safe-area-inset-top));
-    inset-inline-end: max(calc(var(--space-unit) * 8), env(safe-area-inset-right));
+    inset-block-start: max(var(--page-inset-block), env(safe-area-inset-top));
+    inset-inline-end: max(var(--page-gutter), env(safe-area-inset-right));
   }
 
 
@@ -537,14 +564,14 @@
   .home-hero {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--space-m);
-    padding-block-end: var(--space-m);
+    gap: var(--home-feature-gap);
+    padding-block-end: var(--divider-inset);
     border-block-end: 1px solid var(--border-control);
   }
 
   .home-intro {
     display: grid;
-    gap: var(--space-s);
+    gap: var(--home-intro-gap);
   }
 
   .home-intro h1 {
@@ -565,12 +592,7 @@
   @media (width >= calc(755 / 16 * 1rem)) {
     .home-hero {
       max-width: var(--featured-image-max-width);
-      gap: clamp(2.5rem, 3vw, 5rem);
       align-items: start;
-    }
-
-    .home-intro {
-      gap: clamp(1.5rem, 1.5vw, 2.5rem);
     }
 
     .home-intro__text {
@@ -582,8 +604,8 @@
   .projects {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--space-m);
-    column-gap: var(--space-s);
+    row-gap: var(--section-gap);
+    column-gap: var(--grid-gap);
 
     picture {
       overflow: hidden;
@@ -602,8 +624,8 @@
   .projects__description {
     display: grid;
     align-content: start;
-    gap: var(--space-unit);
-    margin-block-start: calc(var(--space-unit) * 4);
+    gap: var(--metadata-gap);
+    margin-block-start: var(--card-media-gap);
 
     p {
       color: var(--text-muted);
@@ -613,7 +635,10 @@
 
     a {
       width: fit-content;
-      margin-block-start: calc(var(--space-unit) * 3);
+      margin-block-start: max(
+        0rem,
+        calc(var(--card-action-gap) - var(--metadata-gap))
+      );
       font-size: var(--font-size-body);
       font-weight: var(--font-weight-regular);
       line-height: var(--line-height-body);
@@ -652,8 +677,9 @@
 
   /* Proyecto destacado */
   .featured-project {
+    --card-media-gap: var(--intro-gap);
     display: grid;
-    gap: var(--space-s);
+    gap: var(--card-media-gap);
   }
 
   .featured-project picture {
@@ -693,27 +719,30 @@
   /* El carrusel sale del margen derecho. El marco base se conserva en móvil;
      escritorio usa todo el viewport y mantiene un margen final de lectura. */
   .project-carousel {
-    --carousel-bleed: 32px;
+    --carousel-bleed: var(--page-gutter);
+    --focus-padding-start: var(--space-2);
+    --focus-padding-end: var(--space-4);
+    --carousel-label-gap: var(--space-6);
     max-width: 100rem;
     min-width: 0;
   }
 
   .project-carousel__label {
-    margin-block-end: calc(var(--space-unit) * 4);
+    margin-block-end: calc(var(--carousel-label-gap) - var(--focus-padding-start));
   }
 
   .project-carousel__track {
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: calc(
-      (100% + var(--carousel-bleed) - var(--space-s)) / 1.5
+      (100% + var(--carousel-bleed) - var(--grid-gap)) / 1.5
     );
-    gap: var(--space-s);
+    gap: var(--grid-gap);
     margin-inline-end: calc(-1 * var(--carousel-bleed));
     padding-inline-end: var(--carousel-bleed);
-    padding-block: calc(var(--space-unit) * 2) calc(var(--space-unit) * 4);
+    padding-block: var(--focus-padding-start) var(--focus-padding-end);
     /* Conserva espacio para el foco sin sumarlo a la separación con el footer. */
-    margin-block-end: calc(var(--space-unit) * -4);
+    margin-block-end: calc(-1 * var(--focus-padding-end));
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -752,7 +781,10 @@
 
     .project-link {
       margin-block-start: auto;
-      padding-block-start: calc(var(--space-unit) * 3);
+      padding-block-start: max(
+        0rem,
+        calc(var(--card-action-gap) - var(--metadata-gap))
+      );
     }
 
     a:focus-visible {
@@ -767,7 +799,7 @@
 
     .project-carousel__track {
       grid-auto-columns: min(
-        calc((100% + var(--carousel-bleed) - 2 * var(--space-s)) / 2.5),
+        calc((100% + var(--carousel-bleed) - 2 * var(--grid-gap)) / 2.5),
         var(--project-card-max-width)
       );
     }
@@ -778,7 +810,7 @@
   @media (width >= 128rem) {
     .project-carousel__track {
       grid-auto-columns: min(
-        calc((100% + var(--carousel-bleed) - 3 * var(--space-s)) / 3.5),
+        calc((100% + var(--carousel-bleed) - 3 * var(--grid-gap)) / 3.5),
         var(--project-card-max-width)
       );
     }
@@ -847,15 +879,13 @@
   /* 11. Casos de proyecto: estructura editorial compartida. */
   .case-study {
     display: grid;
-    gap: var(--space-m);
+    gap: var(--section-gap);
     min-width: 0;
   }
 
-  .case-intro,
-  .case-copy,
-  .case-close {
+  .case-intro {
     display: grid;
-    gap: var(--space-s);
+    gap: var(--intro-gap);
   }
 
   .case-intro h1 {
@@ -864,12 +894,12 @@
 
   .case-facts {
     display: grid;
-    gap: var(--space-s);
+    gap: var(--grid-gap);
 
     > div {
       display: grid;
       align-content: start;
-      gap: var(--space-unit);
+      gap: var(--metadata-gap);
       min-width: 0;
     }
 
@@ -880,27 +910,30 @@
   }
 
   .case-opening,
-  .case-gallery,
-  .case-text {
+  .case-gallery {
     display: grid;
-    gap: var(--space-s);
+    gap: var(--grid-gap);
     min-width: 0;
   }
 
   .case-copy {
+    display: grid;
     align-content: start;
-    gap: var(--space-xs);
+    gap: var(--copy-gap);
+    min-width: 0;
   }
 
   .case-text {
+    display: grid;
     align-items: start;
-    gap: var(--space-xs);
+    gap: var(--copy-gap);
+    min-width: 0;
   }
 
   .case-media {
     display: grid;
     align-content: start;
-    gap: var(--space-xs);
+    gap: var(--media-caption-gap);
     min-width: 0;
 
     img,
@@ -930,11 +963,13 @@
   }
 
   .case-close {
+    display: grid;
+    gap: var(--related-block-gap);
     border-block-start: 1px solid var(--border-control);
-    padding-block-start: var(--space-m);
+    padding-block-start: var(--divider-inset);
 
     h2 {
-      margin-block-end: var(--space-xs);
+      margin-block-end: var(--copy-gap);
     }
   }
 
@@ -951,7 +986,7 @@
   .case-selection {
     display: block;
     width: fit-content;
-    margin-block-start: var(--space-s);
+    margin-block-start: var(--related-block-gap);
   }
 
   .case-close__links {
@@ -959,7 +994,7 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: var(--space-s);
+    gap: var(--related-block-gap);
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
@@ -973,7 +1008,7 @@
     .case-gallery,
     .case-close {
       grid-template-columns: var(--layout-columns);
-      column-gap: var(--space-m);
+      column-gap: var(--grid-gap);
       align-items: start;
     }
 
@@ -989,8 +1024,8 @@
          centra My role entre el bloque Client y ese eje. */
       grid-template-columns:
         fit-content(20%) minmax(0, 1fr)
-        minmax(0, calc((100% - var(--space-m)) / 2));
-      column-gap: var(--space-m);
+        minmax(0, calc((100% - var(--grid-gap)) / 2));
+      column-gap: var(--grid-gap);
     }
 
     .case-facts > div:nth-child(2) {
@@ -1019,10 +1054,10 @@
   .about-page,
   .about-intro,
   .about-details,
-  .about-practice,
   .about-areas {
     display: grid;
-    gap: var(--space-m);
+    row-gap: var(--section-gap);
+    column-gap: var(--grid-gap);
     min-width: 0;
   }
 
@@ -1030,7 +1065,29 @@
   .about-section {
     display: grid;
     align-content: start;
-    gap: var(--space-s);
+    overflow-wrap: anywhere;
+    min-width: 0;
+  }
+
+  .about-intro__copy {
+    gap: var(--intro-gap);
+  }
+
+  .about-section {
+    gap: var(--copy-gap);
+
+    /* El total bajo el título es section-heading-gap, incluido el gap del padre. */
+    > h2 {
+      margin-block-end: max(
+        0rem,
+        calc(var(--section-heading-gap) - var(--copy-gap))
+      );
+    }
+  }
+
+  .about-practice {
+    display: grid;
+    gap: var(--section-heading-gap);
     min-width: 0;
   }
 
@@ -1069,27 +1126,31 @@
 
   .about-experience {
     display: grid;
-    gap: var(--space-s);
+    gap: var(--related-block-gap);
 
     li {
       display: grid;
-      gap: var(--space-unit);
+      gap: var(--metadata-gap);
     }
   }
 
   .about-area {
     display: flex;
     flex-direction: column;
-    gap: var(--space-xs);
+    gap: var(--copy-gap);
     border-block-start: 1px solid var(--border-control);
-    padding-block-start: var(--space-s);
+    padding-block-start: var(--divider-inset);
     min-width: 0;
 
     ul {
       display: grid;
-      gap: var(--space-xs);
+      gap: var(--copy-gap);
       margin-block-start: auto;
-      padding-block-start: var(--space-xs);
+      /* Distancia mínima completa desde el párrafo; auto conserva la alineación. */
+      padding-block-start: max(
+        0rem,
+        calc(var(--related-block-gap) - var(--copy-gap))
+      );
     }
   }
 
@@ -1121,6 +1182,7 @@
 
     .about-areas {
       grid-template-columns: var(--layout-three-columns);
+      row-gap: var(--grid-gap);
     }
   }
 
@@ -1151,14 +1213,20 @@
     display: grid;
     min-width: 0;
     max-width: var(--ch-width-body);
-    gap: var(--space-xs);
+    /* Cada grupo controla su separación. El estado vacío conserva aria-live
+       y su fila de altura cero, sin añadir un gap al final del formulario. */
+    row-gap: 0;
+
+    > .contact-form__field + .contact-form__field,
+    > .btn-primary,
+    > #form-message:not(:empty) {
+      margin-block-start: var(--form-group-gap);
+    }
   }
 
-  .contact-form__name,
-  .contact-form__email,
-  .contact-form__message {
+  .contact-form__field {
     display: grid;
-    gap: var(--space-xs);
+    gap: var(--field-label-gap);
   }
 
   .contact-form__field-error {
@@ -1188,7 +1256,7 @@
   .page-links {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-s);
+    gap: var(--navigation-gap);
     align-items: center;
   }
 

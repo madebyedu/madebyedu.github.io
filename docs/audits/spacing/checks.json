@@ -1,0 +1,493 @@
+{
+  "date": "2026-10-29",
+  "baseline_commit": "ce59338bd9dfe202c01a1890962a9759871711f6",
+  "source": "assets/css/style.css",
+  "source_sha256": "15331590e5827eb93d6aaa7edcd658bc3f4c0dab1c13ad7b4da85cca52a863bf",
+  "environment": "Codex in-app browser on macOS; viewport emulation; default root 16px; classic scrollbar reservation where applicable.",
+  "normal_layout": {
+    "pages": 9,
+    "widths": [
+      320,
+      390,
+      599,
+      600,
+      754,
+      755,
+      768,
+      1024,
+      1440,
+      1920,
+      2560
+    ],
+    "heights": [
+      600,
+      900,
+      1200
+    ],
+    "cases": 297,
+    "assertions": 1584,
+    "passed": true,
+    "checks": [
+      "approved spacing relations",
+      "horizontal overflow",
+      "header overlap",
+      "form empty row",
+      "section and grid separation"
+    ]
+  },
+  "text_200_percent": {
+    "cases": 36,
+    "widths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "height": 900,
+    "passed": true,
+    "method": "Temporary local HTML views with root font-size 200%, scripts removed and submit buttons disabled; CSS unchanged."
+  },
+  "form_layout_states": {
+    "cases": 16,
+    "states": [
+      "empty",
+      "success",
+      "error",
+      "fields"
+    ],
+    "widths": [
+      320,
+      390,
+      768,
+      1440
+    ],
+    "passed": true,
+    "method": "Temporary server-only fixtures; no production source fixtures, POST or real data."
+  },
+  "mobile_menu": {
+    "cases": 4,
+    "passed": true,
+    "checks": [
+      "open/close",
+      "forward/reverse focus trap",
+      "Escape",
+      "focus return",
+      "viewport padding"
+    ]
+  },
+  "carousel": {
+    "passed": true,
+    "end_scroll_left": 1425,
+    "after_arrow_left": 1123.5,
+    "edge_alignment": true,
+    "focus_padding_compensation": true
+  },
+  "grid_axes": {
+    "cases": 6,
+    "passed": true,
+    "measurements": [
+      {
+        "delta": -0.02,
+        "page": "/about.html",
+        "width": 768
+      },
+      {
+        "delta": 0,
+        "page": "/about.html",
+        "width": 1440
+      },
+      {
+        "delta": 0,
+        "page": "/about.html",
+        "width": 2560
+      },
+      {
+        "delta": 0.01,
+        "page": "/projects/porsche-launch-brochure.html",
+        "width": 768
+      },
+      {
+        "delta": 0,
+        "page": "/projects/porsche-launch-brochure.html",
+        "width": 1440
+      },
+      {
+        "delta": 0,
+        "page": "/projects/porsche-launch-brochure.html",
+        "width": 2560
+      }
+    ]
+  },
+  "viewport_results": [
+    {
+      "viewport": [
+        320,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 16,
+      "gallery_gap_px": 16
+    },
+    {
+      "viewport": [
+        320,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 16,
+      "gallery_gap_px": 16
+    },
+    {
+      "viewport": [
+        320,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 16,
+      "gallery_gap_px": 16
+    },
+    {
+      "viewport": [
+        390,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 16,
+      "gallery_gap_px": 16
+    },
+    {
+      "viewport": [
+        390,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 16,
+      "gallery_gap_px": 16
+    },
+    {
+      "viewport": [
+        390,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 16,
+      "gallery_gap_px": 16
+    },
+    {
+      "viewport": [
+        599,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 17.84,
+      "gallery_gap_px": 16.76
+    },
+    {
+      "viewport": [
+        599,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 17.84,
+      "gallery_gap_px": 16.76
+    },
+    {
+      "viewport": [
+        599,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 17.84,
+      "gallery_gap_px": 16.76
+    },
+    {
+      "viewport": [
+        600,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 17.84,
+      "gallery_gap_px": 16.775
+    },
+    {
+      "viewport": [
+        600,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 17.84,
+      "gallery_gap_px": 16.775
+    },
+    {
+      "viewport": [
+        600,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 17.84,
+      "gallery_gap_px": 16.775
+    },
+    {
+      "viewport": [
+        754,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.38,
+      "gallery_gap_px": 19.085
+    },
+    {
+      "viewport": [
+        754,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.38,
+      "gallery_gap_px": 19.085
+    },
+    {
+      "viewport": [
+        754,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.38,
+      "gallery_gap_px": 19.085
+    },
+    {
+      "viewport": [
+        755,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.4,
+      "gallery_gap_px": 19.1
+    },
+    {
+      "viewport": [
+        755,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.4,
+      "gallery_gap_px": 19.1
+    },
+    {
+      "viewport": [
+        755,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.4,
+      "gallery_gap_px": 19.1
+    },
+    {
+      "viewport": [
+        768,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.52,
+      "gallery_gap_px": 19.295
+    },
+    {
+      "viewport": [
+        768,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.52,
+      "gallery_gap_px": 19.295
+    },
+    {
+      "viewport": [
+        768,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 32,
+      "intro_gap_px": 19.52,
+      "gallery_gap_px": 19.295
+    },
+    {
+      "viewport": [
+        1024,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 33.05,
+      "intro_gap_px": 22.08,
+      "gallery_gap_px": 23.135
+    },
+    {
+      "viewport": [
+        1024,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 33.05,
+      "intro_gap_px": 22.08,
+      "gallery_gap_px": 23.135
+    },
+    {
+      "viewport": [
+        1024,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 33.05,
+      "intro_gap_px": 22.08,
+      "gallery_gap_px": 23.135
+    },
+    {
+      "viewport": [
+        1440,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 35.13,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 29.375
+    },
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 35.13,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 29.375
+    },
+    {
+      "viewport": [
+        1440,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 35.13,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 29.375
+    },
+    {
+      "viewport": [
+        1920,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 37.53,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 32
+    },
+    {
+      "viewport": [
+        1920,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 37.53,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 32
+    },
+    {
+      "viewport": [
+        1920,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 37.53,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 32
+    },
+    {
+      "viewport": [
+        2560,
+        600
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 40,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 32
+    },
+    {
+      "viewport": [
+        2560,
+        900
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 40,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 32
+    },
+    {
+      "viewport": [
+        2560,
+        1200
+      ],
+      "pages": 9,
+      "passed": true,
+      "section_gap_px": 40,
+      "intro_gap_px": 24,
+      "gallery_gap_px": 32
+    }
+  ],
+  "limitations": [
+    "No physical iOS/Android devices",
+    "No screen-reader announcement verification",
+    "No real form submission",
+    "Text scaling fixtures are not a browser zoom test",
+    "Touch gesture behavior was not synthesized; JavaScript remains unchanged"
+  ]
+}
