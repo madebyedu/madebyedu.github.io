@@ -326,13 +326,11 @@
     gap: var(--space-m);
   }
 
-  .about__sections,
   .contactform__intro {
     display: grid;
     gap: calc(var(--space-unit) * 2);
   }
 
-  .about__subtext,
   .contact-form__legal {
     color: var(--text-muted);
     font-size: var(--font-size-body-xs);
@@ -960,25 +958,99 @@
     }
   }
 
-  /* 12. About */
-  .about__sections {
-    max-width: var(--ch-width-body);
+  /* 12. About: perfil, trayectoria y áreas de práctica. */
+  .about-page,
+  .about-intro,
+  .about-profile,
+  .about-practice,
+  .about-areas {
+    display: grid;
+    gap: var(--space-m);
+    min-width: 0;
   }
 
-  .about__subtext {
-    line-height: 1.5;
+  .about-intro__copy,
+  .about-section {
+    display: grid;
+    align-content: start;
+    gap: var(--space-s);
+    min-width: 0;
   }
 
-  .about__img {
-    border-radius: var(--border-radius-in);
+  .about-intro h1 {
+    max-width: 25ch;
+  }
 
-    @media (width >= calc(755 / 16 * 1rem)) {
-      img {
-        max-width: 50%;
-        aspect-ratio: 1/1;
-        object-position: center;
-        object-fit: cover;
-      }
+  .about-portrait {
+    width: min(100%, 40rem);
+    justify-self: end;
+
+    img {
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      object-position: 55% center;
+      border-radius: var(--border-radius-in);
+    }
+  }
+
+  .about-cv {
+    width: fit-content;
+    font-weight: var(--font-weight-emphasis);
+    letter-spacing: var(--letter-spacing-emphasis);
+  }
+
+  .about-meta {
+    color: var(--text-muted);
+    font-size: var(--font-size-body-xs);
+    font-weight: var(--font-weight-regular);
+    letter-spacing: normal;
+  }
+
+  .about-cv .about-meta {
+    color: inherit;
+  }
+
+  .about-experience {
+    display: grid;
+    gap: var(--space-s);
+
+    li {
+      display: grid;
+      gap: var(--space-unit);
+    }
+  }
+
+  .about-area {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    border-block-start: 1px solid var(--border-control);
+    padding-block-start: var(--space-s);
+    min-width: 0;
+
+    ul {
+      display: grid;
+      gap: var(--space-xs);
+      margin-block-start: auto;
+      padding-block-start: var(--space-xs);
+    }
+  }
+
+  @media (width >= calc(755 / 16 * 1rem)) {
+    .about-intro {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      align-items: start;
+    }
+
+    .about-profile {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (width >= 60rem) {
+    .about-areas {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-s);
     }
   }
 
