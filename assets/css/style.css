@@ -1038,7 +1038,10 @@
 
   @media (width >= calc(755 / 16 * 1rem)) {
     .about-page {
-      --about-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      --about-left-share: 0.55;
+      --about-columns:
+        minmax(0, calc((100% - var(--space-m)) * var(--about-left-share)))
+        minmax(0, 1fr);
     }
 
     .about-intro,
@@ -1051,19 +1054,30 @@
       justify-self: start;
     }
 
-    .about-practice {
+    .about-background {
       grid-column: 1;
       grid-row: 1;
     }
 
-    .about-background {
-      grid-column: 1;
+    .about-work {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .about-practice {
+      grid-column: 1 / -1;
       grid-row: 2;
     }
 
-    .about-work {
-      grid-column: 2;
-      grid-row: 1 / span 2;
+    .about-areas {
+      /* La tercera área comparte el eje derecho de las filas superiores;
+         la segunda empieza a mitad de camino entre ambos ejes. */
+      --about-right-axis: calc(
+        (100% - var(--space-m)) * var(--about-left-share) + var(--space-m)
+      );
+      grid-template-columns:
+        repeat(2, minmax(0, calc(var(--about-right-axis) / 2 - var(--space-m))))
+        minmax(0, 1fr);
     }
   }
 
