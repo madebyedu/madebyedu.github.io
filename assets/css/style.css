@@ -961,7 +961,7 @@
   /* 12. About: perfil, trayectoria y áreas de práctica. */
   .about-page,
   .about-intro,
-  .about-profile,
+  .about-details,
   .about-practice,
   .about-areas {
     display: grid;
@@ -1037,20 +1037,33 @@
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
-    .about-intro {
-      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    .about-page {
+      --about-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    }
+
+    .about-intro,
+    .about-details {
+      grid-template-columns: var(--about-columns);
       align-items: start;
     }
 
-    .about-profile {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+    .about-portrait {
+      justify-self: start;
     }
-  }
 
-  @media (width >= 60rem) {
-    .about-areas {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: var(--space-s);
+    .about-practice {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .about-background {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    .about-work {
+      grid-column: 2;
+      grid-row: 1 / span 2;
     }
   }
 
