@@ -217,10 +217,10 @@
       --space-m: clamp(1.5rem, 3dvh, 3rem);
     }
 
-    /* El destacado y el carrusel ajustan su escala a la altura disponible. */
+    /* La portada crece con el ancho y conserva la jerarquía entre proyectos. */
     .page-home {
-      --featured-image-max-width: 84dvh;
-      --project-card-max-width: calc(var(--featured-image-max-width) * 0.95);
+      --featured-image-max-width: clamp(42rem, 58vw, 88rem);
+      --project-card-max-width: calc(var(--featured-image-max-width) * 0.7);
     }
   }
 
@@ -526,9 +526,10 @@
     }
   }
 
-  /* 9. Home: presentación y proyecto destacado comparten la primera fila. */
+  /* 9. Home: presentación y destacado se suceden sobre el mismo eje izquierdo. */
   .home-hero {
     display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-m);
     padding-block-end: var(--space-m);
     border-block-end: 1px solid var(--border-control);
@@ -549,16 +550,27 @@
 
   .home-intro__text p {
     color: var(--text-muted);
+    font-size: inherit;
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
     .home-hero {
-      grid-template-columns: var(--layout-columns);
+      max-width: var(--featured-image-max-width);
+      gap: clamp(2.5rem, 3vw, 5rem);
       align-items: start;
+    }
+
+    .home-intro {
+      gap: clamp(1.5rem, 1.5vw, 2.5rem);
+    }
+
+    .home-intro h1 {
+      font-size: clamp(2.5rem, 1.25rem + 2.3vw, 5rem);
     }
 
     .home-intro__text {
       width: min(100%, var(--ch-width-body));
+      font-size: clamp(1rem, 0.9rem + 0.2vw, 1.25rem);
     }
   }
 
@@ -658,19 +670,13 @@
       align-content: start;
     }
 
-    .featured-project > .projects__image-link {
-      /* Conserva el límite de altura del destacado dentro de la retícula. */
-      width: 100%;
-      max-width: var(--featured-image-max-width);
-    }
-
     .featured-project .projects__description {
       min-width: 0;
       align-content: start;
     }
 
     .featured-project .projects__description h2 {
-      font-size: clamp(1.25rem, 2.25vw, var(--font-size-h1));
+      font-size: clamp(1.25rem, 1rem + 0.5vw, 2rem);
       text-wrap: balance;
     }
 
@@ -763,7 +769,7 @@
   }
 
   /* Desde 2048px se ven tres tarjetas y media; antes se mantienen dos y media.
-     El límite por altura conserva la jerarquía del destacado. */
+     El límite relativo de cada tarjeta conserva la jerarquía del destacado. */
   @media (width >= 128rem) {
     .project-carousel__track {
       grid-auto-columns: min(
