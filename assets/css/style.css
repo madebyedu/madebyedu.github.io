@@ -545,6 +545,12 @@
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
+    .home-intro {
+      grid-template-columns: var(--layout-columns);
+      gap: var(--space-m);
+      align-items: start;
+    }
+
     .home-intro__text {
       width: min(100%, var(--ch-width-body));
     }
@@ -641,24 +647,25 @@
 
   @media (width >= calc(755 / 16 * 1rem)) {
     .projects > .featured-project {
-      display: flex;
-      align-items: flex-end;
+      grid-template-columns: var(--layout-columns);
+      column-gap: var(--space-m);
+      align-items: end;
     }
 
     .featured-project > .projects__image-link {
-      /* La foto 2:1 cede espacio al título completo y no supera el 42dvh de alto. */
-      flex: 0 1 62%;
+      /* Conserva el límite de altura del destacado dentro de la retícula. */
+      width: 100%;
       max-width: var(--featured-image-max-width);
     }
 
     .featured-project .projects__description {
-      flex: 1 0 max-content;
+      min-width: 0;
       align-content: start;
     }
 
     .featured-project .projects__description h2 {
       font-size: clamp(1.25rem, 2.25vw, var(--font-size-h1));
-      text-wrap: nowrap;
+      text-wrap: balance;
     }
 
     .featured-project .projects__description p {
@@ -969,7 +976,9 @@
     }
 
     .case-facts > div:nth-child(2) {
-      text-align: center;
+      justify-self: center;
+      max-width: 100%;
+      text-align: start;
     }
 
     .case-text {
@@ -1098,6 +1107,29 @@
   }
 
   /* 13. Contacto y validación */
+  @media (width >= calc(755 / 16 * 1rem)) {
+    .contact-layout {
+      grid-template-columns: var(--layout-columns);
+      align-items: start;
+    }
+
+    .contact-layout > .contactform__intro {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .contact-layout > .contact-form {
+      grid-column: 2;
+      grid-row: 1;
+      min-width: 0;
+    }
+
+    .contact-layout__legal {
+      grid-column: 2;
+      grid-row: 2;
+    }
+  }
+
   .contact-form {
     display: grid;
     max-width: var(--ch-width-body);
