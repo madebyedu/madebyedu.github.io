@@ -56,7 +56,9 @@
 
 - La rama de desarrollo es `dev`; `main` corresponde a la web publicada. Trabaja en `dev` salvo que el usuario pida otra rama. Integra cambios en `main` cuando el usuario solicite publicarlos.
 - Comprueba el diff antes de guardar una versión y verifica que el commit incluya exclusivamente los cambios autorizados.
-- Crea commits con un propósito claro solo cuando el usuario haya solicitado esa operación. La solicitud de un commit no autoriza un push, que requiere su propia solicitud y las confirmaciones existentes.
+- Crea commits con un propósito claro cuando el usuario los solicite o se aplique la autorización permanente para cambios de `AGENTS.md` descrita a continuación. La solicitud de un commit no autoriza un push, que requiere su propia solicitud y las confirmaciones existentes.
+- Cuando `AGENTS.md` tenga cambios pendientes, revisa su diff y guárdalos automáticamente en un commit independiente en `dev`, incluyendo únicamente ese archivo. Esta regla constituye autorización permanente para ese commit, sin pedir una confirmación adicional.
+- Si la misma tarea también modifica otros archivos, guarda sus cambios autorizados en uno o más commits separados del de `AGENTS.md`. No dejes ninguno de estos ajustes pendientes; conserva fuera de los commits los cambios ajenos a la tarea. Estos commits no autorizan un push ni una publicación.
 - Cuando el usuario solicite crear un commit, redacta automáticamente un mensaje profesional en inglés siguiendo Conventional Commits. Selecciona el tipo apropiado según los cambios reales y utiliza un resumen breve y descriptivo. No pidas al usuario que redacte el mensaje. Respeta todas las restricciones de seguridad y publicación de este archivo.
 - Realiza push, pull con integración, merge o publicación cuando formen parte de la petición. No los ejecutes únicamente por haber terminado una edición local.
 - Antes de realizar un push, un merge hacia `main`, una publicación, un borrado de ramas o cualquier operación potencialmente destructiva, solicita la confirmación explícita del usuario para esa operación.
