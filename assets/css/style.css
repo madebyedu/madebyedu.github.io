@@ -47,6 +47,18 @@
     /* Diferencia entre el borde inferior de la cabecera y el texto del nombre. */
     --header-text-inset: 0.25rem;
 
+    /* Retícula editorial común a About y a las fichas de proyecto. */
+    --layout-left-share: 0.55;
+    --layout-columns:
+      minmax(0, calc((100% - var(--space-m)) * var(--layout-left-share)))
+      minmax(0, 1fr);
+    --layout-right-axis: calc(
+      (100% - var(--space-m)) * var(--layout-left-share) + var(--space-m)
+    );
+    --layout-three-columns:
+      repeat(2, minmax(0, calc(var(--layout-right-axis) / 2 - var(--space-m))))
+      minmax(0, 1fr);
+
     /* Colores */
     --bg-dark: oklch(22.505% 0.01737 259.75);
     --bg-dark-shadow: oklch(17.228% 0.01601 261.51);
@@ -829,7 +841,6 @@
   .case-facts {
     display: grid;
     gap: var(--space-s);
-    max-width: 80rem;
 
     > div {
       display: grid;
@@ -912,6 +923,12 @@
     line-height: calc(1em + 0.5rem);
   }
 
+  .case-selection {
+    display: block;
+    width: fit-content;
+    margin-block-start: var(--space-s);
+  }
+
   .case-close__links {
     display: flex;
     flex-wrap: wrap;
@@ -921,40 +938,53 @@
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
-    .case-facts {
-      grid-template-columns: 1fr 1.25fr 1.5fr;
+    .case-study {
+      /* Las fichas usan mitades iguales; About conserva su proporción. */
+      --layout-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .case-opening {
-      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-      gap: var(--space-m);
+    .case-study,
+    .case-opening,
+    .case-gallery,
+    .case-close {
+      grid-template-columns: var(--layout-columns);
+      column-gap: var(--space-m);
       align-items: start;
     }
 
+    .case-intro,
+    .case-opening,
+    .case-gallery,
+    .case-close {
+      grid-column: 1 / -1;
+    }
+
+    .case-facts {
+      /* Deliverables empieza en la segunda columna. El espacio restante
+         centra My role entre el bloque Client y ese eje. */
+      grid-template-columns:
+        fit-content(20%) minmax(0, 1fr)
+        minmax(0, calc((100% - var(--space-m)) / 2));
+      column-gap: var(--space-m);
+    }
+
+    .case-facts > div:nth-child(2) {
+      text-align: center;
+    }
+
     .case-text {
-      grid-template-columns: 12rem minmax(0, 65ch);
-      gap: var(--space-s);
+      grid-column: 1;
     }
 
-    .case-gallery {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-
-      > .case-media:last-child:nth-child(odd) {
-        grid-column: 1 / -1;
-        width: min(100%, 70rem);
-        justify-self: center;
-      }
+    .case-media--portrait {
+      /* Mantiene la proporción vertical sin imágenes desmesuradas en ultrawide. */
+      width: min(100%, 60dvh);
     }
-  }
 
-  @media (width >= 75rem) {
-    .case-gallery--portraits {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-
-      > .case-media:last-child:nth-child(odd) {
-        grid-column: auto;
-        width: auto;
-      }
+    .case-close__links {
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-self: end;
     }
   }
 
@@ -1037,16 +1067,9 @@
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
-    .about-page {
-      --about-left-share: 0.55;
-      --about-columns:
-        minmax(0, calc((100% - var(--space-m)) * var(--about-left-share)))
-        minmax(0, 1fr);
-    }
-
     .about-intro,
     .about-details {
-      grid-template-columns: var(--about-columns);
+      grid-template-columns: var(--layout-columns);
       align-items: start;
     }
 
@@ -1070,14 +1093,7 @@
     }
 
     .about-areas {
-      /* La tercera área comparte el eje derecho de las filas superiores;
-         la segunda empieza a mitad de camino entre ambos ejes. */
-      --about-right-axis: calc(
-        (100% - var(--space-m)) * var(--about-left-share) + var(--space-m)
-      );
-      grid-template-columns:
-        repeat(2, minmax(0, calc(var(--about-right-axis) / 2 - var(--space-m))))
-        minmax(0, 1fr);
+      grid-template-columns: var(--layout-three-columns);
     }
   }
 
