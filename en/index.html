@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="/assets/js/language.js"></script>
+    <title>Eduardo Carrasco | Graphic Designer</title>
+    <meta
+      name="description"
+      content="Portfolio of Eduardo Carrasco, specializing in graphic design, photography, and video production. Discover unified artistic visions for branding and digital campaigns."
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/assets/img/favicon/favicon-96x96.png?v=20260421"
+      sizes="96x96"
+    />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/assets/img/favicon/favicon.svg?v=20260421"
+    />
+    <link
+      rel="shortcut icon"
+      href="/assets/img/favicon/favicon.ico?v=20260421"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/assets/img/favicon/apple-touch-icon.png?v=20260421"
+    />
+    <link
+      rel="manifest"
+      href="/assets/img/favicon/site.webmanifest?v=20260421"
+    />
+    <link rel="preload" href="/assets/css/style.css" as="style" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link
+      rel="preload"
+      href="/assets/fonts/general-sans-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <script src="/assets/js/app.js" defer></script>
+  </head>
+
+  <body class="page-home">
+    <!-- Header -->
+    <header>
+      <div class="wrapper">
+        <div class="header__content">
+          <a class="logo" href="/en/">Eduardo Carrasco</a>
+          <!-- Desktop Navigation -->
+          <nav class="nav desktop-nav" aria-label="Main navigation">
+            <ul class="nav__list">
+              <li>
+                <a href="/en/" class="nav__link" aria-current="page">Portfolio</a>
+              </li>
+              <li><a href="/en/about.html" class="nav__link">About me</a></li>
+              <li>
+                <a href="/en/contact.html" class="nav__link">Contact</a>
+              </li>
+            </ul>
+          </nav>
+          <!-- Mobile Hamburger Menu -->
+          <button
+            class="hamburger"
+            aria-label="Toggle mobile menu"
+            aria-expanded="false"
+          >
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+            <span class="hamburger__line"></span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation">
+      <ul class="mobile-menu__list">
+        <li>
+          <a href="/en/" class="mobile-menu__link" aria-current="page">Portfolio</a>
+        </li>
+        <li><a href="/en/about.html" class="mobile-menu__link">About me</a></li>
+        <li>
+          <a href="/en/contact.html" class="mobile-menu__link">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+    <main>
+      <div class="wrapper home-content">
+        <div class="home-hero">
+          <section class="home-intro" data-reveal="rise" aria-labelledby="home-title">
+            <h1 id="home-title">
+              From concept to finished piece.
+            </h1>
+            <div class="home-intro__text">
+              <p>
+                I’m a graphic designer developing and producing work for digital and print media. My training in photography and experience in video editing and motion graphics complement my work.
+              </p>
+            </div>
+          </section>
+
+          <article id="projects" class="featured-project" data-reveal="rise">
+            <a
+              class="projects__image-link"
+              href="/en/projects/porsche-launch-brochure.html"
+              aria-labelledby="project-porsche-title"
+            >
+              <picture>
+                <img
+                  src="/assets/img/thumbnail/porsche-brochure_desktop_2x1.webp"
+                  alt="Mockup del folleto de lanzamiento de Centro Porsche Valladolid"
+                  class="projects__image"
+                  width="1400"
+                  height="700"
+                  loading="eager"
+                  fetchpriority="high"
+              /></picture>
+            </a>
+            <div class="projects__description">
+              <h2 id="project-porsche-title">Centro Porsche Launch Brochure</h2>
+              <p>Print &amp; Editorial Design</p>
+              <a
+                class="project-link"
+                href="/en/projects/porsche-launch-brochure.html"
+              >
+                <span class="project-link__icon" aria-hidden="true">▸</span>
+                <span>Ver proyecto</span>
+              </a>
+            </div>
+          </article>
+        </div>
+
+        <section class="projects" aria-label="Más proyectos">
+
+          <div class="project-carousel" data-project-carousel>
+            <p class="project-carousel__label" data-reveal="rise">Más proyectos</p>
+            <div
+              class="project-carousel__track"
+              id="more-projects"
+              tabindex="0"
+              role="region"
+              aria-roledescription="carrusel"
+              aria-label="Otros proyectos"
+            >
+              <article class="project-card" data-reveal="rise">
+                <a
+                  class="projects__image-link"
+                  href="/en/projects/hydro-repelent.html"
+                  aria-labelledby="project-hydro-title"
+                >
+                  <picture>
+                    <img
+                      src="/assets/img/thumbnail/automotive-water-repellent-campaign-instagram-feed-mockup_desktop_2x1.webp"
+                      alt="Graphic design mockup of an Instagram feed carousel for an automotive water repellent treatment campaign, featuring social media ads for Audi, Volkswagen, and SEAT."
+                      class="projects__image"
+                      width="1400"
+                      height="700"
+                      loading="lazy"
+                      decoding="async"
+                  /></picture>
+                </a>
+                <div class="projects__description">
+                  <h2 id="project-hydro-title">Hydro-Repellent Treatment Campaign</h2>
+                  <p>Digital Ads &amp; Print Design</p>
+                  <a class="project-link" href="/en/projects/hydro-repelent.html">
+                    <span class="project-link__icon" aria-hidden="true">▸</span>
+                    <span>Ver proyecto</span>
+                  </a>
+                </div>
+              </article>
+
+              <article class="project-card" data-reveal="rise">
+                <a
+                  class="projects__image-link"
+                  href="/en/projects/employee-healthcare-campaign.html"
+                  aria-labelledby="project-healthcare-title"
+                >
+                  <picture>
+                    <img
+                      src="/assets/img/thumbnail/employee-healthcare-campaign_desktop_2x1.webp"
+                      alt=""
+                      class="projects__image"
+                      width="1400"
+                      height="700"
+                      loading="lazy"
+                      decoding="async"
+                  /></picture>
+                </a>
+                <div class="projects__description">
+                  <h2 id="project-healthcare-title">Employee Healthcare Campaign</h2>
+                  <p>Animation &amp; Print Design</p>
+                  <a
+                    class="project-link"
+                    href="/en/projects/employee-healthcare-campaign.html"
+                  >
+                    <span class="project-link__icon" aria-hidden="true">▸</span>
+                    <span>Ver proyecto</span>
+                  </a>
+                </div>
+              </article>
+
+              <article class="project-card" data-reveal="rise">
+                <a
+                  class="projects__image-link"
+                  href="/en/projects/brand-identity-video.html"
+                  aria-labelledby="project-brand-video-title"
+                >
+                  <picture>
+                    <img
+                      src="/assets/img/thumbnail/brand-identity-video_desktop_2x1.webp"
+                      alt=""
+                      class="projects__image"
+                      width="1400"
+                      height="700"
+                      loading="lazy"
+                      decoding="async"
+                  /></picture>
+                </a>
+                <div class="projects__description">
+                  <h2 id="project-brand-video-title">CUPRA Brand Identity Video</h2>
+                  <p>Film &amp; Motion Graphics</p>
+                  <a
+                    class="project-link"
+                    href="/en/projects/brand-identity-video.html"
+                  >
+                    <span class="project-link__icon" aria-hidden="true">▸</span>
+                    <span>Ver proyecto</span>
+                  </a>
+                </div>
+              </article>
+
+              <article class="project-card" data-reveal="rise">
+                <a
+                  class="projects__image-link"
+                  href="/en/projects/business-card-design.html"
+                  aria-labelledby="project-outletcars-title"
+                >
+                  <picture>
+                    <img
+                      src="/assets/img/thumbnail/business-card-design_desktop_2x1.webp"
+                      alt=""
+                      class="projects__image"
+                      width="1400"
+                      height="700"
+                      loading="lazy"
+                      decoding="async"
+                  /></picture>
+                </a>
+                <div class="projects__description">
+                  <h2 id="project-outletcars-title">OutletCars Business Card Design</h2>
+                  <p>Print Design</p>
+                  <a
+                    class="project-link"
+                    href="/en/projects/business-card-design.html"
+                  >
+                    <span class="project-link__icon" aria-hidden="true">▸</span>
+                    <span>Ver proyecto</span>
+                  </a>
+                </div>
+              </article>
+
+              <article class="project-card" data-reveal="rise">
+                <a
+                  class="projects__image-link"
+                  href="/en/projects/natural-light-project.html"
+                  aria-labelledby="project-natural-light-title"
+                >
+                  <picture>
+                    <img
+                      src="/assets/img/thumbnail/natural-light-project_desktop_2x1.webp"
+                      alt="Close-up portrait of a young woman with auburn hair and a delicate silver necklace, photographed outdoors in natural sunlight against a blurred ocean and blue sky background"
+                      class="projects__image"
+                      width="1400"
+                      height="700"
+                      loading="lazy"
+                      decoding="async"
+                  /></picture>
+                </a>
+                <div class="projects__description">
+                  <h2 id="project-natural-light-title">Natural Light Project</h2>
+                  <p>Editorial Photography</p>
+                  <a
+                    class="project-link"
+                    href="/en/projects/natural-light-project.html"
+                  >
+                    <span class="project-link__icon" aria-hidden="true">▸</span>
+                    <span>Ver proyecto</span>
+                  </a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="wrapper">
+        <div class="page-links">
+          <a
+            href="https://www.linkedin.com/in/educarrasco"
+            target="_blank"
+            rel="noopener"
+          >
+            LinkedIn
+          </a>
+          <a
+            href="https://www.behance.net/madebyedu"
+            target="_blank"
+            rel="noopener"
+          >
+            Behance
+          </a>
+          <a
+            href="https://www.instagram.com/educarrasco.jpg"
+            target="_blank"
+            rel="noopener"
+          >
+            Instagram
+          </a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
