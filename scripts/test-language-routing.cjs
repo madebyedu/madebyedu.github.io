@@ -32,9 +32,8 @@ test("Other languages select English, using only the first preference", () => {
   assert.equal(destination(["es-ES", "en-US"], "/"), null);
 });
 test("Project destinations, queries and anchors survive both directions", () => {
-  const page = "/projects/natural-light-project.html?source=test#case-title";
-  assert.equal(destination(["en-GB"], page), `/en${page}`);
-  assert.equal(destination(["es-ES"], `/en${page}`), page);
+  assert.equal(destination(["en-GB"], "/projects/luz-natural.html?source=test#case-title"), "/en/projects/natural-light.html?source=test#case-title");
+  assert.equal(destination(["es-ES"], "/en/projects/natural-light.html?source=test#case-title"), "/projects/luz-natural.html?source=test#case-title");
 });
 test("Home URL variants resolve without redirect loops", () => {
   assert.equal(destination(["en"], "/index.html#projects"), "/en/#projects");
@@ -42,6 +41,32 @@ test("Home URL variants resolve without redirect loops", () => {
   assert.equal(destination(["es"], "/en"), "/");
   assert.equal(destination(["en"], "/en/"), null);
   assert.equal(destination(["es"], "/"), null);
+});
+
+const projects = [
+  ["centro-porsche-valladolid-catalogo-apertura", "centro-porsche-valladolid-launch-brochure", "porsche-launch-brochure"],
+  ["campana-tratamiento-antilluvia", "rain-repellent-treatment-campaign", "hydro-repelent"],
+  ["campana-salud-empleados", "employee-health-campaign", "employee-healthcare-campaign"],
+  ["concesionario-cupra-video-presentacion", "cupra-dealership-video", "brand-identity-video"],
+  ["tarjetas-visita-outletcars", "outletcars-business-cards", "business-card-design"],
+  ["luz-natural", "natural-light", "natural-light-project"],
+];
+test("Every old URL opens the renamed project in the browser language", () => {
+  for (const [es, en, old] of projects) {
+    for (const prefix of ["", "/en"]) {
+      const url = `${prefix}/projects/${old}.html?ref=old#case-title`;
+      assert.equal(destination(["es-MX"], url), `/projects/${es}.html?ref=old#case-title`);
+      assert.equal(destination(["en-US"], url), `/en/projects/${en}.html?ref=old#case-title`);
+    }
+  }
+});
+test("Localized project URLs choose their counterpart without loops", () => {
+  for (const [es, en] of projects) {
+    assert.equal(destination(["es-ES"], `/projects/${es}.html`), null);
+    assert.equal(destination(["en-US"], `/en/projects/${en}.html`), null);
+    assert.equal(destination(["es-ES"], `/en/projects/${en}.html`), `/projects/${es}.html`);
+    assert.equal(destination(["en-US"], `/projects/${es}.html`), `/en/projects/${en}.html`);
+  }
 });
 test("Browser language fallback and missing language preferences", () => {
   assert.equal(destination([], "/", "en-GB"), "/en/");

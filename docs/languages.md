@@ -4,7 +4,7 @@
 - La edición inglesa tiene las mismas páginas dentro de `en/` y declara `lang="en"`.
 - Ambas comparten CSS, JavaScript, imágenes, vídeos y documentos de `assets/`.
 - `assets/js/language.js` se carga antes del contenido. El primer idioma de `navigator.languages` determina la edición: `es` y todas sus variantes regionales abren castellano; cualquier otro idioma abre inglés. Si no hay una preferencia disponible, se usa castellano.
-- La selección se aplica en cada entrada, incluidas las fichas de proyecto. Se conserva el destino, los parámetros y el fragmento de la URL. No hay selector ni preferencia manual guardada.
+- La selección se aplica en cada entrada, incluidas las fichas de proyecto. Se conserva el proyecto de destino, los parámetros y el fragmento de la URL. Los proyectos utilizan nombres de archivo propios de cada idioma; sus equivalencias están en language.js y se documentan en docs/project-names.md. No hay selector ni preferencia manual guardada.
 - La selección automática requiere JavaScript. Sin JavaScript se muestra la edición solicitada por su URL.
 
 ## Contenido
