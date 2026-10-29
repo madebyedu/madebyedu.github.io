@@ -18,7 +18,7 @@
   }
 
   :root {
-    /* Tipografía compartida: cuerpo estable y titulares fluidos sin saltos. */
+    /* Tipografía: tres tamaños efectivos y dos pesos en todas las páginas. */
     --font-family-base: "General Sans", Arial, sans-serif;
     --font-weight-regular: 400;
     --font-weight-emphasis: 600;
@@ -27,17 +27,20 @@
     --line-height-body: 1.5;
     --line-height-heading: calc(1em + 0.5rem);
 
-    --font-size-caption: 0.875rem;
+    /* Lectura y controles: 16px. Secciones: 20–24px. Titulares: 28–40px.
+       Los títulos crecen entre 400 y 900px con una raíz de 16px. */
     --font-size-body: 1rem;
-    --font-size-heading-sm: 1rem;
-    --font-size-mobile-nav: 1.5rem;
+    --font-size-heading-md: clamp(1.25rem, 1.05rem + 0.8vw, 1.5rem);
+    --font-size-heading-lg: clamp(1.75rem, 1.15rem + 2.4vw, 2.5rem);
 
-    --font-size-lead: clamp(1rem, 0.9rem + 0.2vw, 1.25rem);
-    --font-size-heading-md: clamp(1.125rem, 1.05rem + 0.3vw, 1.25rem);
-    --font-size-heading-lg: clamp(1.5rem, 1.1875rem + 1.25vw, 2rem);
-    --font-size-display: clamp(1.5rem, 0.8rem + 2.8vw, 5rem);
-    --font-size-heading-featured: clamp(1.125rem, 1rem + 0.5vw, 2rem);
-    --font-size-caption-featured: clamp(0.875rem, 0.8rem + 0.3vw, 1rem);
+    /* Los roles conservan su intención, pero comparten los tres niveles. */
+    --font-size-caption: var(--font-size-body);
+    --font-size-heading-sm: var(--font-size-body);
+    --font-size-lead: var(--font-size-body);
+    --font-size-caption-featured: var(--font-size-body);
+    --font-size-heading-featured: var(--font-size-heading-md);
+    --font-size-mobile-nav: var(--font-size-heading-md);
+    --font-size-display: var(--font-size-heading-lg);
 
     --ch-width-body: 65ch;
 
