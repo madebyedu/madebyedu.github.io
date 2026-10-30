@@ -37,8 +37,6 @@
     --font-size-caption: var(--font-size-body);
     --font-size-heading-sm: var(--font-size-body);
     --font-size-lead: var(--font-size-body);
-    --font-size-caption-featured: var(--font-size-body);
-    --font-size-heading-featured: var(--font-size-heading-md);
     --font-size-mobile-nav: var(--font-size-heading-md);
     --font-size-display: var(--font-size-heading-lg);
 
@@ -106,15 +104,17 @@
     --text: #f5f5f3;
     --text-muted: #b7b7b2;
 
-    --accent: #8ab4f8;
-    --accent-hover: #b0ceff;
+    --accent: #93aecf;
+    /* Variante de interacción del acento: 20% de blanco. */
+    --accent-hover: #a9bed9;
     --text-on-accent: #181818;
 
     --border-control: #737373;
     --border-subtle: #363636;
 
     --color-error: #e6a19a;
-    --color-success: var(--accent);
+    /* El estado funcional conserva su color, independiente del acento de marca. */
+    --color-success: #8ab4f8;
 
     /* Transiciones */
     --duration-interaction: 0.3s;
@@ -246,22 +246,23 @@
     align-self: start;
   }
 
-  /* Home conserva más aire alrededor del titular grande y del destacado. */
+  /* El carrusel de Home llega al borde sin reservar una franja vacía de scroll.
+     Si la página necesita barra vertical, el navegador conserva su espacio real. */
+  html:has(body.page-home) {
+    scrollbar-gutter: auto;
+  }
+
+  /* Home agrupa la presentación y da paso a una selección de igual jerarquía. */
   .page-home {
-    --home-intro-gap: clamp(var(--space-4), 1.5vw, 2.5rem);
-    --home-feature-gap: clamp(var(--space-8), 3vw, 5rem);
+    --font-size-display: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+    --home-intro-gap: clamp(var(--space-3), 1.125vw, var(--space-4));
+    --home-projects-gap: clamp(var(--space-8), 3.5vw, var(--space-12));
   }
 
   /* La navegación cambia de estructura; la escala de espaciado permanece fluida. */
   @media (width >= calc(755 / 16 * 1rem)) {
     :root {
       --header-text-inset: var(--nav-link-padding-block);
-    }
-
-    /* La portada crece con el ancho y conserva la jerarquía entre proyectos. */
-    .page-home {
-      --featured-image-max-width: clamp(42rem, 58vw, 88rem);
-      --project-card-max-width: calc(var(--featured-image-max-width) * 0.7);
     }
   }
 
@@ -293,7 +294,9 @@
   }
 
   input:user-invalid,
-  textarea:user-invalid {
+  textarea:user-invalid,
+  input[aria-invalid="true"],
+  textarea[aria-invalid="true"] {
     outline: 2px solid var(--color-error);
     outline-offset: 2px;
   }
@@ -380,7 +383,9 @@
   }
 
   input:user-invalid,
-  textarea:user-invalid {
+  textarea:user-invalid,
+  input[aria-invalid="true"],
+  textarea[aria-invalid="true"] {
     outline-color: var(--color-error);
   }
 
@@ -579,13 +584,17 @@
     }
   }
 
-  /* 9. Home: presentación y destacado se suceden sobre el mismo eje izquierdo. */
-  .home-hero {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--home-feature-gap);
-    padding-block-end: var(--divider-inset);
-    border-block-end: 1px solid var(--border-subtle);
+  /* 9. Home: composición por tercios cuando sobra altura; flujo natural si no.
+     HomeComposition mide el contenido sin imponer alturas ni recortarlo. */
+  .page-home main {
+    align-self: stretch;
+  }
+
+  .home-content {
+    align-content: start;
+    padding-block-start: var(--home-space-above, 0px);
+    gap: calc(var(--home-projects-gap) + var(--home-space-between, 0px));
+    padding-block-end: var(--home-space-below, 0px);
   }
 
   .home-intro {
@@ -609,11 +618,6 @@
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
-    .home-hero {
-      max-width: var(--featured-image-max-width);
-      align-items: start;
-    }
-
     .home-intro__text {
       width: min(100%, var(--ch-width-body));
     }
@@ -689,55 +693,16 @@
     transform: none;
   }
 
-  /* Proyecto destacado */
-  .featured-project {
-    --card-media-gap: var(--intro-gap);
-    display: grid;
-    gap: var(--card-media-gap);
-  }
-
-  .featured-project picture {
-    overflow: hidden;
-  }
-
-  .featured-project .projects__description {
-    margin-block-start: 0;
-    align-content: start;
-  }
-
-  .featured-project .projects__description h2 {
-    max-width: none;
-    font-size: var(--font-size-heading-featured);
-    text-wrap: wrap;
-  }
-
-  .featured-project .projects__description p {
-    font-size: var(--font-size-caption-featured);
-  }
-
-  @media (width >= calc(755 / 16 * 1rem)) {
-    .featured-project {
-      align-content: start;
-    }
-
-    .featured-project .projects__description {
-      min-width: 0;
-      align-content: start;
-    }
-
-    .featured-project .projects__description h2 {
-      text-wrap: balance;
-    }
-  }
-
   /* El carrusel sale del margen derecho. El marco base se conserva en móvil;
      escritorio usa todo el viewport y mantiene un margen final de lectura. */
   .project-carousel {
     --carousel-bleed: var(--page-gutter);
+    --carousel-visible-cards: 1.25;
+    --carousel-visible-gaps: 1;
     --focus-padding-start: var(--space-2);
     --focus-padding-end: var(--space-4);
-    --carousel-label-gap: var(--space-6);
-    max-width: 100rem;
+    --carousel-label-gap: var(--space-4);
+    max-width: none;
     min-width: 0;
   }
 
@@ -748,8 +713,12 @@
   .project-carousel__track {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: calc(
-      (100% + var(--carousel-bleed) - var(--grid-gap)) / 1.5
+    grid-auto-columns: min(
+      calc(
+        (100% + var(--carousel-bleed) - var(--carousel-visible-gaps) * var(--grid-gap)) /
+        var(--carousel-visible-cards)
+      ),
+      var(--carousel-card-max-width, 100vw)
     );
     gap: var(--grid-gap);
     margin-inline-end: calc(-1 * var(--carousel-bleed));
@@ -758,7 +727,7 @@
     /* Conserva espacio para el foco sin sumarlo a la separación con el footer. */
     margin-block-end: calc(-1 * var(--focus-padding-end));
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scroll-behavior: smooth;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
@@ -768,9 +737,12 @@
       display: none;
     }
 
-    &.is-dragging {
+    &.is-coasting {
       scroll-snap-type: none;
       scroll-behavior: auto;
+    }
+
+    &.is-dragging {
       cursor: grabbing;
       user-select: none;
     }
@@ -794,7 +766,7 @@
     }
 
     .project-link {
-      margin-block-start: auto;
+      margin-block-start: 0;
       padding-block-start: max(
         0rem,
         calc(var(--card-action-gap) - var(--metadata-gap))
@@ -806,39 +778,42 @@
     }
   }
 
-  @media (width >= calc(755 / 16 * 1rem)) {
-    .project-carousel {
-      max-width: none;
-    }
-
-    .project-carousel__track {
-      grid-auto-columns: min(
-        calc((100% + var(--carousel-bleed) - 2 * var(--grid-gap)) / 2.5),
-        var(--project-card-max-width)
-      );
+  /* En escritorio amplio, las acciones comparten el eje inferior. En tarjetas
+     estrechas, prima la proximidad a la categoría sin reservar líneas de texto. */
+  @media (width >= 64rem) {
+    .project-card .project-link {
+      margin-block-start: auto;
     }
   }
 
-  /* Desde 2048px se ven tres tarjetas y media; antes se mantienen dos y media.
-     El límite relativo de cada tarjeta conserva la jerarquía del destacado. */
+  /* La siguiente tarjeta permanece parcialmente visible en todos los tamaños. */
+  @media (width >= calc(755 / 16 * 1rem)) {
+    .project-carousel {
+      --carousel-visible-cards: 1.75;
+    }
+  }
+
+  @media (width >= 64rem) {
+    .project-carousel {
+      --carousel-visible-cards: 2.25;
+      --carousel-visible-gaps: 2;
+    }
+  }
+
   @media (width >= 128rem) {
-    .project-carousel__track {
-      grid-auto-columns: min(
-        calc((100% + var(--carousel-bleed) - 3 * var(--grid-gap)) / 3.5),
-        var(--project-card-max-width)
-      );
+    .project-carousel {
+      --carousel-visible-cards: 2.5;
+      --carousel-card-max-width: 62.5rem;
     }
   }
 
   /* En móvil, el enlace de la imagen cubre toda la celda. Los enlaces
      originales siguen disponibles para teclado, sin anidar elementos <a>. */
   @media (width < calc(755 / 16 * 1rem)) {
-    .featured-project,
     .project-card {
       position: relative;
     }
 
-    .featured-project > .projects__image-link,
     .project-card > .projects__image-link {
       position: static;
 
@@ -1146,8 +1121,7 @@
     ul {
       display: grid;
       gap: var(--copy-gap);
-      margin-block-start: auto;
-      /* Distancia mínima completa desde el párrafo; auto conserva la alineación. */
+      /* Completa la distancia desde el párrafo, incluido el gap del área. */
       padding-block-start: max(
         0rem,
         calc(var(--related-block-gap) - var(--copy-gap))
@@ -1236,9 +1210,15 @@
     color: var(--color-error);
 
     input:user-invalid ~ &,
-    textarea:user-invalid ~ & {
+    textarea:user-invalid ~ &,
+    input[aria-invalid="true"] ~ &,
+    textarea[aria-invalid="true"] ~ & {
       display: block;
       animation: fadeIn var(--duration-interaction) ease;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
   }
 
@@ -1263,6 +1243,10 @@
 
   /* 15. Preferencias de movimiento: excepciones compartidas */
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
     .mobile-menu,
     .mobile-menu a,
     .hamburger__line,

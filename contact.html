@@ -92,7 +92,7 @@
     </nav>
 
     <main>
-      <div class="wrapper layout-spacing contact-layout">
+      <div class="wrapper layout-spacing contact-layout" lang="en">
         <section class="contactform__intro" data-reveal="rise">
           <h1>Let's chat.</h1>
           <p>
@@ -105,7 +105,6 @@
           id="contact-form"
           action="https://api.web3forms.com/submit"
           method="post"
-          novalidate
         >
           <input
             type="hidden"
@@ -124,14 +123,14 @@
           />
           <div class="contact-form__field contact-form__name">
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" required />
+            <input type="text" id="name" name="name" autocomplete="name" required />
             <span class="contact-form__field-error" id="name-error"
               >Please enter your name.</span
             >
           </div>
           <div class="contact-form__field contact-form__email">
             <label for="email">E-mail:</label>
-            <input type="email" id="email" name="email" required />
+            <input type="email" id="email" name="email" autocomplete="email" required />
             <span class="contact-form__field-error" id="email-error"
               >Please enter a valid e-mail address.</span
             >
@@ -144,7 +143,7 @@
             >
           </div>
           <button class="btn-primary" type="submit">Send Message</button>
-          <p id="form-message" aria-live="polite"></p>
+          <p id="form-message" aria-live="polite" aria-atomic="true"></p>
         </form>
         <section class="contact-layout__legal">
           <p class="contact-form__legal" data-reveal="rise">

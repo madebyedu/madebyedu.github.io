@@ -92,61 +92,59 @@
 
     <main>
       <div class="wrapper home-content">
-        <div class="home-hero">
-          <section class="home-intro" data-reveal="rise" aria-labelledby="home-title">
-            <h1 id="home-title">
-              From concept to finished piece.
-            </h1>
-            <div class="home-intro__text">
-              <p>
-                I’m a graphic designer developing and producing work for digital and print media. My training in photography and experience in video editing and motion graphics complement my work.
-              </p>
-            </div>
-          </section>
+        <section class="home-intro" data-reveal="rise" aria-labelledby="home-title">
+          <h1 id="home-title">
+            From concept to finished piece.
+          </h1>
+          <div class="home-intro__text">
+            <p>
+              I’m a graphic designer developing and producing work for digital and print media. My training in photography and experience in video editing and motion graphics complement my work.
+            </p>
+          </div>
+        </section>
 
-          <article id="projects" class="featured-project" data-reveal="rise">
-            <a
-              class="projects__image-link"
-              href="/en/projects/centro-porsche-valladolid-launch-brochure.html"
-              aria-labelledby="project-porsche-title"
-            >
-              <picture>
-                <img
-                  src="/assets/img/thumbnail/porsche-brochure_desktop_2x1.webp"
-                  alt="Mockup del folleto de lanzamiento de Centro Porsche Valladolid"
-                  class="projects__image"
-                  width="1400"
-                  height="700"
-                  loading="eager"
-                  fetchpriority="high"
-              /></picture>
-            </a>
-            <div class="projects__description">
-              <h2 id="project-porsche-title">Centro Porsche Valladolid Launch Brochure</h2>
-              <p>Editorial Design</p>
-              <a
-                class="project-link"
-                href="/en/projects/centro-porsche-valladolid-launch-brochure.html"
-              >
-                <span class="project-link__icon" aria-hidden="true">▸</span>
-                <span>Ver proyecto</span>
-              </a>
-            </div>
-          </article>
-        </div>
-
-        <section class="projects" aria-label="Más proyectos">
+        <section id="projects" class="projects" aria-label="Selected work">
 
           <div class="project-carousel" data-project-carousel>
-            <p class="project-carousel__label" data-reveal="rise">Más proyectos</p>
+            <p class="project-carousel__label" data-reveal="rise">Selected work</p>
             <div
               class="project-carousel__track"
               id="more-projects"
               tabindex="0"
               role="region"
-              aria-roledescription="carrusel"
-              aria-label="Otros proyectos"
+              aria-roledescription="carousel"
+              aria-label="Projects"
             >
+              <article class="project-card" data-reveal="rise">
+                <a
+                  class="projects__image-link"
+                  href="/en/projects/centro-porsche-valladolid-launch-brochure.html"
+                  aria-labelledby="project-porsche-title"
+                >
+                  <picture>
+                    <img
+                      src="/assets/img/thumbnail/porsche-brochure_desktop_2x1.webp"
+                      alt="Mockup del folleto de lanzamiento de Centro Porsche Valladolid"
+                      class="projects__image"
+                      width="1400"
+                      height="700"
+                      loading="eager"
+                      fetchpriority="high"
+                  /></picture>
+                </a>
+                <div class="projects__description">
+                  <h2 id="project-porsche-title">Centro Porsche Valladolid Launch Brochure</h2>
+                  <p>Editorial Design</p>
+                  <a
+                    class="project-link"
+                    href="/en/projects/centro-porsche-valladolid-launch-brochure.html"
+                  >
+                    <span class="project-link__icon" aria-hidden="true">▸</span>
+                    <span>Ver proyecto</span>
+                  </a>
+                </div>
+              </article>
+
               <article class="project-card" data-reveal="rise">
                 <a
                   class="projects__image-link"
