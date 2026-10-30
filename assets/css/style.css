@@ -248,8 +248,8 @@
 
   /* Home conserva más aire alrededor del titular grande y del destacado. */
   .page-home {
-    --home-intro-gap: clamp(var(--space-4), 1.5vw, 2.5rem);
-    --home-feature-gap: clamp(var(--space-8), 3vw, 5rem);
+    --home-intro-gap: clamp(var(--space-3), 1.125vw, var(--space-4));
+    --home-feature-gap: clamp(var(--space-8), 3.5vw, var(--space-12));
   }
 
   /* La navegación cambia de estructura; la escala de espaciado permanece fluida. */
@@ -580,7 +580,16 @@
   }
 
   /* 9. Home: presentación y destacado se suceden sobre el mismo eje izquierdo. */
+  .home-content {
+    --section-gap: clamp(
+      var(--space-8),
+      2.8vw,
+      calc(var(--space-8) + var(--space-2))
+    );
+  }
+
   .home-hero {
+    --divider-inset: var(--space-6);
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--home-feature-gap);
@@ -736,7 +745,7 @@
     --carousel-bleed: var(--page-gutter);
     --focus-padding-start: var(--space-2);
     --focus-padding-end: var(--space-4);
-    --carousel-label-gap: var(--space-6);
+    --carousel-label-gap: var(--space-4);
     max-width: 100rem;
     min-width: 0;
   }
@@ -794,7 +803,7 @@
     }
 
     .project-link {
-      margin-block-start: auto;
+      margin-block-start: 0;
       padding-block-start: max(
         0rem,
         calc(var(--card-action-gap) - var(--metadata-gap))
@@ -803,6 +812,14 @@
 
     a:focus-visible {
       outline-offset: 2px;
+    }
+  }
+
+  /* En escritorio amplio, las acciones comparten el eje inferior. En tarjetas
+     estrechas, prima la proximidad a la categoría sin reservar líneas de texto. */
+  @media (width >= 64rem) {
+    .project-card .project-link {
+      margin-block-start: auto;
     }
   }
 
@@ -1146,8 +1163,7 @@
     ul {
       display: grid;
       gap: var(--copy-gap);
-      margin-block-start: auto;
-      /* Distancia mínima completa desde el párrafo; auto conserva la alineación. */
+      /* Completa la distancia desde el párrafo, incluido el gap del área. */
       padding-block-start: max(
         0rem,
         calc(var(--related-block-gap) - var(--copy-gap))
