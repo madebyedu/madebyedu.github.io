@@ -18,29 +18,25 @@
   }
 
   :root {
-    /* Tipografía: tres tamaños efectivos y dos pesos en todas las páginas. */
+    /* Escala BMW adaptada a General Sans: roles distintos, pesos 400/600. */
     --font-family-base: "General Sans", Arial, sans-serif;
     --font-weight-regular: 400;
     --font-weight-emphasis: 600;
     --letter-spacing-base: normal;
-    --letter-spacing-emphasis: 0.01em;
-    --line-height-body: 1.5;
-    --line-height-heading: calc(1em + 0.5rem);
+    --letter-spacing-emphasis: 0.005em;
+    --line-height-body: 1.55;
+    --line-height-heading: 1.15;
 
-    /* Lectura y controles: 16px. Secciones: 20–24px. Titulares: 28–40px.
-       Los títulos crecen entre 400 y 900px con una raíz de 16px. */
     --font-size-body: 1rem;
-    --font-size-heading-md: clamp(1.25rem, 1.05rem + 0.8vw, 1.5rem);
-    --font-size-heading-lg: clamp(1.75rem, 1.15rem + 2.4vw, 2.5rem);
-
-    /* Los roles conservan su intención, pero comparten los tres niveles. */
-    --font-size-caption: var(--font-size-body);
-    --font-size-heading-sm: var(--font-size-body);
-    --font-size-lead: var(--font-size-body);
+    --font-size-caption: 0.875rem;
+    --font-size-heading-sm: clamp(1.125rem, 1rem + 0.4vw, 1.25rem);
+    --font-size-heading-md: clamp(1.5rem, 1.25rem + 1vw, 2rem);
+    --font-size-heading-lg: clamp(2rem, 1.5rem + 2vw, 3rem);
+    --font-size-display: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+    --font-size-lead: var(--font-size-heading-sm);
     --font-size-caption-featured: var(--font-size-body);
     --font-size-heading-featured: var(--font-size-heading-md);
     --font-size-mobile-nav: var(--font-size-heading-md);
-    --font-size-display: var(--font-size-heading-lg);
 
     --ch-width-body: 65ch;
 
@@ -53,49 +49,37 @@
     --space-6: calc(var(--space-1) * 6);
     --space-8: calc(var(--space-1) * 8);
     --space-12: calc(var(--space-1) * 12);
+    --space-20: calc(var(--space-1) * 20);
 
-    /* Ritmo fluido por anchura; la altura se reserva para funciones de viewport. */
-    --page-gutter: clamp(var(--space-8), 2.5vw, 5rem);
-    --section-gap: clamp(var(--space-8), 1.75rem + 0.5vw, 2.5rem);
-    --intro-gap: clamp(var(--space-4), 0.75rem + 1vw, var(--space-6));
-    --copy-gap: clamp(var(--space-2), 0.25rem + 1vw, var(--space-4));
-    --grid-gap: clamp(var(--space-4), 0.5rem + 1.5vw, var(--space-8));
-
-    --section-heading-gap: var(--intro-gap);
-    --related-block-gap: var(--intro-gap);
-    --metadata-gap: var(--space-1);
-    --media-caption-gap: var(--copy-gap);
-    --divider-inset: var(--intro-gap);
+    /* Proximidad interna, agrupación y capítulos usan pasos diferentes. */
+    --page-gutter: clamp(var(--space-6), 3.333vw, var(--space-20));
+    --section-gap: clamp(var(--space-12), 6vw, var(--space-20));
+    --intro-gap: clamp(var(--space-4), 2vw, var(--space-6));
+    --copy-gap: var(--space-4);
+    --grid-gap: clamp(var(--space-6), 3vw, var(--space-12));
+    --section-heading-gap: var(--space-6);
+    --related-block-gap: var(--space-6);
+    --metadata-gap: var(--space-2);
+    --media-caption-gap: var(--space-3);
+    --divider-inset: var(--space-6);
     --card-media-gap: var(--space-4);
     --card-action-gap: var(--space-4);
 
-    /* Dimensiones ópticas de controles conservadas; ritmo de campos independiente. */
     --field-label-gap: var(--space-2);
-    --form-group-gap: var(--intro-gap);
-    --field-padding: 0.8rem;
+    --form-group-gap: var(--space-6);
+    --field-padding: var(--space-3) var(--space-4);
     --button-padding-block: var(--space-3);
-    --button-padding-inline: 1.875rem;
+    --button-padding-inline: var(--space-8);
 
-    --page-inset-block: var(--space-8);
-    --header-content-gap: var(--section-gap);
-    --navigation-gap: var(--grid-gap);
-    --nav-link-padding-block: var(--space-2);
-    /* Diferencia entre el borde inferior de la cabecera y el texto del nombre. */
-    --header-text-inset: var(--space-1);
-    /* Distancia mínima completa: incluye el gap que ya aporta body. */
-    --footer-content-gap: calc(2 * (var(--section-gap) + var(--header-text-inset)));
+    --page-inset-block: clamp(var(--space-6), 3vw, var(--space-12));
+    --header-content-gap: clamp(var(--space-8), 4vw, 4rem);
+    --navigation-gap: var(--space-8);
+    --nav-link-padding-block: var(--space-3);
+    --footer-content-gap: var(--section-gap);
 
-    /* Retícula editorial común a About y a las fichas de proyecto. */
-    --layout-left-share: 0.55;
-    --layout-columns:
-      minmax(0, calc((100% - var(--grid-gap)) * var(--layout-left-share)))
-      minmax(0, 1fr);
-    --layout-right-axis: calc(
-      (100% - var(--grid-gap)) * var(--layout-left-share) + var(--grid-gap)
-    );
-    --layout-three-columns:
-      repeat(2, minmax(0, calc(var(--layout-right-axis) / 2 - var(--grid-gap))))
-      minmax(0, 1fr);
+    /* Ejes compartidos; las áreas de práctica usan tercios en escritorio. */
+    --layout-columns: repeat(2, minmax(0, 1fr));
+    --layout-three-columns: repeat(3, minmax(0, 1fr));
 
     /* 60/30/10 de peso visual: carbón dominante, neutros de apoyo y azul
        para acciones y estados. Las imágenes conservan sus colores propios. */
@@ -109,21 +93,22 @@
     --accent: #93aecf;
     /* Variante de interacción del acento: 20% de blanco. */
     --accent-hover: #a9bed9;
+    --accent-active: #7e9dbc;
     --text-on-accent: #181818;
 
     --border-control: #737373;
-    --border-subtle: #363636;
+    --border-subtle: #424242;
 
     --color-error: #e6a19a;
-    /* El estado funcional conserva su color, independiente del acento de marca. */
-    --color-success: #8ab4f8;
+    /* El texto de confirmación comunica el resultado además del color. */
+    --color-success: var(--accent);
 
     /* Transiciones */
-    --duration-interaction: 0.3s;
+    --duration-interaction: 0.2s;
     /* Preset rise: entrada ascendente con fundido y secuencia entre bloques. */
-    --reveal-duration: 0.8s;
-    --reveal-step: 0.15s;
-    --reveal-distance: 2.5rem;
+    --reveal-duration: 0.65s;
+    --reveal-step: 0.1s;
+    --reveal-distance: 1rem;
     --transition:
       all var(--duration-interaction) cubic-bezier(0.36, -0.05, 0.07, 1);
 
@@ -192,14 +177,17 @@
 
   h1 {
     font-size: var(--font-size-heading-lg);
+    line-height: 1.1;
   }
 
   h2 {
     font-size: var(--font-size-heading-md);
+    line-height: 1.25;
   }
 
   h3 {
     font-size: var(--font-size-heading-sm);
+    line-height: 1.4;
   }
 
   p {
@@ -248,23 +236,12 @@
     align-self: start;
   }
 
-  /* Home conserva más aire alrededor del titular grande y del destacado. */
   .page-home {
-    --home-intro-gap: clamp(var(--space-3), 1.125vw, var(--space-4));
-    --home-feature-gap: clamp(var(--space-8), 3.5vw, var(--space-12));
-  }
-
-  /* La navegación cambia de estructura; la escala de espaciado permanece fluida. */
-  @media (width >= calc(755 / 16 * 1rem)) {
-    :root {
-      --header-text-inset: var(--nav-link-padding-block);
-    }
-
-    /* La portada crece con el ancho y conserva la jerarquía entre proyectos. */
-    .page-home {
-      --featured-image-max-width: clamp(42rem, 58vw, 88rem);
-      --project-card-max-width: calc(var(--featured-image-max-width) * 0.7);
-    }
+    --home-intro-gap: var(--space-4);
+    --home-feature-gap: var(--section-gap);
+    /* Límites de altura de medios: evitan una portada gigante en ultrawide. */
+    --featured-image-max-width: 88dvh;
+    --project-card-max-width: 74dvh;
   }
 
   /* 5. Controles y botón principal */
@@ -286,6 +263,7 @@
     color: var(--text);
     caret-color: var(--accent);
     padding: var(--field-padding);
+    min-height: var(--space-12);
     border-radius: var(--border-radius-in);
 
     &:focus {
@@ -308,30 +286,26 @@
 
   .btn-primary {
     display: block;
+    min-height: var(--space-12);
     padding: var(--button-padding-block) var(--button-padding-inline);
-    line-height: var(--line-height-body);
+    line-height: 1.25;
     background-color: var(--accent);
     color: var(--text-on-accent);
     cursor: pointer;
     font-weight: var(--font-weight-emphasis);
     letter-spacing: var(--letter-spacing-emphasis);
-    border-radius: var(--border-radius-in);
+    border-radius: 0;
     border: 1px solid transparent;
-    transition: var(--transition);
-
-    &:active {
-      background-color: var(--accent);
-      color: var(--text-on-accent);
-      border-color: transparent;
-    }
+    transition: background-color var(--duration-interaction) ease;
 
     @media (hover: hover) {
       &:hover {
-        transform: none;
         background-color: var(--accent-hover);
-        color: var(--text-on-accent);
-        border-color: transparent;
       }
+    }
+
+    &:active {
+      background-color: var(--accent-active);
     }
   }
 
@@ -416,6 +390,9 @@
     line-height: var(--line-height-body);
     transform: none;
     text-wrap: balance;
+    min-height: 2.75rem;
+    display: inline-flex;
+    align-items: center;
   }
 
   .desktop-nav {
@@ -430,9 +407,12 @@
 
   .nav__link {
     padding: var(--nav-link-padding-block) 0;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    font-size: var(--font-size-caption);
     font-weight: var(--font-weight-regular);
-    line-height: var(--line-height-body);
+    line-height: 1.4;
   }
 
   /* El color identifica la sección actual; el foco conserva su contorno. */
@@ -444,7 +424,10 @@
   }
 
   .mobile-menu__link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-block: var(--space-2);
   }
 
   /* Menú móvil y sus estados */
@@ -453,8 +436,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 2rem;
-    height: 2rem;
+    width: 2.75rem;
+    height: 2.75rem;
     background: none;
     border: none;
     cursor: pointer;
@@ -581,36 +564,35 @@
     }
   }
 
-  /* 9. Home: presentación y destacado se suceden sobre el mismo eje izquierdo. */
+  /* 9. Home: apertura editorial; una columna en tablet y dos en escritorio. */
   .home-content {
-    --section-gap: clamp(
-      var(--space-8),
-      2.8vw,
-      calc(var(--space-8) + var(--space-2))
-    );
+    gap: var(--space-8);
   }
 
   .home-hero {
-    --divider-inset: var(--space-6);
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--home-feature-gap);
-    padding-block-end: var(--divider-inset);
+    gap: var(--home-feature-gap) var(--grid-gap);
+    padding-block-end: var(--space-8);
     border-block-end: 1px solid var(--border-subtle);
   }
 
   .home-intro {
     display: grid;
+    align-content: start;
     gap: var(--home-intro-gap);
   }
 
   .home-intro h1 {
-    max-width: 26ch;
+    max-width: 18ch;
     font-size: var(--font-size-display);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
   }
 
   .home-intro__text {
     min-width: 0;
+    max-width: 44ch;
     font-size: var(--font-size-lead);
   }
 
@@ -619,14 +601,15 @@
     font-size: inherit;
   }
 
-  @media (width >= calc(755 / 16 * 1rem)) {
+  @media (width >= 64rem) {
     .home-hero {
-      max-width: var(--featured-image-max-width);
+      grid-template-columns: var(--layout-columns);
       align-items: start;
     }
 
-    .home-intro__text {
-      width: min(100%, var(--ch-width-body));
+    .featured-project {
+      width: min(100%, var(--featured-image-max-width));
+      justify-self: start;
     }
   }
 
@@ -649,7 +632,7 @@
     object-position: center;
     filter: brightness(1);
     transition: filter var(--duration-interaction) ease;
-    border-radius: var(--border-radius-in);
+    border-radius: 0;
   }
 
   .projects__description {
@@ -685,9 +668,9 @@
   }
 
   .project-link__icon {
-    /* Glifo decorativo proporcional al enlace, sin un tamaño de texto propio. */
-    font-size: 1em;
-    line-height: 1;
+    /* Flecha SVG de trazo coherente, proporcional al texto de la acción. */
+    width: 1em;
+    height: 1em;
     flex-shrink: 0;
   }
 
@@ -747,12 +730,14 @@
     --carousel-bleed: var(--page-gutter);
     --focus-padding-start: var(--space-2);
     --focus-padding-end: var(--space-4);
-    --carousel-label-gap: var(--space-4);
+    --carousel-label-gap: var(--space-6);
     max-width: 100rem;
     min-width: 0;
   }
 
   .project-carousel__label {
+    font-size: var(--font-size-caption);
+    letter-spacing: 0.02em;
     margin-block-end: calc(var(--carousel-label-gap) - var(--focus-padding-start));
   }
 
@@ -795,6 +780,11 @@
 
     > .projects__image-link {
       flex-shrink: 0;
+    }
+
+    h2 {
+      font-size: var(--font-size-heading-sm);
+      line-height: 1.3;
     }
 
     .projects__description {
@@ -905,7 +895,7 @@
 
   .case-intro {
     display: grid;
-    gap: var(--intro-gap);
+    gap: var(--space-8);
   }
 
   .case-intro h1 {
@@ -958,7 +948,7 @@
 
     img,
     video {
-      border-radius: var(--border-radius-in);
+      border-radius: 0;
     }
 
     figcaption {
@@ -966,6 +956,10 @@
       font-size: var(--font-size-caption);
       max-width: var(--ch-width-body);
     }
+  }
+
+  .case-media video {
+    background-color: var(--bg-dark);
   }
 
   .case-media picture img {
@@ -989,6 +983,8 @@
     padding-block-start: var(--divider-inset);
 
     h2 {
+      font-size: var(--font-size-heading-sm);
+      line-height: 1.4;
       margin-block-end: var(--copy-gap);
     }
   }
@@ -996,7 +992,7 @@
   .case-next {
     display: inline-block;
     max-width: 36ch;
-    font-size: var(--font-size-heading-lg);
+    font-size: var(--font-size-heading-md);
     font-weight: var(--font-weight-emphasis);
     letter-spacing: var(--letter-spacing-emphasis);
     line-height: var(--line-height-heading);
@@ -1017,12 +1013,25 @@
     gap: var(--related-block-gap);
   }
 
-  @media (width >= calc(755 / 16 * 1rem)) {
-    .case-study {
-      /* Las fichas usan mitades iguales; About conserva su proporción. */
-      --layout-columns: repeat(2, minmax(0, 1fr));
+  /* La ficha respira en tablet; tres columnas solo cuando tienen anchura útil. */
+  @media (width >= 37.5rem) {
+    .case-facts,
+    .case-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .case-facts > div:last-child {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* Una animación de formatos necesita más espacio que una miniatura de galería. */
+  .case-gallery > .case-media:has(> video):only-child {
+    grid-column: 1 / -1;
+    width: min(100%, 70rem);
+  }
+
+  @media (width >= 64rem) {
     .case-study,
     .case-opening,
     .case-gallery,
@@ -1040,18 +1049,12 @@
     }
 
     .case-facts {
-      /* Deliverables empieza en la segunda columna. El espacio restante
-         centra My role entre el bloque Client y ese eje. */
-      grid-template-columns:
-        fit-content(20%) minmax(0, 1fr)
-        minmax(0, calc((100% - var(--grid-gap)) / 2));
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       column-gap: var(--grid-gap);
     }
 
-    .case-facts > div:nth-child(2) {
-      justify-self: center;
-      max-width: 100%;
-      text-align: start;
+    .case-facts > div:last-child {
+      grid-column: auto;
     }
 
     .case-text {
@@ -1091,6 +1094,11 @@
 
   .about-intro__copy {
     gap: var(--intro-gap);
+
+    > p {
+      font-size: var(--font-size-lead);
+      max-width: 44ch;
+    }
   }
 
   .about-section {
@@ -1117,13 +1125,13 @@
 
   .about-portrait {
     width: min(100%, 40rem);
-    justify-self: end;
+    justify-self: start;
 
     img {
       aspect-ratio: 4 / 3;
       object-fit: cover;
       object-position: 55% center;
-      border-radius: var(--border-radius-in);
+      border-radius: 0;
     }
   }
 
@@ -1173,7 +1181,7 @@
     }
   }
 
-  @media (width >= calc(755 / 16 * 1rem)) {
+  @media (width >= 64rem) {
     .about-intro,
     .about-details {
       grid-template-columns: var(--layout-columns);
@@ -1206,7 +1214,15 @@
   }
 
   /* 13. Contacto y validación */
-  @media (width >= calc(755 / 16 * 1rem)) {
+  .contactform__intro p {
+    font-size: var(--font-size-lead);
+  }
+
+  .contact-form__field > label {
+    font-size: var(--font-size-caption);
+  }
+
+  @media (width >= 64rem) {
     .contact-layout {
       grid-template-columns: var(--layout-columns);
       align-items: start;
@@ -1277,6 +1293,14 @@
     flex-wrap: wrap;
     gap: var(--navigation-gap);
     align-items: center;
+  }
+
+  .page-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    padding-block: var(--space-3);
+    font-size: var(--font-size-caption);
   }
 
   /* 15. Preferencias de movimiento: excepciones compartidas */
