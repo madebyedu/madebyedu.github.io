@@ -7,13 +7,14 @@
 - Los estilos compartidos están en `assets/css/style.css` y el comportamiento en `assets/js/app.js`.
 - Mantén el diseño propio, el sistema visual y las convenciones existentes. No introduzcas Tailwind CSS ni nuevos frameworks, ni migres el sistema de estilos.
 
-## Dirección artística y autonomía
+## Dirección artística por defecto
 
-- Aplica automáticamente [DESIGN.md](DESIGN.md) al trabajar en diseño visual, HTML, CSS, componentes o responsive. Úsalo para decidir jerarquía, composición, proporciones, proximidad Gestalt, ritmo, geometría, color, movimiento y accesibilidad; no solo para cotejar variables.
-- BMW es una referencia estructural fuerte, adaptada a la identidad propia del portfolio. Distingue los valores implementados y aprobados de las referencias conceptuales; no copies su marca, fuentes o recursos.
-- Cuando el usuario solicite una mejora o actualización, impleméntala de manera integral dentro del alcance autorizado. Resuelve conjuntamente tipografía, espaciados, color, retículas y componentes cuando dependan entre sí; prioriza estilos compartidos frente a parches locales.
-- No te limites a analizar o proponer si se ha pedido implementar. No dividas artificialmente el trabajo en fases ni solicites confirmación para tamaños, gaps, radios u otras decisiones menores autorizadas.
-- Consulta únicamente ante una ambigüedad importante, una contradicción sustancial no resuelta por la petición o un riesgo fuera del alcance autorizado. Las autorizaciones expresas del usuario prevalecen sobre las direcciones anteriores del manual; actualízalo cuando se solicite.
+- Consulta y aplica proactivamente [DESIGN.md](DESIGN.md) al crear, modificar, mejorar o revisar cualquier parte visual o frontend del portfolio, sin esperar que el usuario lo mencione: HTML, CSS, componentes, responsive, navegación, formularios, tipografía, colores, espaciados, imágenes, composición, animaciones y estados interactivos.
+- Utiliza el manual para tomar decisiones de dirección artística, no solo para cotejar valores CSS: composición editorial y expresiva, geometría precisa, proximidad Gestalt y agrupación semántica, jerarquía visual y tipográfica, equilibrio entre imagen y texto, ritmo espacial, alineaciones coherentes, espacio negativo equilibrado, movimiento discreto y elegante, coherencia responsive y accesibilidad.
+- Evalúa las relaciones y el resultado visual real; evita soluciones genéricas o mecánicas, distancias idénticas para relaciones diferentes, redondeos arbitrarios y componentes decorativos innecesarios. Combina estos criterios con Frontend Craft e Impeccable según el apartado de skills, sin duplicar procesos ni ampliar revisiones triviales.
+- Distingue decisiones artísticas aprobadas, valores técnicos efectivamente implementados, referencias orientativas y propuestas pendientes de validar. El manual no autoriza por sí mismo cambios en la web: no conviertas valores exploratorios ni diferencias con el CSS en órdenes de implementación.
+- Dentro de una modificación visual autorizada, resuelve autónomamente los pequeños detalles necesarios siguiendo el manual y conservando el alcance pedido. Si la petición contradice una decisión importante de DESIGN.md, explica brevemente el conflicto y propone una alternativa coherente; antes de cambiar la dirección artística, alterar extensamente la composición o contradecir de forma relevante el diseño existente, presenta una propuesta y espera aprobación.
+- Aplica los criterios de alcance y responsive de este archivo: comprueba los elementos compartidos en todas las páginas pertinentes, incluidas las seis fichas de proyectos, y conserva la coherencia entre componentes y tamaños. No extiendas cambios específicos ni añadas rediseños ajenos a la petición.
 
 ## Skills por defecto
 
@@ -40,11 +41,12 @@
 ## Forma de trabajar
 
 - Lee el estado de Git y los archivos relevantes antes de editar. Conserva los cambios pendientes que no pertenecen a tu tarea.
-- Ejecuta las modificaciones autorizadas con criterio propio, conservando cambios ajenos y contratos existentes. No amplíes el alcance por iniciativa propia.
-- Verifica de forma proporcionada: revisión visual breve de los elementos afectados para cambios de diseño, pruebas específicas para funcionalidad y comprobaciones relevantes para accesibilidad. Para publicación o cambios de alto riesgo, realiza una verificación más completa.
-- Usa las comprobaciones existentes y revisa el diff. No generes capturas masivas, auditorías exhaustivas, informes largos ni pruebas repetidas por defecto; amplía la cobertura solo cuando el riesgo o un problema observado lo justifiquen. No envíes el formulario real durante pruebas sin autorización.
-- Comprueba móvil, tamaños intermedios y escritorio cuando sean pertinentes, además de los componentes compartidos afectados. No confundas una revisión estática o automática con una prueba visual o con una certificación de accesibilidad.
-- Entrega una respuesta concisa con cambios y decisiones importantes, archivos modificados, comprobaciones realizadas y problemas relevantes. Evita informes extensos salvo petición expresa.
+- Resuelve detalles rutinarios con criterio propio y las convenciones existentes. Realiza directamente los cambios pequeños, claros y reversibles cuando la petición autorice la modificación.
+- Para rediseños importantes, cambios de arquitectura, decisiones que afecten a varias funcionalidades o ambigüedades importantes de producto, diseño o alcance, presenta una propuesta breve y espera la aprobación antes de editar.
+- Verifica los flujos afectados en navegador cuando sea posible, incluyendo móvil, escritorio, teclado y consola. No envíes el formulario real de contacto durante una prueba sin autorización.
+- Usa las comprobaciones existentes y comprueba el diff. No presentes como ejecutadas pruebas que no has realizado.
+- Comprueba los archivos modificados y sus dependencias relevantes, y verifica la coherencia visual y funcional de los elementos compartidos en las páginas afectadas.
+- Al entregar, explica brevemente qué archivos cambiaste, qué páginas se vieron afectadas, qué pruebas realizaste y qué falta verificar. No presentes una revisión de código como prueba visual o funcional ejecutada.
 - No descargues ni ejecutes instaladores, binarios externos o scripts remotos sin autorización explícita del usuario.
 - Antes de modificar permisos o introducir dependencias nuevas, justifica la necesidad y obtén la aprobación explícita del usuario.
 - No incluyas contraseñas, tokens, claves API ni archivos de configuración privada en commits o publicaciones.
