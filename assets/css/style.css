@@ -295,7 +295,9 @@
   }
 
   input:user-invalid,
-  textarea:user-invalid {
+  textarea:user-invalid,
+  input[aria-invalid="true"],
+  textarea[aria-invalid="true"] {
     outline: 2px solid var(--color-error);
     outline-offset: 2px;
   }
@@ -382,7 +384,9 @@
   }
 
   input:user-invalid,
-  textarea:user-invalid {
+  textarea:user-invalid,
+  input[aria-invalid="true"],
+  textarea[aria-invalid="true"] {
     outline-color: var(--color-error);
   }
 
@@ -1254,9 +1258,15 @@
     color: var(--color-error);
 
     input:user-invalid ~ &,
-    textarea:user-invalid ~ & {
+    textarea:user-invalid ~ &,
+    input[aria-invalid="true"] ~ &,
+    textarea[aria-invalid="true"] ~ & {
       display: block;
       animation: fadeIn var(--duration-interaction) ease;
+
+      @media (prefers-reduced-motion: reduce) {
+        animation: none;
+      }
     }
   }
 
@@ -1281,6 +1291,10 @@
 
   /* 15. Preferencias de movimiento: excepciones compartidas */
   @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
     .mobile-menu,
     .mobile-menu a,
     .hamburger__line,

@@ -1,6 +1,10 @@
 // Portfolio Website JavaScript
 // Handles mobile menu toggle and smooth interactions
 
+const reducedMotionPreference = window.matchMedia(
+  "(prefers-reduced-motion: reduce)",
+);
+
 class PortfolioApp {
   constructor() {
     this.hamburger = document.querySelector(".hamburger");
@@ -152,6 +156,15 @@ class PortfolioApp {
 class SmoothScroll {
   constructor() {
     this.init();
+    reducedMotionPreference.addEventListener("change", (event) => {
+      if (event.matches) {
+        window.scrollTo({
+          top: window.scrollY,
+          left: window.scrollX,
+          behavior: "instant",
+        });
+      }
+    });
   }
 
   init() {
@@ -169,7 +182,10 @@ class SmoothScroll {
         const target = document.querySelector(href);
         if (target) {
           e.preventDefault();
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
+          target.scrollIntoView({
+            behavior: reducedMotionPreference.matches ? "instant" : "smooth",
+            block: "start",
+          });
         }
       });
     });
@@ -200,8 +216,7 @@ class PerformanceMonitor {
 class RevealAnimator {
   constructor() {
     this.elements = [...document.querySelectorAll('[data-reveal="rise"]')];
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (reducedMotion.matches || !("IntersectionObserver" in window)) return;
+    if (reducedMotionPreference.matches || !("IntersectionObserver" in window)) return;
 
     this.observer = new IntersectionObserver((entries) => {
       let index = 0;
@@ -225,8 +240,14 @@ class RevealAnimator {
       }
     });
 
-    reducedMotion.addEventListener("change", (event) => {
-      if (event.matches) this.elements.forEach((element) => this.reveal(element));
+    reducedMotionPreference.addEventListener("change", (event) => {
+      if (!event.matches) return;
+      // Stabilize all content so restoring normal motion cannot replay old entries.
+      this.observer.disconnect();
+      this.elements.forEach((element) => {
+        element.classList.remove("reveal-pending", "is-revealed");
+        element.style.removeProperty("--reveal-delay");
+      });
     });
   }
 
@@ -262,6 +283,11 @@ class ProjectCarousel {
       this.scrollTo(destinations[event.key]);
     });
     this.bindDragging();
+    reducedMotionPreference.addEventListener("change", (event) => {
+      if (event.matches) {
+        this.track.scrollTo({ left: this.track.scrollLeft, behavior: "instant" });
+      }
+    });
     this.resizeObserver = new ResizeObserver(() => this.updateBleed());
     this.resizeObserver.observe(this.root);
     window.addEventListener("resize", () => this.updateBleed());
@@ -274,10 +300,10 @@ class ProjectCarousel {
   }
 
   scrollTo(left) {
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    this.track.scrollTo({ left, behavior: reducedMotion ? "instant" : "smooth" });
+    this.track.scrollTo({
+      left,
+      behavior: reducedMotionPreference.matches ? "instant" : "smooth",
+    });
   }
 
   updateBleed() {
@@ -345,22 +371,102 @@ class ProjectCarousel {
   }
 }
 
-// Form Submission Logic
+// Autoplay is enhanced in JS so reduced motion is respected before playback starts.
+class MotionAwareVideos {
+  constructor() {
+    this.videos = [...document.querySelectorAll("video[data-autoplay]")];
+    this.loopingVideos = new Set(this.videos.filter((video) => video.loop));
+    this.updatePreference();
+
+    if (!reducedMotionPreference.matches) {
+      this.videos.forEach((video) => {
+        video.autoplay = true;
+        // A browser may require a gesture; native controls remain available.
+        video.play().catch(() => {});
+      });
+    }
+
+    reducedMotionPreference.addEventListener("change", () => {
+      this.updatePreference();
+    });
+  }
+
+  updatePreference() {
+    this.videos.forEach((video) => {
+      video.loop = !reducedMotionPreference.matches && this.loopingVideos.has(video);
+      if (reducedMotionPreference.matches) {
+        video.autoplay = false;
+        video.pause();
+      }
+    });
+    // Returning to normal motion never overrides a visitor's playback/pause choice.
+  }
+}
+
+// Form validation keeps the native constraints and the existing inline messages.
 const form = document.getElementById("contact-form");
 const formMessage = document.getElementById("form-message");
 
 if (form && formMessage) {
-  form.addEventListener("submit", async function (event) {
-    // 1. Prevent default submission to handle it via JS
-    event.preventDefault();
+  // Without JS, HTML retains interactive native validation.
+  form.noValidate = true;
+  const fields = [...form.querySelectorAll(
+    ".contact-form__field input, .contact-form__field textarea",
+  )];
+  let validationAttempted = false;
+  let submitting = false;
 
-    // 2. Check native HTML5 validity (this triggers your CSS :user-invalid states!)
+  function updateFieldError(field, showError) {
+    const error = field.parentElement.querySelector(".contact-form__field-error");
+    if (!error) return;
+    const invalid = showError && !field.validity.valid;
+    const descriptions = new Set(
+      (field.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean),
+    );
+    descriptions.delete(error.id);
+    if (invalid) {
+      field.setAttribute("aria-invalid", "true");
+      descriptions.add(error.id);
+    } else {
+      field.removeAttribute("aria-invalid");
+    }
+    if (descriptions.size) {
+      field.setAttribute("aria-describedby", [...descriptions].join(" "));
+    } else {
+      field.removeAttribute("aria-describedby");
+    }
+  }
+
+  fields.forEach((field) => {
+    const syncError = () => updateFieldError(
+      field,
+      validationAttempted || field.matches(":user-invalid"),
+    );
+    field.addEventListener("input", syncError);
+    field.addEventListener("blur", syncError);
+    field.addEventListener("invalid", () => updateFieldError(field, true));
+  });
+
+  form.addEventListener("reset", () => {
+    validationAttempted = false;
+    fields.forEach((field) => updateFieldError(field, false));
+  });
+
+  form.addEventListener("submit", async function (event) {
+    event.preventDefault();
+    if (submitting) return;
+
+    validationAttempted = true;
+    formMessage.textContent = "";
+    fields.forEach((field) => updateFieldError(field, true));
     if (!form.checkValidity()) {
-      return; // Stop the script if there are errors
+      fields.find((field) => !field.validity.valid)?.focus();
+      return;
     }
 
-    // 3. If valid, send the data in the background
     const formData = new FormData(form);
+    submitting = true;
+    form.setAttribute("aria-busy", "true");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
@@ -370,13 +476,10 @@ if (form && formMessage) {
 
       const data = await response.json();
 
-      if (data.success) {
+      if (response.ok && data.success) {
         formMessage.textContent = "Message sent! I'll get back to you soon.";
         formMessage.style.color = "var(--color-success)";
         form.reset();
-        setTimeout(() => {
-          formMessage.textContent = "";
-        }, 5000);
       } else {
         formMessage.textContent = "Something went wrong. Please try again.";
         formMessage.style.color = "var(--color-error)";
@@ -384,6 +487,9 @@ if (form && formMessage) {
     } catch (error) {
       formMessage.textContent = "Network error. Please check your connection.";
       formMessage.style.color = "var(--color-error)";
+    } finally {
+      submitting = false;
+      form.removeAttribute("aria-busy");
     }
   });
 }
@@ -393,6 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
   new PortfolioApp();
   new SmoothScroll();
   new RevealAnimator();
+  new MotionAwareVideos();
   document.querySelectorAll("[data-project-carousel]").forEach((root) => {
     new ProjectCarousel(root);
   });
