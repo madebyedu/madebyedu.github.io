@@ -131,7 +131,7 @@ Se puede estudiar un peso adicional cuando exista una necesidad real, pero no de
 |---|---|---|
 | Display | Aproximadamente 24–80 px | Titular principal de Home |
 | Heading XL | Aproximadamente 24–40 px | H1 de páginas interiores |
-| Heading L | Aproximadamente 18–32 px | Proyectos destacados |
+| Heading L | Aproximadamente 18–32 px | Títulos de proyectos |
 | Heading M | Aproximadamente 18–24 px | Encabezados de secciones |
 | Body Lead | Aproximadamente 16–20 px | Textos introductorios |
 | Body | 16 px | Texto editorial general |
@@ -195,7 +195,7 @@ Ejemplos:
 Elementos relacionados que cumplen funciones visuales diferentes.
 
 Ejemplos:
-- Presentación personal e imagen destacada.
+- Presentación personal y selección de proyectos.
 - Descripción de proyecto y acción para acceder a él.
 - Texto explicativo y galería relacionada.
 
@@ -204,7 +204,7 @@ Ejemplos:
 Elementos que representan una transición narrativa.
 
 Ejemplos:
-- Un proyecto destacado y el siguiente conjunto de proyectos.
+- La introducción personal y la selección de proyectos.
 - Secciones editoriales independientes.
 - El final de una galería y el inicio de otro capítulo.
 
@@ -587,18 +587,19 @@ Las auditorías recientes de Home y About han servido para confirmar los siguien
 
 ### Home
 
-- El título principal y su introducción forman un mismo grupo.
-- La imagen destacada necesita una separación mayor respecto a ese grupo.
-- El rótulo «Más proyectos» debe mantenerse visualmente próximo a las imágenes que introduce.
-- La transición entre el proyecto destacado y el carrusel debe comunicar un cambio de capítulo.
+- El título principal y su introducción forman un mismo grupo al comienzo.
+- Los seis proyectos comparten un único carrusel; no existe un proyecto destacado ni una jerarquía de principales y secundarios. Porsche abre la selección, seguido de Antilluvia, Salud, CUPRA, OutletCars y Luz natural.
+- Una pausa editorial separa la presentación de la selección. El rótulo «Proyectos» («Selected work» en inglés) queda próximo a las imágenes que introduce, sin divisor entre proyectos.
+- Todas las tarjetas comparten fotografía horizontal 2:1, título, categoría y acción, con una escala mayor para dar protagonismo al conjunto.
 
 ### Carrusel
 
-La proximidad entre categoría y acción es especialmente importante en tarjetas estrechas.
+- Se muestra aproximadamente una tarjeta y un cuarto en móvil, una y tres cuartos desde 755 px, dos y un cuarto desde 1024 px y dos y media desde 2048 px. La selección continúa hasta el borde derecho y deja ver parte de la siguiente tarjeta.
+- No utiliza flechas ni barra visible. Conserva desplazamiento táctil y nativo, arrastre con ratón, navegación por teclado, foco visible y movimiento reducido.
+- En móvil, toda la tarjeta permite acceder al proyecto. En escritorio, lo hacen la imagen y la acción.
+- Prima la proximidad entre categoría y acción por debajo de 1024 px; desde 1024 px las acciones comparten el eje inferior.
 
-La implementación reciente utiliza proximidad en pantallas inferiores a 1024 px y alineación inferior de acciones desde 1024 px.
-
-Esta solución es una referencia específica del portfolio actual, **no una regla universal para todos los carruseles futuros**.
+Esta solución responde a la selección actual, **no es una regla universal para todos los carruseles futuros**.
 
 ### About
 
@@ -699,6 +700,7 @@ Si DESIGN.md describe una dirección todavía no implementada, Codex debe señal
 - Geometría precisa y bordes preferentemente rectos.
 - Composición editorial y expresiva con estructura rigurosa.
 - Equilibrio entre imagen y tipografía.
+- Home con introducción y un único carrusel de proyectos de igual jerarquía, sin destacado.
 - Movimiento discreto y elegante, con excepciones justificadas.
 - Proximidad, alineación y ritmo visual como criterios conjuntos.
 

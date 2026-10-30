@@ -37,8 +37,6 @@
     --font-size-caption: var(--font-size-body);
     --font-size-heading-sm: var(--font-size-body);
     --font-size-lead: var(--font-size-body);
-    --font-size-caption-featured: var(--font-size-body);
-    --font-size-heading-featured: var(--font-size-heading-md);
     --font-size-mobile-nav: var(--font-size-heading-md);
     --font-size-display: var(--font-size-heading-lg);
 
@@ -248,22 +246,16 @@
     align-self: start;
   }
 
-  /* Home conserva más aire alrededor del titular grande y del destacado. */
+  /* Home agrupa la presentación y da paso a una selección de igual jerarquía. */
   .page-home {
     --home-intro-gap: clamp(var(--space-3), 1.125vw, var(--space-4));
-    --home-feature-gap: clamp(var(--space-8), 3.5vw, var(--space-12));
+    --home-projects-gap: clamp(var(--space-8), 3.5vw, var(--space-12));
   }
 
   /* La navegación cambia de estructura; la escala de espaciado permanece fluida. */
   @media (width >= calc(755 / 16 * 1rem)) {
     :root {
       --header-text-inset: var(--nav-link-padding-block);
-    }
-
-    /* La portada crece con el ancho y conserva la jerarquía entre proyectos. */
-    .page-home {
-      --featured-image-max-width: clamp(42rem, 58vw, 88rem);
-      --project-card-max-width: calc(var(--featured-image-max-width) * 0.7);
     }
   }
 
@@ -585,22 +577,9 @@
     }
   }
 
-  /* 9. Home: presentación y destacado se suceden sobre el mismo eje izquierdo. */
+  /* 9. Home: presentación seguida de la selección completa de proyectos. */
   .home-content {
-    --section-gap: clamp(
-      var(--space-8),
-      2.8vw,
-      calc(var(--space-8) + var(--space-2))
-    );
-  }
-
-  .home-hero {
-    --divider-inset: var(--space-6);
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--home-feature-gap);
-    padding-block-end: var(--divider-inset);
-    border-block-end: 1px solid var(--border-subtle);
+    gap: var(--home-projects-gap);
   }
 
   .home-intro {
@@ -624,11 +603,6 @@
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
-    .home-hero {
-      max-width: var(--featured-image-max-width);
-      align-items: start;
-    }
-
     .home-intro__text {
       width: min(100%, var(--ch-width-body));
     }
@@ -704,55 +678,16 @@
     transform: none;
   }
 
-  /* Proyecto destacado */
-  .featured-project {
-    --card-media-gap: var(--intro-gap);
-    display: grid;
-    gap: var(--card-media-gap);
-  }
-
-  .featured-project picture {
-    overflow: hidden;
-  }
-
-  .featured-project .projects__description {
-    margin-block-start: 0;
-    align-content: start;
-  }
-
-  .featured-project .projects__description h2 {
-    max-width: none;
-    font-size: var(--font-size-heading-featured);
-    text-wrap: wrap;
-  }
-
-  .featured-project .projects__description p {
-    font-size: var(--font-size-caption-featured);
-  }
-
-  @media (width >= calc(755 / 16 * 1rem)) {
-    .featured-project {
-      align-content: start;
-    }
-
-    .featured-project .projects__description {
-      min-width: 0;
-      align-content: start;
-    }
-
-    .featured-project .projects__description h2 {
-      text-wrap: balance;
-    }
-  }
-
   /* El carrusel sale del margen derecho. El marco base se conserva en móvil;
      escritorio usa todo el viewport y mantiene un margen final de lectura. */
   .project-carousel {
     --carousel-bleed: var(--page-gutter);
+    --carousel-visible-cards: 1.25;
+    --carousel-visible-gaps: 1;
     --focus-padding-start: var(--space-2);
     --focus-padding-end: var(--space-4);
     --carousel-label-gap: var(--space-4);
-    max-width: 100rem;
+    max-width: none;
     min-width: 0;
   }
 
@@ -764,7 +699,8 @@
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: calc(
-      (100% + var(--carousel-bleed) - var(--grid-gap)) / 1.5
+      (100% + var(--carousel-bleed) - var(--carousel-visible-gaps) * var(--grid-gap)) /
+      var(--carousel-visible-cards)
     );
     gap: var(--grid-gap);
     margin-inline-end: calc(-1 * var(--carousel-bleed));
@@ -829,39 +765,33 @@
     }
   }
 
+  /* La siguiente tarjeta permanece parcialmente visible en todos los tamaños. */
   @media (width >= calc(755 / 16 * 1rem)) {
     .project-carousel {
-      max-width: none;
-    }
-
-    .project-carousel__track {
-      grid-auto-columns: min(
-        calc((100% + var(--carousel-bleed) - 2 * var(--grid-gap)) / 2.5),
-        var(--project-card-max-width)
-      );
+      --carousel-visible-cards: 1.75;
     }
   }
 
-  /* Desde 2048px se ven tres tarjetas y media; antes se mantienen dos y media.
-     El límite relativo de cada tarjeta conserva la jerarquía del destacado. */
+  @media (width >= 64rem) {
+    .project-carousel {
+      --carousel-visible-cards: 2.25;
+      --carousel-visible-gaps: 2;
+    }
+  }
+
   @media (width >= 128rem) {
-    .project-carousel__track {
-      grid-auto-columns: min(
-        calc((100% + var(--carousel-bleed) - 3 * var(--grid-gap)) / 3.5),
-        var(--project-card-max-width)
-      );
+    .project-carousel {
+      --carousel-visible-cards: 2.5;
     }
   }
 
   /* En móvil, el enlace de la imagen cubre toda la celda. Los enlaces
      originales siguen disponibles para teclado, sin anidar elementos <a>. */
   @media (width < calc(755 / 16 * 1rem)) {
-    .featured-project,
     .project-card {
       position: relative;
     }
 
-    .featured-project > .projects__image-link,
     .project-card > .projects__image-link {
       position: static;
 
