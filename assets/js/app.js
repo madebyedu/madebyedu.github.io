@@ -347,8 +347,14 @@ class ProjectCarousel {
       this.scrollTo(destinations[event.key]);
     });
     this.bindDragging();
+    // Native touch/trackpad scrolling and keyboard focus interrupt mouse momentum.
+    this.track.addEventListener("wheel", () => this.stopMotion(), { passive: true });
+    this.track.addEventListener("focusin", () => {
+      if (!this.drag) this.stopMotion();
+    });
     reducedMotionPreference.addEventListener("change", (event) => {
       if (event.matches) {
+        this.stopMotion();
         this.track.scrollTo({ left: this.track.scrollLeft, behavior: "instant" });
       }
     });
@@ -364,10 +370,55 @@ class ProjectCarousel {
   }
 
   scrollTo(left) {
+    this.stopMotion();
     this.track.scrollTo({
       left,
       behavior: reducedMotionPreference.matches ? "instant" : "smooth",
     });
+  }
+
+  stopMotion() {
+    cancelAnimationFrame(this.motionFrame);
+    this.track.classList.remove("is-coasting");
+  }
+
+  coast(velocity) {
+    const start = this.track.scrollLeft;
+    const maximum = this.track.scrollWidth - this.track.clientWidth;
+    // Pick the destination from the impulse before animating, not after it stops.
+    const projected = Math.max(0, Math.min(maximum, start + (reducedMotionPreference.matches ? 0 : velocity * 260)));
+    const target = Math.max(0, Math.min(maximum, Math.round(projected / this.step) * this.step));
+    const distance = target - start;
+    if (reducedMotionPreference.matches || Math.abs(distance) < 1) {
+      this.track.scrollLeft = target;
+      this.stopMotion();
+      return;
+    }
+
+    const followsImpulse = distance * velocity > 0 && Math.abs(velocity) >= 0.12;
+    const duration = followsImpulse
+      ? Math.min(1200, Math.max(550, 2.5 * Math.abs(distance / velocity)))
+      : Math.min(900, Math.max(500, Math.abs(distance) * 2.2));
+    const initialSlope = followsImpulse
+      ? Math.min(3, velocity * duration / distance)
+      : 0;
+    const began = performance.now();
+    const animate = (now) => {
+      const progress = Math.min(1, (now - began) / duration);
+      // A single trajectory carries the release speed to zero at the card.
+      // Without an impulse, retain the gentle start and finish of a small correction.
+      const eased = followsImpulse
+        ? progress ** 2 * (3 - 2 * progress) +
+          initialSlope * progress * (1 - progress) ** 2
+        : progress ** 3 * (10 - 15 * progress + 6 * progress ** 2);
+      this.track.scrollLeft = start + distance * eased;
+      if (progress < 1) {
+        this.motionFrame = requestAnimationFrame(animate);
+      } else {
+        this.stopMotion();
+      }
+    };
+    this.motionFrame = requestAnimationFrame(animate);
   }
 
   updateBleed() {
@@ -380,14 +431,20 @@ class ProjectCarousel {
   bindDragging() {
     this.track.addEventListener("dragstart", (event) => event.preventDefault());
     this.track.addEventListener("pointerdown", (event) => {
+      this.stopMotion();
       if (
         event.pointerType !== "mouse" || event.button !== 0 ||
         event.ctrlKey || event.metaKey || event.altKey || event.shiftKey
       ) return;
+      this.track.classList.add("is-coasting");
+      this.track.scrollTo({ left: this.track.scrollLeft, behavior: "instant" });
       this.suppressClick = false;
       this.drag = {
         pointerId: event.pointerId,
         startX: event.clientX,
+        lastX: event.clientX,
+        lastTime: event.timeStamp,
+        velocity: 0,
         scrollLeft: this.track.scrollLeft,
         moved: false,
       };
@@ -398,19 +455,35 @@ class ProjectCarousel {
       if (!this.drag.moved && Math.abs(distance) < 8) return;
       if (!this.drag.moved) {
         this.drag.moved = true;
-        this.track.classList.add("is-dragging");
+        this.track.classList.add("is-dragging", "is-coasting");
         this.track.setPointerCapture(event.pointerId);
       }
       event.preventDefault();
+      const elapsed = event.timeStamp - this.drag.lastTime;
+      if (elapsed > 0) {
+        const velocity = (this.drag.lastX - event.clientX) / elapsed;
+        this.drag.velocity = Math.max(-3.5, Math.min(3.5,
+          this.drag.velocity * 0.4 + velocity * 0.6
+        ));
+      }
+      this.drag.lastX = event.clientX;
+      this.drag.lastTime = event.timeStamp;
       this.track.scrollLeft = this.drag.scrollLeft - distance;
     });
     const finish = (event) => {
       if (!this.drag || this.drag.pointerId !== event.pointerId) return;
-      this.suppressClick = this.drag.moved;
+      const drag = this.drag;
+      this.suppressClick = drag.moved;
       this.drag = null;
       this.track.classList.remove("is-dragging");
       if (this.track.hasPointerCapture(event.pointerId)) {
         this.track.releasePointerCapture(event.pointerId);
+      }
+      if (drag.moved && event.type === "pointerup") {
+        // Holding still before release deliberately removes the flick impulse.
+        this.coast(event.timeStamp - drag.lastTime < 80 ? drag.velocity : 0);
+      } else {
+        this.stopMotion();
       }
       // The synthetic click following pointerup must not open a dragged card.
       setTimeout(() => {
@@ -419,6 +492,7 @@ class ProjectCarousel {
     };
     this.track.addEventListener("pointerup", finish);
     this.track.addEventListener("pointercancel", finish);
+    this.track.addEventListener("lostpointercapture", finish);
     this.track.addEventListener("pointerleave", (event) => {
       if (this.drag && !this.drag.moved) finish(event);
     });

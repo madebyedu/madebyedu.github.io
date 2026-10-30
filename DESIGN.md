@@ -597,7 +597,9 @@ Las auditorías recientes de Home y About han servido para confirmar los siguien
 ### Carrusel
 
 - Se muestra aproximadamente una tarjeta y un cuarto en móvil, una y tres cuartos desde 755 px, dos y un cuarto desde 1024 px y al menos dos y media desde 2048 px. La selección continúa hasta el borde derecho utilizable en todas las pantallas, sin limitar el ancho del carrusel ni reservar una franja vacía para una barra de scroll inexistente. En ultrawide, cada tarjeta tiene un ancho máximo de 62.5 rem (1000 px con raíz de 16 px): se mantienen contenidas y aparecen más proyectos hasta el borde, sin dejar un bloque vacío a la derecha.
-- No utiliza flechas ni barra visible. Conserva desplazamiento táctil y nativo, arrastre con ratón, navegación por teclado, foco visible y movimiento reducido.
+- No utiliza flechas ni barra visible. El scroll táctil y de trackpad conserva el comportamiento nativo, con ajuste por proximidad en lugar de anclaje obligatorio.
+- El arrastre con ratón es directo: al soltar se estima el destino según el impulso y una única trayectoria desacelera hasta quedar alineada con un proyecto, sin detenerse antes para añadir otra corrección. Una nueva interacción interrumpe ese impulso; con movimiento reducido no se añade inercia ni animación de ajuste.
+- Conserva navegación por teclado y foco visible.
 - En móvil, toda la tarjeta permite acceder al proyecto. En escritorio, lo hacen la imagen y la acción.
 - Prima la proximidad entre categoría y acción por debajo de 1024 px; desde 1024 px las acciones comparten el eje inferior.
 

@@ -727,7 +727,7 @@
     /* Conserva espacio para el foco sin sumarlo a la separación con el footer. */
     margin-block-end: calc(-1 * var(--focus-padding-end));
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
+    scroll-snap-type: x proximity;
     scroll-behavior: smooth;
     overscroll-behavior-x: contain;
     scrollbar-width: none;
@@ -737,9 +737,12 @@
       display: none;
     }
 
-    &.is-dragging {
+    &.is-coasting {
       scroll-snap-type: none;
       scroll-behavior: auto;
+    }
+
+    &.is-dragging {
       cursor: grabbing;
       user-select: none;
     }
