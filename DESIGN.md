@@ -587,14 +587,16 @@ Las auditorías recientes de Home y About han servido para confirmar los siguien
 
 ### Home
 
-- El título principal y su introducción forman un mismo grupo al comienzo.
+- El título principal y su introducción forman un mismo grupo. El titular de Home utiliza General Sans 600 y una escala fluida de 32–48 px, sin modificar los titulares de otras páginas.
+- Cuando sobra altura entre la cabecera y el footer, el centro del bloque de proyectos se aproxima a la línea del tercio inferior de ese espacio. La introducción se centra verticalmente en el espacio anterior al carrusel.
+- Esta composición responde a la altura real del contenido en móvil, tablet y escritorio. Las separaciones mínimas prevalecen cuando no cabe la composición por tercios: el contenido sigue su flujo natural y permite scroll, también con zoom o texto ampliado.
 - Los seis proyectos comparten un único carrusel; no existe un proyecto destacado ni una jerarquía de principales y secundarios. Porsche abre la selección, seguido de Antilluvia, Salud, CUPRA, OutletCars y Luz natural.
 - Una pausa editorial separa la presentación de la selección. El rótulo «Proyectos» («Selected work» en inglés) queda próximo a las imágenes que introduce, sin divisor entre proyectos.
 - Todas las tarjetas comparten fotografía horizontal 2:1, título, categoría y acción, con una escala mayor para dar protagonismo al conjunto.
 
 ### Carrusel
 
-- Se muestra aproximadamente una tarjeta y un cuarto en móvil, una y tres cuartos desde 755 px, dos y un cuarto desde 1024 px y dos y media desde 2048 px. La selección continúa hasta el borde derecho y deja ver parte de la siguiente tarjeta.
+- Se muestra aproximadamente una tarjeta y un cuarto en móvil, una y tres cuartos desde 755 px, dos y un cuarto desde 1024 px y al menos dos y media desde 2048 px. La selección continúa hasta el borde derecho utilizable en todas las pantallas, sin limitar el ancho del carrusel ni reservar una franja vacía para una barra de scroll inexistente. En ultrawide, cada tarjeta tiene un ancho máximo de 62.5 rem (1000 px con raíz de 16 px): se mantienen contenidas y aparecen más proyectos hasta el borde, sin dejar un bloque vacío a la derecha.
 - No utiliza flechas ni barra visible. Conserva desplazamiento táctil y nativo, arrastre con ratón, navegación por teclado, foco visible y movimiento reducido.
 - En móvil, toda la tarjeta permite acceder al proyecto. En escritorio, lo hacen la imagen y la acción.
 - Prima la proximidad entre categoría y acción por debajo de 1024 px; desde 1024 px las acciones comparten el eje inferior.
