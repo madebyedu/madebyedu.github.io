@@ -92,11 +92,11 @@
 
     <main>
       <div class="wrapper home-content">
-        <section class="home-intro" data-reveal="rise" aria-labelledby="home-title">
-          <h1 id="home-title">
+        <section class="home-intro" aria-labelledby="home-title">
+          <h1 id="home-title" data-reveal="rise">
             From concept to finished piece.
           </h1>
-          <div class="home-intro__text">
+          <div class="home-intro__text" data-reveal="rise">
             <p>
               I’m a graphic designer developing and producing work for digital and print media. My training in photography and experience in video editing and motion graphics complement my work.
             </p>
@@ -106,7 +106,23 @@
         <section id="projects" class="projects" aria-label="Selected work">
 
           <div class="project-carousel" data-project-carousel>
-            <p class="project-carousel__label" data-reveal="rise">Selected work</p>
+            <div class="project-carousel__header" data-reveal="rise">
+              <p>Selected work</p>
+              <div class="project-carousel__controls" role="group" aria-label="Project navigation" hidden>
+                <button type="button" data-carousel-prev aria-controls="more-projects" aria-label="Previous projects">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="M14 6l-6 6 6 6" />
+                  </svg>
+                </button>
+                <span class="project-carousel__markers" aria-hidden="true" data-carousel-markers></span>
+                <span class="project-carousel__status" role="status" aria-label="Visible projects" data-carousel-position></span>
+                <button type="button" data-carousel-next aria-controls="more-projects" aria-label="Next projects">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                    <path d="M10 6l6 6-6 6" />
+                  </svg>
+                </button>
+              </div>
+            </div>
             <div
               class="project-carousel__track"
               id="more-projects"
