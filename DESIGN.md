@@ -666,14 +666,6 @@ Define cómo debe trabajar Codex: procedimientos, herramientas, permisos, seguri
 
 Contienen la implementación efectiva de colores, tipografía, espaciados, geometría y comportamiento responsive.
 
-### Impeccable
-
-Sirve para analizar la calidad visual, composición, jerarquía, proximidad y ritmo.
-
-### Frontend Craft
-
-Sirve para desarrollar y mantener correctamente la interfaz.
-
 ## Reglas de aplicación
 
 - Consultar este documento antes de proponer o implementar cambios visuales.
