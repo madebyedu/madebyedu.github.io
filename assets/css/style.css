@@ -680,10 +680,10 @@
     transform: none;
   }
 
-  /* El carrusel sale del margen derecho. El marco base se conserva en móvil;
-     escritorio usa todo el viewport y mantiene un margen final de lectura. */
+  /* La pista llega a ambos bordes; la primera tarjeta parte del margen de lectura. */
   .project-carousel {
-    --carousel-bleed: var(--page-gutter);
+    --carousel-bleed-start: var(--page-gutter);
+    --carousel-bleed-end: var(--page-gutter);
     --carousel-visible-cards: 1.25;
     --carousel-visible-gaps: 1;
     --focus-padding-start: var(--space-2);
@@ -766,23 +766,23 @@
   }
 
   .project-carousel__track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(
+    --carousel-card-width: min(
       calc(
-        (100% + var(--carousel-bleed) - var(--carousel-visible-gaps) * var(--grid-gap)) /
+        (100% + var(--carousel-bleed-end) - var(--carousel-visible-gaps) * var(--grid-gap)) /
         var(--carousel-visible-cards)
       ),
       var(--carousel-card-max-width, 100vw)
     );
+    display: flex;
     gap: var(--grid-gap);
-    margin-inline-end: calc(-1 * var(--carousel-bleed));
-    padding-inline-end: var(--carousel-bleed);
+    margin-inline: calc(-1 * var(--carousel-bleed-start)) calc(-1 * var(--carousel-bleed-end));
+    padding-inline: var(--carousel-bleed-start) var(--carousel-bleed-end);
     padding-block: var(--focus-padding-start) var(--focus-padding-end);
     /* Conserva espacio para el foco sin sumarlo a la separación con el footer. */
     margin-block-end: calc(-1 * var(--focus-padding-end));
     overflow-x: auto;
     scroll-snap-type: x proximity;
+    scroll-padding-inline-start: var(--carousel-bleed-start);
     overscroll-behavior-x: contain;
     scrollbar-width: none;
     cursor: grab;
@@ -803,6 +803,7 @@
 
   .project-card {
     display: flex;
+    flex: 0 0 var(--carousel-card-width);
     flex-direction: column;
     min-width: 0;
     scroll-snap-align: start;
@@ -863,6 +864,13 @@
   /* En móvil, el enlace de la imagen cubre toda la celda. Los enlaces
      originales siguen disponibles para teclado, sin anidar elementos <a>. */
   @media (width < calc(755 / 16 * 1rem)) {
+    /* Completa la ventana de lectura para alinear también la última tarjeta. */
+    .project-carousel__track::after {
+      content: "";
+      flex: 0 0 max(0px, calc(100% - var(--carousel-card-width)));
+      margin-inline-start: calc(-1 * var(--grid-gap));
+    }
+
     .project-card {
       position: relative;
     }

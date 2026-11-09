@@ -388,6 +388,11 @@ class ProjectCarousel {
     return this.track.scrollWidth - this.track.clientWidth;
   }
 
+  get widthFromGutter() {
+    const padding = parseFloat(getComputedStyle(this.track).paddingInlineStart) || 0;
+    return this.track.clientWidth - padding;
+  }
+
   get step() {
     const gap = parseFloat(getComputedStyle(this.track).columnGap) || 0;
     return this.cards[0].getBoundingClientRect().width + gap;
@@ -415,11 +420,12 @@ class ProjectCarousel {
     if (!step) return;
     const count = this.cards.length;
     const clampCard = (index) => Math.max(1, Math.min(count, index));
-    let first = clampCard(Math.ceil((left - 1) / step) + 1);
-    let last = clampCard(Math.floor((left + viewport - width + 1) / step) + 1);
+    const visibleStart = left + this.widthFromGutter - viewport;
+    let first = clampCard(Math.ceil((visibleStart - 1) / step) + 1);
+    let last = clampCard(Math.floor((visibleStart + viewport - width + 1) / step) + 1);
     // A free scroll can end between cards. Use the one nearest the center.
     if (first > last) {
-      first = last = clampCard(Math.round((left + (viewport - width) / 2) / step) + 1);
+      first = last = clampCard(Math.round((visibleStart + (viewport - width) / 2) / step) + 1);
     }
     const range = first === last ? String(first) : `${first}–${last}`;
     const label = `${range} / ${count}`;
@@ -450,7 +456,7 @@ class ProjectCarousel {
 
     const entry = {
       offset: this.track.scrollLeft / step,
-      visibleSteps: this.track.clientWidth / step,
+      visibleSteps: this.widthFromGutter / step,
       project: link.href,
       card: this.cards.indexOf(link.closest(".project-card")),
       focusLink: event.detail === 0
@@ -489,11 +495,12 @@ class ProjectCarousel {
 
     const card = this.cards[entry.card];
     let left = entry.offset * step;
-    if (card && this.track.clientWidth / step < entry.visibleSteps - 0.01) {
+    const widthFromGutter = this.widthFromGutter;
+    if (card && widthFromGutter / step < entry.visibleSteps - 0.01) {
       // A narrower viewport should still show the card that was opened.
       const cardStart = entry.card * step;
       const cardEnd = cardStart + card.getBoundingClientRect().width;
-      left = Math.min(cardStart, Math.max(left, cardEnd - this.track.clientWidth));
+      left = Math.min(cardStart, Math.max(left, cardEnd - widthFromGutter));
     }
     this.track.scrollTo({
       left: Math.max(0, Math.min(left, this.maxScroll)),
@@ -571,10 +578,12 @@ class ProjectCarousel {
   }
 
   updateBleed() {
-    // Extend the whole sequence to the usable viewport edge; CSS caps each card.
+    // Keep both scroll edges at the usable viewport; padding preserves the gutters.
     const bounds = this.root.getBoundingClientRect();
-    const bleed = Math.max(0, document.documentElement.clientWidth - bounds.right);
-    this.root.style.setProperty("--carousel-bleed", `${bleed}px`);
+    const start = Math.max(0, bounds.left);
+    const end = Math.max(0, document.documentElement.clientWidth - bounds.right);
+    this.root.style.setProperty("--carousel-bleed-start", `${start}px`);
+    this.root.style.setProperty("--carousel-bleed-end", `${end}px`);
     if (this.motionTarget !== null) this.stopMotion();
     else if (!this.drag) this.updateControls();
   }
