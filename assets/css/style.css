@@ -95,35 +95,33 @@
       repeat(2, minmax(0, calc(var(--layout-right-axis) / 2 - var(--grid-gap))))
       minmax(0, 1fr);
 
-    /* 60/30/10 de peso visual: carbón dominante, neutros de apoyo y azul
+    /* 60/30/10 de peso visual: carbón tinta, neutros de apoyo y azul acero
        para acciones y estados. Las imágenes conservan sus colores propios. */
-    --bg-dark: #181818;
+    --bg-dark: #191b1f;
 
-    --bg: #242424;
+    --bg: #22262c;
 
-    --text: #f5f5f3;
-    --text-muted: #b7b7b2;
+    --text: #f3f0ea;
+    --text-muted: #b6bcc4;
 
-    --accent: #93aecf;
-    /* Variante de interacción del acento: 20% de blanco. */
-    --accent-hover: #a9bed9;
-    --text-on-accent: #181818;
+    --accent: #9cbbdd;
+    --accent-hover: #bcd2eb;
+    --text-on-accent: var(--bg-dark);
 
-    --border-control: #737373;
-    --border-subtle: #363636;
+    --border-control: #748190;
+    --border-subtle: #323941;
 
     --color-error: #e6a19a;
     /* El estado funcional conserva su color, independiente del acento de marca. */
-    --color-success: #8ab4f8;
+    --color-success: #abc5db;
 
-    /* Transiciones */
-    --duration-interaction: 0.3s;
-    /* Preset rise: entrada ascendente con fundido y secuencia entre bloques. */
-    --reveal-duration: 0.8s;
-    --reveal-step: 0.15s;
-    --reveal-distance: 2.5rem;
-    --transition:
-      all var(--duration-interaction) cubic-bezier(0.36, -0.05, 0.07, 1);
+    /* Movimiento: respuesta, panel y entrada editorial. */
+    --motion-feedback: 140ms;
+    --motion-panel: 220ms;
+    --motion-reveal: 800ms;
+    --motion-stagger: 150ms;
+    --motion-rise: 2.5rem;
+    --motion-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 
     /* Bordes */
     --border-radius-in: 2px;
@@ -211,7 +209,7 @@
     text-decoration: none;
     color: var(--text-muted);
     font-weight: var(--font-weight-regular);
-    transition: color var(--duration-interaction) ease;
+    transition: color var(--motion-feedback) var(--motion-ease-out);
     font-size: var(--font-size-body);
 
     &:hover,
@@ -318,7 +316,7 @@
     letter-spacing: var(--letter-spacing-emphasis);
     border-radius: var(--border-radius-in);
     border: 1px solid transparent;
-    transition: var(--transition);
+    transition: background-color var(--motion-feedback) var(--motion-ease-out);
 
     &:active {
       background-color: var(--accent);
@@ -328,7 +326,6 @@
 
     @media (hover: hover) {
       &:hover {
-        transform: none;
         background-color: var(--accent-hover);
         color: var(--text-on-accent);
         border-color: transparent;
@@ -471,7 +468,9 @@
     height: 2px;
     background-color: var(--text);
     margin: 2px 0;
-    transition: all var(--duration-interaction) ease;
+    transition:
+      transform var(--motion-feedback) var(--motion-ease-out),
+      opacity var(--motion-feedback) var(--motion-ease-out);
     transform-origin: center;
   }
 
@@ -508,11 +507,13 @@
       env(safe-area-inset-right)
     );
     overflow-y: auto;
+    --menu-fade: var(--motion-feedback);
     opacity: 0;
     visibility: hidden;
+    pointer-events: none;
     transition:
-      opacity var(--duration-interaction) ease,
-      visibility var(--duration-interaction) ease;
+      opacity var(--menu-fade) var(--motion-ease-out),
+      visibility 0s linear var(--menu-fade);
 
     a {
       font-size: var(--font-size-mobile-nav);
@@ -522,8 +523,16 @@
   }
 
   .mobile-menu.active {
+    --menu-fade: var(--motion-panel);
     opacity: 1;
     visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  /* Un enlace enfocado con teclado debe leerse desde el primer fotograma. */
+  .mobile-menu.active:has(:focus-visible) {
+    transition: none;
   }
 
   .mobile-menu__list {
@@ -535,28 +544,6 @@
     margin-block-start: auto;
     gap: var(--navigation-gap);
     text-align: end;
-  }
-
-  /* Animamos cada fila para conservar los estados hover y foco de sus enlaces. */
-  .mobile-menu__list > li {
-    opacity: 0;
-    transform: translateY(var(--space-6));
-    transition:
-      opacity var(--duration-interaction) ease,
-      transform calc(var(--duration-interaction) * 2) cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  .mobile-menu.active .mobile-menu__list > li {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .mobile-menu.active .mobile-menu__list > li:nth-child(2) {
-    transition-delay: calc(var(--duration-interaction) / 4);
-  }
-
-  .mobile-menu.active .mobile-menu__list > li:nth-child(3) {
-    transition-delay: calc(var(--duration-interaction) / 2);
   }
 
   body.menu-open {
@@ -641,7 +628,7 @@
     object-fit: cover;
     object-position: center;
     filter: brightness(1);
-    transition: filter var(--duration-interaction) ease;
+    transition: filter var(--motion-feedback) var(--motion-ease-out);
     border-radius: var(--border-radius-in);
   }
 
@@ -693,10 +680,10 @@
     transform: none;
   }
 
-  /* El carrusel sale del margen derecho. El marco base se conserva en móvil;
-     escritorio usa todo el viewport y mantiene un margen final de lectura. */
+  /* La pista llega a ambos bordes; la primera tarjeta parte del margen de lectura. */
   .project-carousel {
-    --carousel-bleed: var(--page-gutter);
+    --carousel-bleed-start: var(--page-gutter);
+    --carousel-bleed-end: var(--page-gutter);
     --carousel-visible-cards: 1.25;
     --carousel-visible-gaps: 1;
     --focus-padding-start: var(--space-2);
@@ -706,29 +693,96 @@
     min-width: 0;
   }
 
-  .project-carousel__label {
+  .project-carousel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
     margin-block-end: calc(var(--carousel-label-gap) - var(--focus-padding-start));
   }
 
+  .project-carousel__controls:not([hidden]) {
+    display: flex;
+    flex: none;
+    align-items: center;
+    color: var(--text-muted);
+
+    button {
+      display: grid;
+      place-items: center;
+      inline-size: 2.75rem;
+      block-size: 2.75rem;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      border-radius: var(--border-radius-in);
+      cursor: pointer;
+      transition: color var(--motion-feedback) var(--motion-ease-out);
+
+      &:focus-visible {
+        outline-offset: -2px;
+      }
+
+      &[aria-disabled="true"] {
+        color: var(--border-control);
+        cursor: default;
+      }
+
+      &:not([aria-disabled="true"]):is(:hover, :focus-visible) {
+        color: var(--accent-hover);
+      }
+    }
+
+    svg {
+      inline-size: 1.125rem;
+    }
+  }
+
+  .project-carousel__markers {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+
+    span {
+      inline-size: clamp(0.5rem, 1vw, var(--space-3));
+      block-size: 0.125rem;
+      background-color: var(--border-control);
+      border-radius: 1px;
+    }
+
+    [data-visible] {
+      block-size: 0.1875rem;
+      background-color: var(--accent);
+    }
+  }
+
+  .project-carousel__status {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   .project-carousel__track {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(
+    --carousel-card-width: min(
       calc(
-        (100% + var(--carousel-bleed) - var(--carousel-visible-gaps) * var(--grid-gap)) /
+        (100% + var(--carousel-bleed-end) - var(--carousel-visible-gaps) * var(--grid-gap)) /
         var(--carousel-visible-cards)
       ),
       var(--carousel-card-max-width, 100vw)
     );
+    display: flex;
     gap: var(--grid-gap);
-    margin-inline-end: calc(-1 * var(--carousel-bleed));
-    padding-inline-end: var(--carousel-bleed);
+    margin-inline: calc(-1 * var(--carousel-bleed-start)) calc(-1 * var(--carousel-bleed-end));
+    padding-inline: var(--carousel-bleed-start) var(--carousel-bleed-end);
     padding-block: var(--focus-padding-start) var(--focus-padding-end);
     /* Conserva espacio para el foco sin sumarlo a la separación con el footer. */
     margin-block-end: calc(-1 * var(--focus-padding-end));
     overflow-x: auto;
     scroll-snap-type: x proximity;
-    scroll-behavior: smooth;
+    scroll-padding-inline-start: var(--carousel-bleed-start);
     overscroll-behavior-x: contain;
     scrollbar-width: none;
     cursor: grab;
@@ -737,9 +791,8 @@
       display: none;
     }
 
-    &.is-coasting {
+    &.is-positioning {
       scroll-snap-type: none;
-      scroll-behavior: auto;
     }
 
     &.is-dragging {
@@ -750,6 +803,7 @@
 
   .project-card {
     display: flex;
+    flex: 0 0 var(--carousel-card-width);
     flex-direction: column;
     min-width: 0;
     scroll-snap-align: start;
@@ -810,6 +864,13 @@
   /* En móvil, el enlace de la imagen cubre toda la celda. Los enlaces
      originales siguen disponibles para teclado, sin anidar elementos <a>. */
   @media (width < calc(755 / 16 * 1rem)) {
+    /* Completa la ventana de lectura para alinear también la última tarjeta. */
+    .project-carousel__track::after {
+      content: "";
+      flex: 0 0 max(0px, calc(100% - var(--carousel-card-width)));
+      margin-inline-start: calc(-1 * var(--grid-gap));
+    }
+
     .project-card {
       position: relative;
     }
@@ -1214,22 +1275,6 @@
     input[aria-invalid="true"] ~ &,
     textarea[aria-invalid="true"] ~ & {
       display: block;
-      animation: fadeIn var(--duration-interaction) ease;
-
-      @media (prefers-reduced-motion: reduce) {
-        animation: none;
-      }
-    }
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-5px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
     }
   }
 
@@ -1248,53 +1293,53 @@
     }
 
     .mobile-menu,
-    .mobile-menu a,
     .hamburger__line,
-    .mobile-menu__list > li,
-    .mobile-menu.active .mobile-menu__list > li:nth-child(n),
     .projects__image {
       transition: none;
-    }
-
-    .mobile-menu__list > li {
-      transform: none;
-    }
-
-    .project-carousel__track {
-      scroll-behavior: auto;
     }
   }
 }
 
 @layer utility {
-  /* 16. Preset compartido: data-reveal="rise". Visible por defecto sin JS. */
-  [data-reveal="rise"].reveal-pending {
-    opacity: 0;
-  }
-
-  [data-reveal="rise"].is-revealed {
-    animation: reveal-rise var(--reveal-duration)
-      cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0s) both;
-  }
-
-  @keyframes reveal-rise {
-    from {
+  /* 16. Entrada editorial. Sin JS, los bloques se muestran normalmente. */
+  @media (prefers-reduced-motion: no-preference) {
+    [data-reveal="rise"].reveal-pending:not(:focus-within) {
       opacity: 0;
-      transform: translateY(var(--reveal-distance));
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    [data-reveal="rise"].reveal-pending {
-      opacity: 1;
     }
 
-    [data-reveal="rise"].is-revealed {
-      animation: none;
+    [data-reveal="rise"].is-revealed:not(:focus-within) {
+      animation: reveal-rise var(--motion-reveal) var(--motion-ease-out)
+        calc(var(--motion-stagger) * var(--reveal-slot, 0)) backwards;
+    }
+
+    .mobile-menu.active .mobile-menu__list > li {
+      --rise-distance: 0.5rem;
+      animation: reveal-rise 320ms var(--motion-ease-out)
+        calc(55ms * var(--menu-row, 0)) backwards;
+    }
+
+    .mobile-menu.active .mobile-menu__list > li:nth-child(2) {
+      --menu-row: 1;
+    }
+
+    .mobile-menu.active .mobile-menu__list > li:nth-child(3) {
+      --menu-row: 2;
+    }
+
+    .mobile-menu.active:has(:focus-visible) .mobile-menu__list > li {
+      animation-duration: 0s;
+      animation-delay: 0s;
+    }
+
+    @keyframes reveal-rise {
+      from {
+        opacity: 0;
+        transform: translateY(var(--rise-distance, var(--motion-rise)));
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
     }
   }
 }

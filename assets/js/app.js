@@ -11,7 +11,6 @@ class PortfolioApp {
     this.mobileMenu = document.querySelector(".mobile-menu");
     this.body = document.body;
     this.mobileMenuLinks = document.querySelectorAll(".mobile-menu__list a");
-    this.focusTimer = null;
 
     if (this.mobileMenu && this.hamburger) {
       this.init();
@@ -84,18 +83,11 @@ class PortfolioApp {
     this.body.classList.add("menu-open");
     this.body.style.top = `-${scrollY}px`;
 
-    clearTimeout(this.focusTimer);
-    this.focusTimer = setTimeout(() => {
-      const firstMenuItem = this.mobileMenu.querySelector(
-        ".mobile-menu__list a",
-      );
-      if (firstMenuItem) {
-        firstMenuItem.focus({ preventScroll: true });
-      }
-    }, 100);
+    this.mobileMenuLinks[0]?.focus({ preventScroll: true });
   }
 
   closeMobileMenu() {
+    if (!this.mobileMenu.classList.contains("active")) return;
     const scrollY = this.body.style.top;
     this.hamburger.classList.remove("active");
     this.hamburger.setAttribute("aria-expanded", "false");
@@ -107,15 +99,12 @@ class PortfolioApp {
     this.body.style.top = "";
     window.scrollTo({ top: parseInt(scrollY || "0", 10) * -1, behavior: "instant" });
 
-    clearTimeout(this.focusTimer);
-    this.focusTimer = setTimeout(() => {
-      const focusTarget = window.matchMedia(
-        "(width >= calc(755 / 16 * 1rem))",
-      ).matches
-        ? document.querySelector(".desktop-nav a")
-        : this.hamburger;
-      focusTarget?.focus({ preventScroll: true });
-    }, 100);
+    const focusTarget = window.matchMedia(
+      "(width >= calc(755 / 16 * 1rem))",
+    ).matches
+      ? document.querySelector(".desktop-nav a")
+      : this.hamburger;
+    focusTarget?.focus({ preventScroll: true });
   }
 
   handleResize() {
@@ -212,51 +201,51 @@ class PerformanceMonitor {
   }
 }
 
-// Shared entrance preset. Add data-reveal="rise" to a content block on any page.
+// Reveal each editorial block once, as it enters the viewport.
 class RevealAnimator {
   constructor() {
-    this.elements = [...document.querySelectorAll('[data-reveal="rise"]')];
-    if (reducedMotionPreference.matches || !("IntersectionObserver" in window)) return;
+    const elements = [...document.querySelectorAll('[data-reveal="rise"]')];
+    if (!elements.length || reducedMotionPreference.matches ||
+        !("IntersectionObserver" in window)) return;
 
-    this.observer = new IntersectionObserver((entries) => {
-      let index = 0;
-      for (const entry of entries) {
-        if (!entry.isIntersecting) continue;
-        this.reveal(entry.target, Math.min(index++, 3));
-      }
+    const order = new Map(elements.map((element, index) => [element, index]));
+    const observer = new IntersectionObserver((entries) => {
+      const entering = entries
+        .filter(({ isIntersecting, target }) => isIntersecting && target.classList.contains("reveal-pending"))
+        .map(({ target }) => target)
+        .sort((a, b) => order.get(a) - order.get(b));
+      // Keep the sequence distinct even when more than four blocks enter together.
+      const stride = Math.min(1, 3 / Math.max(1, entering.length - 1));
+      entering.forEach((element, index) => {
+        element.style.setProperty("--reveal-slot", index * stride);
+        element.classList.replace("reveal-pending", "is-revealed");
+        observer.unobserve(element);
+      });
     }, { rootMargin: "0px 0px 40px 0px" });
 
-    this.elements.forEach((element) => {
+    elements.forEach((element) => {
+      observer.observe(element);
       element.classList.add("reveal-pending");
-      this.observer.observe(element);
     });
 
-    // Keyboard navigation must never land in invisible content.
-    document.addEventListener("focusin", (event) => {
+    const showImmediately = (element) => {
+      element.classList.remove("reveal-pending", "is-revealed");
+      element.style.removeProperty("--reveal-slot");
+    };
+    const onFocus = (event) => {
       const element = event.target.closest('[data-reveal="rise"]');
-      if (element) {
-        this.reveal(element);
-        element.getAnimations().forEach((animation) => animation.finish());
-      }
-    });
+      if (!element) return;
+      observer.unobserve(element);
+      showImmediately(element);
+    };
+    document.addEventListener("focusin", onFocus);
 
     reducedMotionPreference.addEventListener("change", (event) => {
       if (!event.matches) return;
-      // Stabilize all content so restoring normal motion cannot replay old entries.
-      this.observer.disconnect();
-      this.elements.forEach((element) => {
-        element.classList.remove("reveal-pending", "is-revealed");
-        element.style.removeProperty("--reveal-delay");
-      });
+      observer.disconnect();
+      document.removeEventListener("focusin", onFocus);
+      elements.forEach(showImmediately);
     });
-  }
-
-  reveal(element, index = 0) {
-    if (!element.classList.contains("reveal-pending")) return;
-    element.style.setProperty("--reveal-delay", `calc(var(--reveal-step) * ${index})`);
-    element.classList.remove("reveal-pending");
-    element.classList.add("is-revealed");
-    this.observer.unobserve(element);
   }
 }
 
@@ -330,38 +319,78 @@ class ProjectCarousel {
     this.root = root;
     this.track = root.querySelector(".project-carousel__track");
     this.cards = [...root.querySelectorAll(".project-card")];
+    this.controls = root.querySelector(".project-carousel__controls");
+    this.previous = root.querySelector("[data-carousel-prev]");
+    this.next = root.querySelector("[data-carousel-next]");
+    this.position = root.querySelector("[data-carousel-position]");
+    this.returnKey = `portfolio:carousel:${location.pathname}`;
     this.drag = null;
+    this.motionTarget = null;
     this.suppressClick = false;
 
     if (!this.track || !this.cards.length) return;
+    this.markers = this.cards.map(() => document.createElement("span"));
+    root.querySelector("[data-carousel-markers]")?.append(...this.markers);
     this.track.addEventListener("keydown", (event) => {
       if (event.target !== this.track) return;
       const destinations = {
-        ArrowLeft: this.track.scrollLeft - this.step,
-        ArrowRight: this.track.scrollLeft + this.step,
+        ArrowLeft: this.adjacentPosition(-1),
+        ArrowRight: this.adjacentPosition(1),
         Home: 0,
-        End: this.track.scrollWidth,
+        End: this.maxScroll,
       };
       if (!(event.key in destinations)) return;
       event.preventDefault();
       this.scrollTo(destinations[event.key]);
     });
     this.bindDragging();
+    this.previous?.addEventListener("click", () => {
+      this.scrollTo(this.adjacentPosition(-1));
+    });
+    this.next?.addEventListener("click", () => {
+      this.scrollTo(this.adjacentPosition(1));
+    });
+    const settle = () => {
+      if (!this.drag && this.motionTarget === null) this.updateControls();
+    };
+    if ("onscrollend" in this.track) {
+      this.track.addEventListener("scrollend", settle);
+    } else {
+      this.track.addEventListener("scroll", () => {
+        clearTimeout(this.scrollTimer);
+        this.scrollTimer = setTimeout(settle, 120);
+      }, { passive: true });
+    }
+    this.track.addEventListener("click", (event) => this.rememberPosition(event));
+    window.addEventListener("pageshow", (event) => {
+      if (event.persisted) this.restorePosition();
+    });
     // Native touch/trackpad scrolling and keyboard focus interrupt mouse momentum.
-    this.track.addEventListener("wheel", () => this.stopMotion(), { passive: true });
+    this.track.addEventListener("wheel", () => {
+      if (this.motionTarget !== null) this.stopMotion();
+    }, { passive: true });
     this.track.addEventListener("focusin", () => {
-      if (!this.drag) this.stopMotion();
+      if (this.motionTarget !== null) this.stopMotion();
     });
     reducedMotionPreference.addEventListener("change", (event) => {
-      if (event.matches) {
-        this.stopMotion();
-        this.track.scrollTo({ left: this.track.scrollLeft, behavior: "instant" });
-      }
+      if (event.matches && !this.drag) this.stopMotion();
     });
-    this.resizeObserver = new ResizeObserver(() => this.updateBleed());
-    this.resizeObserver.observe(this.root);
+    if ("ResizeObserver" in window) {
+      this.resizeObserver = new ResizeObserver(() => this.updateBleed());
+      this.resizeObserver.observe(this.root);
+    }
     window.addEventListener("resize", () => this.updateBleed());
     this.updateBleed();
+    this.restorePosition();
+  }
+
+  get maxScroll() {
+    return this.track.scrollWidth - this.track.clientWidth;
+  }
+
+  get widthFromGutter() {
+    const padding = parseFloat(getComputedStyle(this.track).paddingInlineStart) || 0;
+    return this.track.clientWidth - padding;
   }
 
   get step() {
@@ -369,48 +398,175 @@ class ProjectCarousel {
     return this.cards[0].getBoundingClientRect().width + gap;
   }
 
-  scrollTo(left) {
-    this.stopMotion();
+  adjacentPosition(direction) {
+    const left = this.motionTarget ?? this.track.scrollLeft;
+    const step = this.step;
+    if (!step || (direction < 0 ? left <= 1 : left >= this.maxScroll - 1)) return left;
+    return direction < 0
+      ? Math.max(0, (Math.ceil((left - 1) / step) - 1) * step)
+      : Math.min(this.maxScroll, (Math.floor((left + 1) / step) + 1) * step);
+  }
+
+  updateControls() {
+    if (!this.controls) return;
+    const left = this.track.scrollLeft;
+    const viewport = this.track.clientWidth;
+    const maximum = this.track.scrollWidth - viewport;
+    this.controls.hidden = maximum <= 1;
+    if (this.controls.hidden) return;
+
+    const width = this.cards[0].getBoundingClientRect().width;
+    const step = width + (parseFloat(getComputedStyle(this.track).columnGap) || 0);
+    if (!step) return;
+    const count = this.cards.length;
+    const clampCard = (index) => Math.max(1, Math.min(count, index));
+    const visibleStart = left + this.widthFromGutter - viewport;
+    let first = clampCard(Math.ceil((visibleStart - 1) / step) + 1);
+    let last = clampCard(Math.floor((visibleStart + viewport - width + 1) / step) + 1);
+    // A free scroll can end between cards. Use the one nearest the center.
+    if (first > last) {
+      first = last = clampCard(Math.round((visibleStart + (viewport - width) / 2) / step) + 1);
+    }
+    const range = first === last ? String(first) : `${first}–${last}`;
+    const label = `${range} / ${count}`;
+    if (this.position.textContent !== label) {
+      this.position.textContent = label;
+      this.markers.forEach((marker, index) => {
+        marker.toggleAttribute("data-visible", index + 1 >= first && index + 1 <= last);
+      });
+    }
+    this.updateButtons(left, maximum);
+  }
+
+  updateButtons(left, maximum = this.maxScroll) {
+    for (const [button, unavailable] of [[this.previous, left <= 1], [this.next, left >= maximum - 1]]) {
+      const value = String(unavailable);
+      if (button && button.getAttribute("aria-disabled") !== value) {
+        button.setAttribute("aria-disabled", value);
+      }
+    }
+  }
+
+  rememberPosition(event) {
+    if (event.defaultPrevented || event.button !== 0 ||
+      event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+    const link = event.target.closest(".project-card a[href]");
+    const step = this.step;
+    if (!link || !step || (link.target && link.target !== "_self")) return;
+
+    const entry = {
+      offset: this.track.scrollLeft / step,
+      visibleSteps: this.widthFromGutter / step,
+      project: link.href,
+      card: this.cards.indexOf(link.closest(".project-card")),
+      focusLink: event.detail === 0
+        ? (link.classList.contains("projects__image-link") ? "image" : "action")
+        : null,
+    };
+    // History keeps the position per entry. Session storage also supports the
+    // link back to selected work, which creates a different history entry.
+    try {
+      history.replaceState({ ...history.state, projectCarousel: entry }, "");
+    } catch {
+      // The browser can still restore its own scroll state.
+    }
+    try {
+      sessionStorage.setItem(this.returnKey, JSON.stringify(entry));
+    } catch {
+      // Storage may be disabled.
+    }
+  }
+
+  restorePosition() {
+    let entry = history.state?.projectCarousel;
+    if (!entry && location.hash === "#projects") {
+      try {
+        const saved = JSON.parse(sessionStorage.getItem(this.returnKey));
+        if (saved?.project === document.referrer) {
+          entry = saved;
+          sessionStorage.removeItem(this.returnKey);
+        }
+      } catch {
+        // Keep the normal anchor navigation if storage is unavailable.
+      }
+    }
+    const step = this.step;
+    if (!Number.isFinite(entry?.offset) || !step) return;
+
+    const card = this.cards[entry.card];
+    let left = entry.offset * step;
+    const widthFromGutter = this.widthFromGutter;
+    if (card && widthFromGutter / step < entry.visibleSteps - 0.01) {
+      // A narrower viewport should still show the card that was opened.
+      const cardStart = entry.card * step;
+      const cardEnd = cardStart + card.getBoundingClientRect().width;
+      left = Math.min(cardStart, Math.max(left, cardEnd - widthFromGutter));
+    }
     this.track.scrollTo({
-      left,
-      behavior: reducedMotionPreference.matches ? "instant" : "smooth",
+      left: Math.max(0, Math.min(left, this.maxScroll)),
+      behavior: "instant",
     });
+    if (card && entry.focusLink && document.activeElement === document.body) {
+      const selector = entry.focusLink === "image" ? ".projects__image-link" : ".project-link";
+      card.querySelector(selector)?.focus({ preventScroll: true });
+    }
+    this.updateControls();
+  }
+
+  scrollTo(left) {
+    if (this.drag || Math.abs(left - (this.motionTarget ?? this.track.scrollLeft)) < 1) return;
+    this.moveTo(left);
   }
 
   stopMotion() {
     cancelAnimationFrame(this.motionFrame);
-    this.track.classList.remove("is-coasting");
+    this.motionTarget = null;
+    this.track.classList.remove("is-positioning");
+    this.updateControls();
   }
 
   coast(velocity) {
     const start = this.track.scrollLeft;
-    const maximum = this.track.scrollWidth - this.track.clientWidth;
+    const maximum = this.maxScroll;
+    const step = this.step;
+    if (!step) {
+      this.stopMotion();
+      return;
+    }
     // Pick the destination from the impulse before animating, not after it stops.
-    const projected = Math.max(0, Math.min(maximum, start + (reducedMotionPreference.matches ? 0 : velocity * 260)));
-    const target = Math.max(0, Math.min(maximum, Math.round(projected / this.step) * this.step));
+    const impulse = reducedMotionPreference.matches ? 0 : velocity * 160;
+    const projected = Math.max(0, Math.min(maximum, start + impulse));
+    const snap = Math.min(maximum, Math.round(projected / step) * step);
+    const target = maximum - projected < Math.abs(projected - snap) ? maximum : snap;
+    this.moveTo(target, velocity);
+  }
+
+  moveTo(target, velocity = 0) {
+    cancelAnimationFrame(this.motionFrame);
+    const start = this.track.scrollLeft;
     const distance = target - start;
+    this.track.classList.add("is-positioning");
     if (reducedMotionPreference.matches || Math.abs(distance) < 1) {
       this.track.scrollLeft = target;
       this.stopMotion();
       return;
     }
 
+    this.motionTarget = target;
+    this.updateButtons(target);
     const followsImpulse = distance * velocity > 0 && Math.abs(velocity) >= 0.12;
-    const duration = followsImpulse
-      ? Math.min(1200, Math.max(550, 2.5 * Math.abs(distance / velocity)))
-      : Math.min(900, Math.max(500, Math.abs(distance) * 2.2));
+    const duration = Math.min(320, 160 + Math.abs(distance) * 0.28);
     const initialSlope = followsImpulse
       ? Math.min(3, velocity * duration / distance)
       : 0;
     const began = performance.now();
     const animate = (now) => {
-      const progress = Math.min(1, (now - began) / duration);
-      // A single trajectory carries the release speed to zero at the card.
-      // Without an impulse, retain the gentle start and finish of a small correction.
+      const progress = Math.max(0, Math.min(1, (now - began) / duration));
+      // Carry the release speed into the curve; button navigation decelerates from the start.
       const eased = followsImpulse
         ? progress ** 2 * (3 - 2 * progress) +
           initialSlope * progress * (1 - progress) ** 2
-        : progress ** 3 * (10 - 15 * progress + 6 * progress ** 2);
+        : 1 - (1 - progress) ** 4;
       this.track.scrollLeft = start + distance * eased;
       if (progress < 1) {
         this.motionFrame = requestAnimationFrame(animate);
@@ -422,10 +578,14 @@ class ProjectCarousel {
   }
 
   updateBleed() {
-    // Extend the whole sequence to the usable viewport edge; CSS caps each card.
+    // Keep both scroll edges at the usable viewport; padding preserves the gutters.
     const bounds = this.root.getBoundingClientRect();
-    const bleed = Math.max(0, document.documentElement.clientWidth - bounds.right);
-    this.root.style.setProperty("--carousel-bleed", `${bleed}px`);
+    const start = Math.max(0, bounds.left);
+    const end = Math.max(0, document.documentElement.clientWidth - bounds.right);
+    this.root.style.setProperty("--carousel-bleed-start", `${start}px`);
+    this.root.style.setProperty("--carousel-bleed-end", `${end}px`);
+    if (this.motionTarget !== null) this.stopMotion();
+    else if (!this.drag) this.updateControls();
   }
 
   bindDragging() {
@@ -436,8 +596,7 @@ class ProjectCarousel {
         event.pointerType !== "mouse" || event.button !== 0 ||
         event.ctrlKey || event.metaKey || event.altKey || event.shiftKey
       ) return;
-      this.track.classList.add("is-coasting");
-      this.track.scrollTo({ left: this.track.scrollLeft, behavior: "instant" });
+      this.track.classList.add("is-positioning");
       this.suppressClick = false;
       this.drag = {
         pointerId: event.pointerId,
@@ -455,7 +614,7 @@ class ProjectCarousel {
       if (!this.drag.moved && Math.abs(distance) < 8) return;
       if (!this.drag.moved) {
         this.drag.moved = true;
-        this.track.classList.add("is-dragging", "is-coasting");
+        this.track.classList.add("is-dragging");
         this.track.setPointerCapture(event.pointerId);
       }
       event.preventDefault();
@@ -504,35 +663,41 @@ class ProjectCarousel {
   }
 }
 
-// Autoplay is enhanced in JS so reduced motion is respected before playback starts.
+// Ambient video plays only while it is in view, unless the visitor has paused it.
 class MotionAwareVideos {
   constructor() {
-    this.videos = [...document.querySelectorAll("video[data-autoplay]")];
-    this.loopingVideos = new Set(this.videos.filter((video) => video.loop));
-    this.updatePreference();
-
-    if (!reducedMotionPreference.matches) {
-      this.videos.forEach((video) => {
-        video.autoplay = true;
-        // A browser may require a gesture; native controls remain available.
-        video.play().catch(() => {});
+    document.querySelectorAll("video[data-autoplay]").forEach((video) => {
+      let inView = false;
+      let userPaused = false;
+      let pausedBySite = false;
+      const syncPlayback = () => {
+        const canAutoplay = inView && !document.hidden && !reducedMotionPreference.matches;
+        video.loop = canAutoplay;
+        if (!canAutoplay) {
+          if (!video.paused) {
+            pausedBySite = true;
+            video.pause();
+          }
+        } else if (!userPaused && video.paused) {
+          // The native controls are available when autoplay is blocked.
+          video.play().catch(() => {});
+        }
+      };
+      video.addEventListener("pause", () => {
+        if (!pausedBySite) userPaused = true;
+        pausedBySite = false;
       });
-    }
-
-    reducedMotionPreference.addEventListener("change", () => {
-      this.updatePreference();
-    });
-  }
-
-  updatePreference() {
-    this.videos.forEach((video) => {
-      video.loop = !reducedMotionPreference.matches && this.loopingVideos.has(video);
-      if (reducedMotionPreference.matches) {
-        video.autoplay = false;
-        video.pause();
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(([entry]) => {
+          inView = entry.isIntersecting && entry.intersectionRatio >= 0.6;
+          syncPlayback();
+        }, { threshold: 0.6 });
+        observer.observe(video);
       }
+      reducedMotionPreference.addEventListener("change", syncPlayback);
+      document.addEventListener("visibilitychange", syncPlayback);
+      syncPlayback();
     });
-    // Returning to normal motion never overrides a visitor's playback/pause choice.
   }
 }
 
