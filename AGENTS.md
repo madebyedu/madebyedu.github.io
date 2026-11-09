@@ -11,19 +11,11 @@
 
 - Consulta y aplica proactivamente [DESIGN.md](DESIGN.md) al crear, modificar, mejorar o revisar cualquier parte visual o frontend del portfolio, sin esperar que el usuario lo mencione: HTML, CSS, componentes, responsive, navegación, formularios, tipografía, colores, espaciados, imágenes, composición, animaciones y estados interactivos.
 - Utiliza el manual para tomar decisiones de dirección artística, no solo para cotejar valores CSS: composición editorial y expresiva, geometría precisa, proximidad Gestalt y agrupación semántica, jerarquía visual y tipográfica, equilibrio entre imagen y texto, ritmo espacial, alineaciones coherentes, espacio negativo equilibrado, movimiento discreto y elegante, coherencia responsive y accesibilidad.
-- Evalúa las relaciones y el resultado visual real; evita soluciones genéricas o mecánicas, distancias idénticas para relaciones diferentes, redondeos arbitrarios y componentes decorativos innecesarios. Combina estos criterios con Frontend Craft e Impeccable según el apartado de skills, sin duplicar procesos ni ampliar revisiones triviales.
+- Evalúa las relaciones y el resultado visual real; evita soluciones genéricas o mecánicas, distancias idénticas para relaciones diferentes, redondeos arbitrarios y componentes decorativos innecesarios.
 - Distingue decisiones artísticas aprobadas, valores técnicos efectivamente implementados, referencias orientativas y propuestas pendientes de validar. El manual no autoriza por sí mismo cambios en la web: no conviertas valores exploratorios ni diferencias con el CSS en órdenes de implementación.
 - Dentro de una modificación visual autorizada, resuelve autónomamente los pequeños detalles necesarios siguiendo el manual y conservando el alcance pedido. Si la petición contradice una decisión importante de DESIGN.md, explica brevemente el conflicto y propone una alternativa coherente; antes de cambiar la dirección artística, alterar extensamente la composición o contradecir de forma relevante el diseño existente, presenta una propuesta y espera aprobación.
 - Mantén `DESIGN.md` actualizado por iniciativa propia cuando una tarea autorizada cambie una decisión visual duradera, un patrón compartido o un criterio de composición. Documenta el resultado realmente implementado y comprobado, sin pedir un recordatorio ni ampliar el alcance; evita registrar ajustes triviales o propuestas como decisiones aprobadas.
 - Aplica los criterios de alcance y responsive de este archivo: comprueba los elementos compartidos en todas las páginas pertinentes, incluidas las seis fichas de proyectos, y conserva la coherencia entre componentes y tamaños. No extiendas cambios específicos ni añadas rediseños ajenos a la petición.
-
-## Skills por defecto
-
-- Aplica estas reglas a las tareas del portfolio salvo indicación expresa del usuario; no es necesario que nombre o invoque Frontend Craft o Impeccable en cada petición.
-- Utiliza Frontend Craft por defecto para programación frontend: HTML, CSS, JavaScript, estructura, componentes, funcionalidades, accesibilidad, rendimiento y mantenimiento.
-- Utiliza Impeccable por defecto para diseño visual, maquetación, distribución, tipografía, colores, espaciados, jerarquía, responsive y revisión estética.
-- Si la tarea combina programación y diseño, utiliza ambas de forma complementaria, repartiendo el trabajo y evitando comprobaciones duplicadas. No actives procedimientos completos innecesarios para cambios triviales.
-- Comprueba su disponibilidad, lee las instrucciones pertinentes y utiliza sus capacidades reales. Si alguna no está disponible o no puedes ejecutarla, indícalo y continúa con las capacidades disponibles, sin afirmar que la has ejecutado. Su uso sigue sujeto a las autorizaciones de seguridad de este archivo.
 
 ## Alcance, impacto y coherencia
 
