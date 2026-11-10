@@ -78,6 +78,7 @@
     --header-content-gap: var(--section-gap);
     --navigation-gap: var(--grid-gap);
     --nav-link-padding-block: var(--space-2);
+    --navigation-target: 2.75rem;
     /* Diferencia entre el borde inferior de la cabecera y el texto del nombre. */
     --header-text-inset: var(--space-1);
     /* Distancia mínima completa: incluye el gap que ya aporta body. */
@@ -457,8 +458,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 2rem;
-    height: 2rem;
+    /* Amplía la pulsación sin mover el icono ni aumentar la fila. */
+    --menu-target-outset: calc((2rem - var(--navigation-target)) / 2);
+    inline-size: var(--navigation-target);
+    block-size: var(--navigation-target);
+    flex-shrink: 0;
+    margin-block: var(--menu-target-outset);
+    margin-inline-end: var(--menu-target-outset);
     background: none;
     border: none;
     cursor: pointer;
@@ -575,17 +581,15 @@
     }
   }
 
-  /* 9. Home: composición por tercios cuando sobra altura; flujo natural si no.
-     HomeComposition mide el contenido sin imponer alturas ni recortarlo. */
+  /* 9. Home: una pausa editorial acotada cuando sobra altura. */
   .page-home main {
     align-self: stretch;
   }
 
   .home-content {
     align-content: start;
-    padding-block-start: var(--home-space-above, 0px);
-    gap: calc(var(--home-projects-gap) + var(--home-space-between, 0px));
-    padding-block-end: var(--home-space-below, 0px);
+    padding-block-start: var(--home-extra-space, 0px);
+    gap: calc(var(--home-projects-gap) + var(--home-extra-space, 0px));
   }
 
   .home-intro {
@@ -687,8 +691,6 @@
   .project-carousel {
     --carousel-bleed-start: var(--page-gutter);
     --carousel-bleed-end: var(--page-gutter);
-    --carousel-visible-cards: 1.25;
-    --carousel-visible-gaps: 1;
     --focus-padding-start: var(--space-2);
     --focus-padding-end: var(--space-4);
     --carousel-label-gap: var(--space-4);
@@ -698,6 +700,7 @@
 
   .project-carousel__header {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: var(--space-2);
@@ -705,21 +708,24 @@
   }
 
   .project-carousel__label {
+    min-inline-size: 0;
     font-size: var(--font-size-body);
     line-height: var(--line-height-body);
   }
 
   .project-carousel__controls:not([hidden]) {
     display: flex;
-    flex: none;
+    max-inline-size: 100%;
+    margin-inline-start: auto;
     align-items: center;
     color: var(--text-muted);
 
     button {
       display: grid;
       place-items: center;
-      inline-size: 2.75rem;
-      block-size: 2.75rem;
+      flex: 0 0 var(--navigation-target);
+      inline-size: var(--navigation-target);
+      block-size: var(--navigation-target);
       padding: 0;
       background: transparent;
       border: 0;
@@ -748,6 +754,8 @@
 
   .project-carousel__markers {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
     gap: var(--space-1);
 
@@ -773,42 +781,16 @@
     white-space: nowrap;
   }
 
-  /* Con texto ampliado, el rótulo y los controles necesitan filas propias. */
-  @media (width < 20rem) {
-    .project-carousel__header {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    .project-carousel__controls:not([hidden]) {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      row-gap: var(--space-1);
-
-      button {
-        inline-size: min(2.75rem, 100%);
-      }
-
-      [data-carousel-next] {
-        justify-self: end;
-      }
-    }
-
-    .project-carousel__markers {
-      grid-column: 1 / -1;
-      grid-row: 2;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-  }
-
   .project-carousel__track {
+    /* Las tarjetas crecen de forma continua al pasar de una a dos visibles.
+       Los topes de cada tramo mantienen un anticipo de la tarjeta siguiente. */
+    --carousel-span: calc(100% + var(--carousel-bleed-end));
     --carousel-card-width: min(
-      calc(
-        (100% + var(--carousel-bleed-end) - var(--carousel-visible-gaps) * var(--grid-gap)) /
-        var(--carousel-visible-cards)
-      ),
-      var(--carousel-card-max-width, 100vw)
+      calc((var(--carousel-span) - var(--grid-gap)) / 1.25),
+      max(18rem, calc((var(--carousel-span) - var(--grid-gap)) / 1.75)),
+      max(28rem, calc((var(--carousel-span) - 2 * var(--grid-gap)) / 2.25)),
+      max(50rem, calc((var(--carousel-span) - 2 * var(--grid-gap)) / 2.5)),
+      62.5rem
     );
     display: flex;
     gap: var(--grid-gap);
@@ -870,35 +852,6 @@
 
     a:focus-visible {
       outline-offset: 2px;
-    }
-  }
-
-  /* En escritorio amplio, las acciones comparten el eje inferior. En tarjetas
-     estrechas, prima la proximidad a la categoría sin reservar líneas de texto. */
-  @media (width >= 64rem) {
-    .project-card .project-link {
-      margin-block-start: auto;
-    }
-  }
-
-  /* La siguiente tarjeta permanece parcialmente visible en todos los tamaños. */
-  @media (width >= calc(755 / 16 * 1rem)) {
-    .project-carousel {
-      --carousel-visible-cards: 1.75;
-    }
-  }
-
-  @media (width >= 64rem) {
-    .project-carousel {
-      --carousel-visible-cards: 2.25;
-      --carousel-visible-gaps: 2;
-    }
-  }
-
-  @media (width >= 128rem) {
-    .project-carousel {
-      --carousel-visible-cards: 2.5;
-      --carousel-card-max-width: 62.5rem;
     }
   }
 
@@ -997,11 +950,31 @@
     }
   }
 
+  @media (width < 30rem) {
+    .case-intro + .case-opening {
+      /* Compacta el paso de los datos a la primera pieza. */
+      margin-block-start: calc(var(--space-6) - var(--section-gap));
+    }
+
+    .case-facts {
+      row-gap: var(--space-3);
+    }
+
+    /* En una pantalla estrecha, la pieza se ve antes del texto del reto. */
+    .case-opening > .case-media {
+      order: -1;
+    }
+  }
+
   .case-opening,
   .case-gallery {
     display: grid;
     gap: var(--grid-gap);
     min-width: 0;
+  }
+
+  .case-opening--paired > .case-text {
+    margin-block-start: calc(var(--section-gap) - var(--grid-gap));
   }
 
   .case-copy {
@@ -1126,9 +1099,26 @@
       grid-column: 1;
     }
 
-    .case-media--portrait {
-      /* Mantiene la proporción vertical sin imágenes desmesuradas en ultrawide. */
-      width: min(100%, 60dvh);
+    .case-gallery:has(> .case-media--portrait) {
+      /* El límite se aplica a las pistas para mantener la distancia entre fotos. */
+      grid-template-columns: repeat(2, minmax(0, min(
+        calc((100% - var(--grid-gap)) / 2),
+        60dvh
+      )));
+    }
+
+    .case-opening--paired {
+      row-gap: var(--section-gap);
+      grid-template-rows: auto 1fr;
+
+      > .case-text {
+        margin-block-start: 0;
+      }
+
+      > .case-media {
+        grid-column: 2;
+        grid-row: 1 / 3;
+      }
     }
 
     .case-close__links {
@@ -1185,7 +1175,7 @@
 
   .about-portrait {
     width: min(100%, 40rem);
-    justify-self: end;
+    justify-self: start;
 
     img {
       aspect-ratio: 4 / 3;
@@ -1242,29 +1232,14 @@
   }
 
   @media (width >= calc(755 / 16 * 1rem)) {
-    .about-intro,
-    .about-details {
+    .about-intro {
       grid-template-columns: var(--layout-columns);
       align-items: start;
     }
 
-    .about-portrait {
-      justify-self: start;
-    }
-
-    .about-background {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    .about-work {
-      grid-column: 2;
-      grid-row: 1;
-    }
-
-    .about-practice {
-      grid-column: 1 / -1;
-      grid-row: 2;
+    .about-experience {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--grid-gap);
     }
 
     .about-areas {
@@ -1279,33 +1254,33 @@
     }
   }
 
-  /* 13. Contacto y validación */
-  @media (width >= calc(755 / 16 * 1rem)) {
-    .contact-layout {
+  @media (width >= 75rem) {
+    .about-details {
       grid-template-columns: var(--layout-columns);
       align-items: start;
     }
 
-    .contact-layout > .contactform__intro {
-      grid-column: 1;
-      grid-row: 1;
+    .about-practice {
+      grid-column: 1 / -1;
     }
+  }
 
-    .contact-layout > .contact-form {
-      grid-column: 1;
-      grid-row: 2;
-    }
+  /* 13. Contacto y validación */
+  .contact-layout > * {
+    width: min(
+      100%,
+      var(--ch-width-body),
+      max(30rem, calc((100% - var(--grid-gap)) * var(--layout-left-share)))
+    );
+  }
 
-    .contact-layout__legal {
-      grid-column: 1;
-      grid-row: 3;
-    }
+  .contact-layout__legal {
+    margin-block-start: calc(var(--form-group-gap) - var(--section-gap));
   }
 
   .contact-form {
     display: grid;
     min-width: 0;
-    max-width: var(--ch-width-body);
     /* Cada grupo controla su separación. El estado vacío conserva aria-live
        y su fila de altura cero, sin añadir un gap al final del formulario. */
     row-gap: 0;

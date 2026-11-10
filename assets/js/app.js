@@ -276,39 +276,18 @@ class HomeComposition {
   update() {
     const bodyStyle = getComputedStyle(document.body);
     const rootStyle = getComputedStyle(this.root);
-    const footerStyle = getComputedStyle(this.footer);
-    const bodyGap = parseFloat(bodyStyle.rowGap);
-    const minimumGap = parseFloat(rootStyle.rowGap) -
-      (parseFloat(rootStyle.getPropertyValue("--home-space-between")) || 0);
-    const introHeight = this.intro.getBoundingClientRect().height;
-    const projectsHeight = this.projects.getBoundingClientRect().height;
+    const currentSpace = parseFloat(rootStyle.getPropertyValue("--home-extra-space")) || 0;
+    const minimumGap = parseFloat(rootStyle.rowGap) - currentSpace;
     const available = window.innerHeight -
       parseFloat(bodyStyle.paddingTop) - parseFloat(bodyStyle.paddingBottom) -
-      this.header.getBoundingClientRect().height - this.footer.getBoundingClientRect().height -
-      2 * bodyGap;
+      this.header.offsetHeight - this.footer.offsetHeight - 2 * parseFloat(bodyStyle.rowGap);
+    const contentHeight = this.intro.offsetHeight + this.projects.offsetHeight + minimumGap;
 
-    // The editorial field spans the header's bottom and the footer's text.
-    const field = available + 2 * bodyGap + parseFloat(footerStyle.paddingTop);
-    const projectsTop = Math.max(introHeight + minimumGap, Math.min(
-      field * 2 / 3 - bodyGap - projectsHeight / 2,
-      available - projectsHeight
-    ));
-    // Center the introduction in the area above the projects, keeping a safe gap.
-    const above = Math.max(0, Math.min(
-      (projectsTop - bodyGap - introHeight) / 2,
-      projectsTop - introHeight - minimumGap
-    ));
-    const spaces = {
-      above,
-      between: Math.max(0, projectsTop - above - introHeight - minimumGap),
-      below: Math.max(0, available - projectsTop - projectsHeight),
-    };
-    for (const [position, value] of Object.entries(spaces)) {
-      const property = `--home-space-${position}`;
-      const pixels = `${value.toFixed(3)}px`;
-      if (this.root.style.getPropertyValue(property) !== pixels) {
-        this.root.style.setProperty(property, pixels);
-      }
+    // Give the introduction room to breathe without pushing the work down on tall screens.
+    const extra = Math.min(minimumGap, Math.max(0, (available - contentHeight) / 3));
+    const pixels = `${extra.toFixed(3)}px`;
+    if (this.root.style.getPropertyValue("--home-extra-space") !== pixels) {
+      this.root.style.setProperty("--home-extra-space", pixels);
     }
   }
 }
