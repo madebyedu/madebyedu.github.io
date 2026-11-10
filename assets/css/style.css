@@ -38,9 +38,9 @@
     --font-size-heading-sm: var(--font-size-body);
     --font-size-lead: var(--font-size-body);
     --font-size-mobile-nav: var(--font-size-heading-md);
-    --font-size-display: var(--font-size-heading-lg);
 
     --ch-width-body: 65ch;
+    --ch-width-prose: 58ch;
 
     /* Escala fija de 4px: los pasos no cambian en los breakpoints.
        Los componentes consumen las relaciones semánticas siguientes. */
@@ -205,6 +205,11 @@
     max-width: var(--ch-width-body);
   }
 
+  .about-page p,
+  .case-study p {
+    max-width: var(--ch-width-prose);
+  }
+
   a {
     text-decoration: none;
     color: var(--text-muted);
@@ -252,7 +257,6 @@
 
   /* Home agrupa la presentación y da paso a una selección de igual jerarquía. */
   .page-home {
-    --font-size-display: clamp(2rem, 1.4rem + 2.4vw, 3rem);
     --home-intro-gap: clamp(var(--space-3), 1.125vw, var(--space-4));
     --home-projects-gap: clamp(var(--space-8), 3.5vw, var(--space-12));
   }
@@ -591,7 +595,6 @@
 
   .home-intro h1 {
     max-width: 26ch;
-    font-size: var(--font-size-display);
   }
 
   .home-intro__text {
@@ -701,6 +704,11 @@
     margin-block-end: calc(var(--carousel-label-gap) - var(--focus-padding-start));
   }
 
+  .project-carousel__label {
+    font-size: var(--font-size-body);
+    line-height: var(--line-height-body);
+  }
+
   .project-carousel__controls:not([hidden]) {
     display: flex;
     flex: none;
@@ -765,6 +773,35 @@
     white-space: nowrap;
   }
 
+  /* Con texto ampliado, el rótulo y los controles necesitan filas propias. */
+  @media (width < 20rem) {
+    .project-carousel__header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .project-carousel__controls:not([hidden]) {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--space-1);
+
+      button {
+        inline-size: min(2.75rem, 100%);
+      }
+
+      [data-carousel-next] {
+        justify-self: end;
+      }
+    }
+
+    .project-carousel__markers {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
+
   .project-carousel__track {
     --carousel-card-width: min(
       calc(
@@ -817,6 +854,10 @@
       flex: 1;
       flex-direction: column;
       overflow-wrap: anywhere;
+
+      > h3 {
+        font-size: var(--font-size-heading-md);
+      }
     }
 
     .project-link {
@@ -929,6 +970,12 @@
     max-width: 36ch;
   }
 
+  @media (width < 30rem) {
+    .case-intro .case-title--long {
+      line-height: 1.2;
+    }
+  }
+
   .case-facts {
     display: grid;
     gap: var(--grid-gap);
@@ -943,6 +990,10 @@
     dt {
       color: var(--text-muted);
       font-size: var(--font-size-caption);
+    }
+
+    dd {
+      text-wrap: pretty;
     }
   }
 
@@ -1217,8 +1268,14 @@
     }
 
     .about-areas {
-      grid-template-columns: var(--layout-three-columns);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       row-gap: var(--grid-gap);
+    }
+  }
+
+  @media (width >= 64rem) {
+    .about-areas {
+      grid-template-columns: var(--layout-three-columns);
     }
   }
 
