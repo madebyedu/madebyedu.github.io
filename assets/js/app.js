@@ -295,171 +295,105 @@ class HomeComposition {
   }
 }
 
-// Native horizontal scrolling, keyboard navigation and mouse dragging.
+// A single project changes in place, with the same controls for every input mode.
 class ProjectCarousel {
   constructor(root) {
-    this.root = root;
     this.track = root.querySelector(".project-carousel__track");
     this.cards = [...root.querySelectorAll(".project-card")];
     this.controls = root.querySelector(".project-carousel__controls");
     this.previous = root.querySelector("[data-carousel-prev]");
     this.next = root.querySelector("[data-carousel-next]");
     this.position = root.querySelector("[data-carousel-position]");
+    if (!this.track || !this.controls || this.cards.length < 2) return;
+
     this.returnKey = `portfolio:carousel:${location.pathname}`;
-    this.drag = null;
-    this.motionTarget = null;
-    this.suppressClick = false;
-
-    if (!this.track || !this.cards.length) return;
     this.markers = this.cards.map(() => document.createElement("span"));
-    root.querySelector("[data-carousel-markers]")?.append(...this.markers);
-    this.track.addEventListener("keydown", (event) => {
-      if (event.target !== this.track) return;
-      const destinations = {
-        ArrowLeft: this.adjacentPosition(-1),
-        ArrowRight: this.adjacentPosition(1),
-        Home: 0,
-        End: this.maxScroll,
-      };
-      if (!(event.key in destinations)) return;
-      event.preventDefault();
-      this.scrollTo(destinations[event.key]);
+    root.querySelector("[data-carousel-markers]").append(...this.markers);
+    this.controls.hidden = false;
+    this.track.tabIndex = 0;
+    this.track.classList.add("is-paged");
+
+    const saved = this.restoredProject();
+    this.show(saved?.card ?? 0);
+    if (saved?.focusLink && document.activeElement === document.body) {
+      const target = saved.focusLink === "image" ? ".projects__image-link" : ".project-link";
+      this.cards[this.index].querySelector(target)?.focus({ preventScroll: true });
+    }
+
+    this.previous.addEventListener("click", () => this.step(-1));
+    this.next.addEventListener("click", () => this.step(1));
+    this.track.addEventListener("keydown", (event) => this.handleKey(event));
+    this.track.addEventListener("click", (event) => this.rememberProject(event));
+    this.bindSwipe();
+    this.bindWheel();
+  }
+
+  show(index, animate = false) {
+    const nextIndex = Math.max(0, Math.min(index, this.cards.length - 1));
+    if (this.index === nextIndex) return;
+    if (this.cards[this.index]?.contains(document.activeElement)) {
+      this.track.focus({ preventScroll: true });
+    }
+    this.index = nextIndex;
+    this.cards.forEach((card, i) => {
+      card.hidden = i !== this.index;
+      card.classList.toggle("is-changing", animate && !card.hidden);
+      this.markers[i].toggleAttribute("data-visible", !card.hidden);
     });
-    this.bindDragging();
-    this.previous?.addEventListener("click", () => {
-      this.scrollTo(this.adjacentPosition(-1));
-    });
-    this.next?.addEventListener("click", () => {
-      this.scrollTo(this.adjacentPosition(1));
-    });
-    const settle = () => {
-      if (!this.drag && this.motionTarget === null) this.updateControls();
+    // Load the immediate neighbours so the next gesture has an image ready.
+    for (const card of this.cards.slice(Math.max(0, this.index - 1), this.index + 2)) {
+      card.querySelector("img").loading = "eager";
+    }
+    const title = this.cards[this.index].querySelector("h3").textContent.trim();
+    this.position.textContent = `${this.index + 1} / ${this.cards.length} · ${title}`;
+    this.previous.setAttribute("aria-disabled", String(this.index === 0));
+    this.next.setAttribute("aria-disabled", String(this.index === this.cards.length - 1));
+  }
+
+  step(direction) {
+    this.show(this.index + direction, true);
+  }
+
+  handleKey(event) {
+    if (event.target !== this.track || event.altKey || event.ctrlKey || event.metaKey) return;
+    const positions = {
+      ArrowLeft: this.index - 1,
+      ArrowRight: this.index + 1,
+      Home: 0,
+      End: this.cards.length - 1,
     };
-    if ("onscrollend" in this.track) {
-      this.track.addEventListener("scrollend", settle);
-    } else {
-      this.track.addEventListener("scroll", () => {
-        clearTimeout(this.scrollTimer);
-        this.scrollTimer = setTimeout(settle, 120);
-      }, { passive: true });
-    }
-    this.track.addEventListener("click", (event) => this.rememberPosition(event));
-    window.addEventListener("pageshow", (event) => {
-      if (event.persisted) this.restorePosition();
-    });
-    // Native touch/trackpad scrolling and keyboard focus interrupt mouse momentum.
-    this.track.addEventListener("wheel", () => {
-      if (this.motionTarget !== null) this.stopMotion();
-    }, { passive: true });
-    this.track.addEventListener("focusin", () => {
-      if (this.motionTarget !== null) this.stopMotion();
-    });
-    reducedMotionPreference.addEventListener("change", (event) => {
-      if (event.matches && !this.drag) this.stopMotion();
-    });
-    if ("ResizeObserver" in window) {
-      this.resizeObserver = new ResizeObserver(() => this.updateBleed());
-      this.resizeObserver.observe(this.root);
-    }
-    window.addEventListener("resize", () => this.updateBleed());
-    this.updateBleed();
-    this.restorePosition();
+    if (!(event.key in positions)) return;
+    event.preventDefault();
+    this.show(positions[event.key], true);
   }
 
-  get maxScroll() {
-    return this.track.scrollWidth - this.track.clientWidth;
-  }
-
-  get widthFromGutter() {
-    const padding = parseFloat(getComputedStyle(this.track).paddingInlineStart) || 0;
-    return this.track.clientWidth - padding;
-  }
-
-  get step() {
-    const gap = parseFloat(getComputedStyle(this.track).columnGap) || 0;
-    return this.cards[0].getBoundingClientRect().width + gap;
-  }
-
-  adjacentPosition(direction) {
-    const left = this.motionTarget ?? this.track.scrollLeft;
-    const step = this.step;
-    if (!step || (direction < 0 ? left <= 1 : left >= this.maxScroll - 1)) return left;
-    return direction < 0
-      ? Math.max(0, (Math.ceil((left - 1) / step) - 1) * step)
-      : Math.min(this.maxScroll, (Math.floor((left + 1) / step) + 1) * step);
-  }
-
-  updateControls() {
-    if (!this.controls) return;
-    const left = this.track.scrollLeft;
-    const viewport = this.track.clientWidth;
-    const maximum = this.track.scrollWidth - viewport;
-    this.controls.hidden = maximum <= 1;
-    if (this.controls.hidden) return;
-
-    const width = this.cards[0].getBoundingClientRect().width;
-    const step = width + (parseFloat(getComputedStyle(this.track).columnGap) || 0);
-    if (!step) return;
-    const count = this.cards.length;
-    const clampCard = (index) => Math.max(1, Math.min(count, index));
-    const visibleStart = left + this.widthFromGutter - viewport;
-    let first = clampCard(Math.ceil((visibleStart - 1) / step) + 1);
-    let last = clampCard(Math.floor((visibleStart + viewport - width + 1) / step) + 1);
-    // A free scroll can end between cards. Use the one nearest the center.
-    if (first > last) {
-      first = last = clampCard(Math.round((visibleStart + (viewport - width) / 2) / step) + 1);
-    }
-    const range = first === last ? String(first) : `${first}–${last}`;
-    const label = `${range} / ${count}`;
-    if (this.position.textContent !== label) {
-      this.position.textContent = label;
-      this.markers.forEach((marker, index) => {
-        marker.toggleAttribute("data-visible", index + 1 >= first && index + 1 <= last);
-      });
-    }
-    this.updateButtons(left, maximum);
-  }
-
-  updateButtons(left, maximum = this.maxScroll) {
-    for (const [button, unavailable] of [[this.previous, left <= 1], [this.next, left >= maximum - 1]]) {
-      const value = String(unavailable);
-      if (button && button.getAttribute("aria-disabled") !== value) {
-        button.setAttribute("aria-disabled", value);
-      }
-    }
-  }
-
-  rememberPosition(event) {
+  rememberProject(event) {
     if (event.defaultPrevented || event.button !== 0 ||
-      event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
     const link = event.target.closest(".project-card a[href]");
-    const step = this.step;
-    if (!link || !step || (link.target && link.target !== "_self")) return;
+    if (!link || (link.target && link.target !== "_self")) return;
 
     const entry = {
-      offset: this.track.scrollLeft / step,
-      visibleSteps: this.widthFromGutter / step,
       project: link.href,
-      card: this.cards.indexOf(link.closest(".project-card")),
+      card: this.index,
       focusLink: event.detail === 0
         ? (link.classList.contains("projects__image-link") ? "image" : "action")
         : null,
     };
-    // History keeps the position per entry. Session storage also supports the
-    // link back to selected work, which creates a different history entry.
+    // Per-entry history handles Back. The project link to #projects uses a new entry.
     try {
       history.replaceState({ ...history.state, projectCarousel: entry }, "");
     } catch {
-      // The browser can still restore its own scroll state.
+      // Navigation remains available when history state cannot be written.
     }
     try {
       sessionStorage.setItem(this.returnKey, JSON.stringify(entry));
     } catch {
-      // Storage may be disabled.
+      // Session storage can be unavailable.
     }
   }
 
-  restorePosition() {
+  restoredProject() {
     let entry = history.state?.projectCarousel;
     if (!entry && location.hash === "#projects") {
       try {
@@ -469,180 +403,106 @@ class ProjectCarousel {
           sessionStorage.removeItem(this.returnKey);
         }
       } catch {
-        // Keep the normal anchor navigation if storage is unavailable.
+        // Keep regular anchor navigation when the previous project is unavailable.
       }
     }
-    const step = this.step;
-    if (!Number.isFinite(entry?.offset) || !step) return;
-
-    const card = this.cards[entry.card];
-    let left = entry.offset * step;
-    const widthFromGutter = this.widthFromGutter;
-    if (card && widthFromGutter / step < entry.visibleSteps - 0.01) {
-      // A narrower viewport should still show the card that was opened.
-      const cardStart = entry.card * step;
-      const cardEnd = cardStart + card.getBoundingClientRect().width;
-      left = Math.min(cardStart, Math.max(left, cardEnd - widthFromGutter));
-    }
-    this.track.scrollTo({
-      left: Math.max(0, Math.min(left, this.maxScroll)),
-      behavior: "instant",
-    });
-    if (card && entry.focusLink && document.activeElement === document.body) {
-      const selector = entry.focusLink === "image" ? ".projects__image-link" : ".project-link";
-      card.querySelector(selector)?.focus({ preventScroll: true });
-    }
-    this.updateControls();
+    if (Number.isInteger(entry?.card) && this.cards[entry.card]) return entry;
+    return null;
   }
 
-  scrollTo(left) {
-    if (this.drag || Math.abs(left - (this.motionTarget ?? this.track.scrollLeft)) < 1) return;
-    this.moveTo(left);
-  }
+  bindSwipe() {
+    const dragThreshold = 10;
+    const swipeThreshold = 40;
+    let gesture;
+    let suppressClick = false;
 
-  stopMotion() {
-    cancelAnimationFrame(this.motionFrame);
-    this.motionTarget = null;
-    this.track.classList.remove("is-positioning");
-    this.updateControls();
-  }
-
-  coast(velocity) {
-    const start = this.track.scrollLeft;
-    const maximum = this.maxScroll;
-    const step = this.step;
-    if (!step) {
-      this.stopMotion();
-      return;
-    }
-    // Pick the destination from the impulse before animating, not after it stops.
-    const impulse = reducedMotionPreference.matches ? 0 : velocity * 160;
-    const projected = Math.max(0, Math.min(maximum, start + impulse));
-    const snap = Math.min(maximum, Math.round(projected / step) * step);
-    const target = maximum - projected < Math.abs(projected - snap) ? maximum : snap;
-    this.moveTo(target, velocity);
-  }
-
-  moveTo(target, velocity = 0) {
-    cancelAnimationFrame(this.motionFrame);
-    const start = this.track.scrollLeft;
-    const distance = target - start;
-    this.track.classList.add("is-positioning");
-    if (reducedMotionPreference.matches || Math.abs(distance) < 1) {
-      this.track.scrollLeft = target;
-      this.stopMotion();
-      return;
-    }
-
-    this.motionTarget = target;
-    this.updateButtons(target);
-    const followsImpulse = distance * velocity > 0 && Math.abs(velocity) >= 0.12;
-    const duration = Math.min(320, 160 + Math.abs(distance) * 0.28);
-    const initialSlope = followsImpulse
-      ? Math.min(3, velocity * duration / distance)
-      : 0;
-    const began = performance.now();
-    const animate = (now) => {
-      const progress = Math.max(0, Math.min(1, (now - began) / duration));
-      // Carry the release speed into the curve; button navigation decelerates from the start.
-      const eased = followsImpulse
-        ? progress ** 2 * (3 - 2 * progress) +
-          initialSlope * progress * (1 - progress) ** 2
-        : 1 - (1 - progress) ** 4;
-      this.track.scrollLeft = start + distance * eased;
-      if (progress < 1) {
-        this.motionFrame = requestAnimationFrame(animate);
-      } else {
-        this.stopMotion();
-      }
-    };
-    this.motionFrame = requestAnimationFrame(animate);
-  }
-
-  updateBleed() {
-    // Keep both scroll edges at the usable viewport; padding preserves the gutters.
-    const bounds = this.root.getBoundingClientRect();
-    const pageEnd = document.body.getBoundingClientRect().right;
-    const start = Math.max(0, bounds.left);
-    const end = Math.max(0, pageEnd - bounds.right);
-    this.root.style.setProperty("--carousel-bleed-start", `${start}px`);
-    this.root.style.setProperty("--carousel-bleed-end", `${end}px`);
-    if (this.motionTarget !== null) this.stopMotion();
-    else if (!this.drag) this.updateControls();
-  }
-
-  bindDragging() {
     this.track.addEventListener("dragstart", (event) => event.preventDefault());
     this.track.addEventListener("pointerdown", (event) => {
-      this.stopMotion();
-      if (
-        event.pointerType !== "mouse" || event.button !== 0 ||
-        event.ctrlKey || event.metaKey || event.altKey || event.shiftKey
-      ) return;
-      this.track.classList.add("is-positioning");
-      this.suppressClick = false;
-      this.drag = {
-        pointerId: event.pointerId,
-        startX: event.clientX,
-        lastX: event.clientX,
-        lastTime: event.timeStamp,
-        velocity: 0,
-        scrollLeft: this.track.scrollLeft,
-        moved: false,
-      };
+      suppressClick = false;
+      if (!event.isPrimary || event.button !== 0 ||
+          event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      const { left, right } = this.track.getBoundingClientRect();
+      gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, left, right, horizontal: false };
     });
     this.track.addEventListener("pointermove", (event) => {
-      if (!this.drag || this.drag.pointerId !== event.pointerId) return;
-      const distance = event.clientX - this.drag.startX;
-      if (!this.drag.moved && Math.abs(distance) < 8) return;
-      if (!this.drag.moved) {
-        this.drag.moved = true;
+      if (gesture?.id !== event.pointerId) return;
+      const dx = event.clientX - gesture.x;
+      const x = Math.abs(dx);
+      const y = Math.abs(event.clientY - gesture.y);
+      if (!gesture.horizontal) {
+        if (Math.max(x, y) < dragThreshold) return;
+        if (y >= x) {
+          suppressClick = event.pointerType === "mouse";
+          gesture = null;
+          return;
+        }
+        gesture.horizontal = true;
+        if (event.pointerType === "mouse") this.track.setPointerCapture(event.pointerId);
         this.track.classList.add("is-dragging");
-        this.track.setPointerCapture(event.pointerId);
       }
+      const edge = dx < 0 ? gesture.left : gesture.right;
+      const distanceToEdge = Math.abs(gesture.x - edge);
+      const opacity = dx ? Math.max(0, 1 - x / distanceToEdge) : 1;
+      this.track.style.setProperty("--drag-opacity", opacity);
       event.preventDefault();
-      const elapsed = event.timeStamp - this.drag.lastTime;
-      if (elapsed > 0) {
-        const velocity = (this.drag.lastX - event.clientX) / elapsed;
-        this.drag.velocity = Math.max(-3.5, Math.min(3.5,
-          this.drag.velocity * 0.4 + velocity * 0.6
-        ));
-      }
-      this.drag.lastX = event.clientX;
-      this.drag.lastTime = event.timeStamp;
-      this.track.scrollLeft = this.drag.scrollLeft - distance;
     });
-    const finish = (event) => {
-      if (!this.drag || this.drag.pointerId !== event.pointerId) return;
-      const drag = this.drag;
-      this.suppressClick = drag.moved;
-      this.drag = null;
+    const endGesture = (event) => {
+      if (gesture?.id !== event.pointerId) return;
+      const dx = event.clientX - gesture.x;
+      if (gesture.horizontal && event.type === "pointerup") {
+        suppressClick = true;
+        const reachedEdge = dx < 0 ? event.clientX <= gesture.left : event.clientX >= gesture.right;
+        if (dx && (Math.abs(dx) >= swipeThreshold || reachedEdge)) {
+          const direction = dx < 0 ? 1 : -1;
+          if (this.cards[this.index + direction]) {
+            this.step(direction);
+          } else if (!reducedMotionPreference.matches) {
+            const card = this.cards[this.index];
+            card.classList.remove("is-changing");
+            // Apply the removal before replaying the animation on the same card.
+            void card.offsetWidth;
+            card.classList.add("is-changing");
+          }
+        }
+      }
+      gesture = null;
       this.track.classList.remove("is-dragging");
-      if (this.track.hasPointerCapture(event.pointerId)) {
-        this.track.releasePointerCapture(event.pointerId);
-      }
-      if (drag.moved && event.type === "pointerup") {
-        // Holding still before release deliberately removes the flick impulse.
-        this.coast(event.timeStamp - drag.lastTime < 80 ? drag.velocity : 0);
-      } else {
-        this.stopMotion();
-      }
-      // The synthetic click following pointerup must not open a dragged card.
-      setTimeout(() => {
-        this.suppressClick = false;
-      }, 0);
+      this.track.style.removeProperty("--drag-opacity");
     };
-    this.track.addEventListener("pointerup", finish);
-    this.track.addEventListener("pointercancel", finish);
-    this.track.addEventListener("lostpointercapture", finish);
+    for (const type of ["pointerup", "pointercancel", "lostpointercapture"]) {
+      this.track.addEventListener(type, endGesture);
+    }
     this.track.addEventListener("pointerleave", (event) => {
-      if (this.drag && !this.drag.moved) finish(event);
+      if (!gesture?.horizontal) endGesture(event);
     });
     this.track.addEventListener("click", (event) => {
-      if (!this.suppressClick) return;
+      if (!suppressClick || event.detail === 0) return;
+      suppressClick = false;
       event.preventDefault();
       event.stopPropagation();
     }, true);
+  }
+
+  bindWheel() {
+    let lastEvent = -Infinity;
+    let delta = 0;
+    let consumed = false;
+    this.track.addEventListener("wheel", (event) => {
+      // Vertical scrolling and pinch-to-zoom keep their native behaviour.
+      if (event.ctrlKey || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+      event.preventDefault();
+      if (event.timeStamp - lastEvent > 160) {
+        delta = 0;
+        consumed = false;
+      }
+      lastEvent = event.timeStamp;
+      if (consumed) return;
+      delta += event.deltaX;
+      const threshold = event.deltaMode === 0 ? 35 : 1;
+      if (Math.abs(delta) < threshold) return;
+      consumed = true;
+      this.step(Math.sign(delta));
+    }, { passive: false });
   }
 }
 

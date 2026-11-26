@@ -115,7 +115,7 @@
                   </svg>
                 </button>
                 <span class="project-carousel__markers" aria-hidden="true" data-carousel-markers></span>
-                <span class="project-carousel__status" role="status" aria-label="Proyectos visibles" data-carousel-position></span>
+                <span class="project-carousel__status" role="status" data-carousel-position></span>
                 <button type="button" data-carousel-next aria-controls="more-projects" aria-label="Proyectos siguientes">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                     <path d="M10 6l6 6-6 6" />
@@ -126,12 +126,23 @@
             <div
               class="project-carousel__track"
               id="more-projects"
-              tabindex="0"
+              data-reveal="rise"
               role="region"
               aria-roledescription="carrusel"
               aria-label="Proyectos"
             >
-              <article class="project-card" data-reveal="rise">
+              <article class="project-card">
+                <div class="projects__description">
+                  <h3 id="project-porsche-title">Catálogo corporativo de Centro Porsche Valladolid</h3>
+                  <p>Diseño editorial</p>
+                  <a
+                    class="project-link"
+                    href="/projects/centro-porsche-valladolid-catalogo-apertura.html"
+                  >
+                    <span class="project-link__icon" aria-hidden="true">▸</span>
+                    <span>Ver proyecto</span>
+                  </a>
+                </div>
                 <a
                   class="projects__image-link"
                   href="/projects/centro-porsche-valladolid-catalogo-apertura.html"
@@ -139,7 +150,7 @@
                 >
                   <picture>
                     <source
-                      media="(orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
+                      media="(orientation: portrait) and (width < 49rem), (orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
                       srcset="/assets/img/thumbnail/porsche-brochure_mobile_4x5.webp"
                       width="756"
                       height="945"
@@ -152,22 +163,20 @@
                       height="700"
                       loading="eager"
                       fetchpriority="high"
-                  /></picture>
+                    />
+                  </picture>
                 </a>
+              </article>
+
+              <article class="project-card">
                 <div class="projects__description">
-                  <h3 id="project-porsche-title">Catálogo corporativo de Centro Porsche Valladolid</h3>
-                  <p>Diseño editorial</p>
-                  <a
-                    class="project-link"
-                    href="/projects/centro-porsche-valladolid-catalogo-apertura.html"
-                  >
+                  <h3 id="project-hydro-title">Campaña de tratamiento hidrorrepelente para cristales</h3>
+                  <p>Diseño digital e impreso</p>
+                  <a class="project-link" href="/projects/campana-tratamiento-antilluvia.html">
                     <span class="project-link__icon" aria-hidden="true">▸</span>
                     <span>Ver proyecto</span>
                   </a>
                 </div>
-              </article>
-
-              <article class="project-card" data-reveal="rise">
                 <a
                   class="projects__image-link"
                   href="/projects/campana-tratamiento-antilluvia.html"
@@ -175,7 +184,7 @@
                 >
                   <picture>
                     <source
-                      media="(orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
+                      media="(orientation: portrait) and (width < 49rem), (orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
                       srcset="/assets/img/thumbnail/automotive-water-repellent-campaign-instagram-feed-mockup_mobile_4x5.webp"
                       width="756"
                       height="945"
@@ -188,19 +197,23 @@
                       height="700"
                       loading="lazy"
                       decoding="async"
-                  /></picture>
+                    />
+                  </picture>
                 </a>
+              </article>
+
+              <article class="project-card">
                 <div class="projects__description">
-                  <h3 id="project-hydro-title">Campaña de tratamiento hidrorrepelente para cristales</h3>
-                  <p>Diseño digital e impreso</p>
-                  <a class="project-link" href="/projects/campana-tratamiento-antilluvia.html">
+                  <h3 id="project-healthcare-title">Campaña de salud para empleados</h3>
+                  <p>Animación y diseño impreso</p>
+                  <a
+                    class="project-link"
+                    href="/projects/campana-salud-empleados.html"
+                  >
                     <span class="project-link__icon" aria-hidden="true">▸</span>
                     <span>Ver proyecto</span>
                   </a>
                 </div>
-              </article>
-
-              <article class="project-card" data-reveal="rise">
                 <a
                   class="projects__image-link"
                   href="/projects/campana-salud-empleados.html"
@@ -208,7 +221,7 @@
                 >
                   <picture>
                     <source
-                      media="(orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
+                      media="(orientation: portrait) and (width < 49rem), (orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
                       srcset="/assets/img/thumbnail/employee-healthcare-campaign_mobile_4x5.webp"
                       width="756"
                       height="945"
@@ -221,22 +234,23 @@
                       height="700"
                       loading="lazy"
                       decoding="async"
-                  /></picture>
+                    />
+                  </picture>
                 </a>
+              </article>
+
+              <article class="project-card">
                 <div class="projects__description">
-                  <h3 id="project-healthcare-title">Campaña de salud para empleados</h3>
-                  <p>Animación y diseño impreso</p>
+                  <h3 id="project-brand-video-title">Vídeo de presentación del concesionario CUPRA</h3>
+                  <p>Edición de vídeo y motion graphics</p>
                   <a
                     class="project-link"
-                    href="/projects/campana-salud-empleados.html"
+                    href="/projects/concesionario-cupra-video-presentacion.html"
                   >
                     <span class="project-link__icon" aria-hidden="true">▸</span>
                     <span>Ver proyecto</span>
                   </a>
                 </div>
-              </article>
-
-              <article class="project-card" data-reveal="rise">
                 <a
                   class="projects__image-link"
                   href="/projects/concesionario-cupra-video-presentacion.html"
@@ -244,7 +258,7 @@
                 >
                   <picture>
                     <source
-                      media="(orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
+                      media="(orientation: portrait) and (width < 49rem), (orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
                       srcset="/assets/img/thumbnail/brand-identity-video_mobile_4x5.webp"
                       width="756"
                       height="945"
@@ -257,22 +271,23 @@
                       height="700"
                       loading="lazy"
                       decoding="async"
-                  /></picture>
+                    />
+                  </picture>
                 </a>
+              </article>
+
+              <article class="project-card">
                 <div class="projects__description">
-                  <h3 id="project-brand-video-title">Vídeo de presentación del concesionario CUPRA</h3>
-                  <p>Edición de vídeo y motion graphics</p>
+                  <h3 id="project-outletcars-title">Tarjetas de visita para OutletCars</h3>
+                  <p>Diseño impreso</p>
                   <a
                     class="project-link"
-                    href="/projects/concesionario-cupra-video-presentacion.html"
+                    href="/projects/tarjetas-visita-outletcars.html"
                   >
                     <span class="project-link__icon" aria-hidden="true">▸</span>
                     <span>Ver proyecto</span>
                   </a>
                 </div>
-              </article>
-
-              <article class="project-card" data-reveal="rise">
                 <a
                   class="projects__image-link"
                   href="/projects/tarjetas-visita-outletcars.html"
@@ -280,7 +295,7 @@
                 >
                   <picture>
                     <source
-                      media="(orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
+                      media="(orientation: portrait) and (width < 49rem), (orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
                       srcset="/assets/img/thumbnail/business-card-design_mobile_4x5.webp"
                       width="756"
                       height="945"
@@ -293,22 +308,23 @@
                       height="700"
                       loading="lazy"
                       decoding="async"
-                  /></picture>
+                    />
+                  </picture>
                 </a>
+              </article>
+
+              <article class="project-card">
                 <div class="projects__description">
-                  <h3 id="project-outletcars-title">Tarjetas de visita para OutletCars</h3>
-                  <p>Diseño impreso</p>
+                  <h3 id="project-natural-light-title">Sesión editorial en la playa (proyecto personal)</h3>
+                  <p>Fotografía de retrato</p>
                   <a
                     class="project-link"
-                    href="/projects/tarjetas-visita-outletcars.html"
+                    href="/projects/luz-natural.html"
                   >
                     <span class="project-link__icon" aria-hidden="true">▸</span>
                     <span>Ver proyecto</span>
                   </a>
                 </div>
-              </article>
-
-              <article class="project-card" data-reveal="rise">
                 <a
                   class="projects__image-link"
                   href="/projects/luz-natural.html"
@@ -316,7 +332,7 @@
                 >
                   <picture>
                     <source
-                      media="(orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
+                      media="(orientation: portrait) and (width < 49rem), (orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem)"
                       srcset="/assets/img/thumbnail/natural-light-project_mobile_4x5.webp"
                       width="756"
                       height="945"
@@ -329,19 +345,9 @@
                       height="700"
                       loading="lazy"
                       decoding="async"
-                  /></picture>
+                    />
+                  </picture>
                 </a>
-                <div class="projects__description">
-                  <h3 id="project-natural-light-title">Sesión editorial en la playa (proyecto personal)</h3>
-                  <p>Fotografía de retrato</p>
-                  <a
-                    class="project-link"
-                    href="/projects/luz-natural.html"
-                  >
-                    <span class="project-link__icon" aria-hidden="true">▸</span>
-                    <span>Ver proyecto</span>
-                  </a>
-                </div>
               </article>
             </div>
           </div>

@@ -64,7 +64,6 @@
     --metadata-gap: var(--space-1);
     --media-caption-gap: var(--copy-gap);
     --divider-inset: var(--intro-gap);
-    --card-media-gap: var(--space-4);
     --card-action-gap: var(--space-4);
 
     /* Dimensiones ópticas de controles conservadas; ritmo de campos independiente. */
@@ -622,6 +621,7 @@
   }
 
   .home-content {
+    --home-copy-columns: 12;
     align-content: start;
     padding-block-start: var(--home-extra-space, 0px);
     row-gap: calc(var(--home-projects-gap) + var(--home-extra-space, 0px));
@@ -631,8 +631,8 @@
     row-gap: var(--home-intro-gap);
   }
 
-  .home-intro h1 {
-    max-width: 26ch;
+  .home-intro > * {
+    grid-column-end: span var(--home-copy-columns);
   }
 
   .home-intro__text {
@@ -646,113 +646,15 @@
     font-size: inherit;
   }
 
-  @media (width >= 75rem), (width >= 49rem) and (height >= 49rem) {
-    .home-intro > * {
-      grid-column-end: span 10;
-    }
-  }
-
-  @media (width >= 75rem) {
-    .home-intro > * {
-      grid-column-end: span 7;
-    }
-  }
-
-  /* 10. Proyectos: cuadrícula y elementos compartidos */
-  .projects {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    row-gap: var(--section-gap);
-    column-gap: var(--grid-gap);
-
-    picture {
-      overflow: hidden;
-    }
-
-  }
-
-  .projects__image {
-    aspect-ratio: 2 / 1;
-    object-fit: cover;
-    object-position: center;
-    filter: brightness(1);
-    transition: filter var(--motion-feedback) var(--motion-ease-out);
-    border-radius: var(--border-radius-in);
-  }
-
-  /* Las tablets grandes en vertical usan los encuadres 4:5 de las piezas. */
-  @media (orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem) {
-    .projects__image {
-      aspect-ratio: 4 / 5;
-    }
-  }
-
-  .projects__description {
-    display: grid;
-    align-content: start;
-    gap: var(--metadata-gap);
-    margin-block-start: var(--card-media-gap);
-
-    p {
-      color: var(--text-muted);
-      font-size: var(--font-size-caption);
-      line-height: var(--line-height-body);
-    }
-
-    a {
-      width: fit-content;
-      margin-block-start: max(
-        0rem,
-        calc(var(--card-action-gap) - var(--metadata-gap))
-      );
-      font-size: var(--font-size-body);
-      font-weight: var(--font-weight-regular);
-      line-height: var(--line-height-body);
-    }
-  }
-
-  .projects__description .project-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5em;
-    font-weight: var(--font-weight-emphasis);
-    letter-spacing: var(--letter-spacing-emphasis);
-  }
-
-  .project-link__icon {
-    /* Glifo decorativo proporcional al enlace, sin un tamaño de texto propio. */
-    font-size: 1em;
-    line-height: 1;
-    flex-shrink: 0;
-  }
-
-  .projects__image-link {
-    display: block;
-    min-width: 0;
-  }
-
-  .projects__image-link:hover {
-    transform: none;
-  }
-
-  /* La pista llega a ambos bordes; la primera tarjeta parte del margen de lectura. */
-  .project-carousel {
-    --carousel-bleed-start: var(--page-gutter);
-    --carousel-bleed-end: var(--page-gutter);
-    --focus-padding-start: var(--space-2);
-    --focus-padding-end: var(--space-4);
-    --carousel-label-gap: var(--space-4);
-    max-width: none;
-    min-width: 0;
-  }
-
+  /* 10. Proyectos seleccionados en portada. */
   .project-carousel__header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-2);
-    margin-block-end: calc(var(--carousel-label-gap) - var(--focus-padding-start));
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-1) var(--layout-gap);
+    padding-block-end: var(--space-2);
+    border-block-end: 1px solid var(--border-subtle);
+    margin-block-end: var(--section-heading-gap);
   }
 
   .project-carousel__label {
@@ -766,7 +668,7 @@
     --carousel-arrow-outset: calc((var(--navigation-target) - 0.4375rem) / -2);
     display: flex;
     max-inline-size: 100%;
-    margin-inline: auto var(--carousel-arrow-outset);
+    margin-inline-start: var(--carousel-arrow-outset);
     align-items: center;
     color: var(--text-muted);
 
@@ -822,18 +724,6 @@
     }
   }
 
-  @media (width < 75rem) and ((width < 49rem) or (height < 49rem)) {
-    .project-carousel__header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: var(--space-1);
-    }
-
-    .project-carousel__controls:not([hidden]) {
-      margin-inline: var(--carousel-arrow-outset) 0;
-    }
-  }
-
   .project-carousel__status {
     position: absolute;
     inline-size: 1px;
@@ -844,135 +734,156 @@
   }
 
   .project-carousel__track {
-    /* Anchuras de 10, 7 y 5 columnas, con tramos intermedios para que
-       las tarjetas crezcan sin saltos y dejen ver la siguiente pieza. */
-    --carousel-column: calc((100% + var(--layout-gap)) / 12);
-    --carousel-card-width: min(
-      calc(10 * var(--carousel-column) - var(--layout-gap)),
-      max(18rem, calc(7 * var(--carousel-column) - var(--layout-gap))),
-      max(28rem, calc(5 * var(--carousel-column) - var(--layout-gap))),
-      62.5rem
-    );
-    display: flex;
-    gap: var(--layout-gap);
-    margin-inline: calc(-1 * var(--carousel-bleed-start)) calc(-1 * var(--carousel-bleed-end));
-    padding-inline: var(--carousel-bleed-start) var(--carousel-bleed-end);
-    padding-block: var(--focus-padding-start) var(--focus-padding-end);
-    /* Conserva espacio para el foco sin sumarlo a la separación con el footer. */
-    margin-block-end: calc(-1 * var(--focus-padding-end));
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
-    scroll-padding-inline-start: var(--carousel-bleed-start);
-    overscroll-behavior-x: contain;
-    scrollbar-width: none;
-    cursor: grab;
+    display: grid;
+    gap: var(--section-gap);
+  }
 
-    &::-webkit-scrollbar {
-      display: none;
+  .project-carousel__track.is-paged {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .project-carousel__track.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .project-carousel__track.is-paged {
+      transition: opacity var(--motion-feedback) var(--motion-ease-out);
     }
 
-    &.is-positioning {
-      scroll-snap-type: none;
-    }
-
-    &.is-dragging {
-      cursor: grabbing;
-      user-select: none;
+    .project-carousel__track.is-dragging {
+      opacity: var(--drag-opacity, 1);
+      transition: none;
     }
   }
 
-  .project-card {
-    display: flex;
-    flex: 0 0 var(--carousel-card-width);
-    flex-direction: column;
-    min-width: 0;
-    scroll-snap-align: start;
+  .project-card:not([hidden]) {
+    display: grid;
+    grid-template-columns: var(--layout-columns);
+    column-gap: var(--layout-gap);
+    row-gap: var(--copy-gap);
+    align-items: start;
+  }
 
-    > .projects__image-link {
-      flex-shrink: 0;
+  .projects__description,
+  .projects__image-link {
+    grid-column: 1 / -1;
+    min-inline-size: 0;
+  }
+
+  .projects__description {
+    grid-column-end: span var(--home-copy-columns);
+    display: grid;
+    justify-items: start;
+    gap: var(--space-2);
+    overflow-wrap: anywhere;
+
+    h3 {
+      font-size: var(--font-size-heading-md);
+      max-inline-size: 28ch;
     }
 
-    .projects__description {
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      overflow-wrap: anywhere;
-
-      > h3 {
-        font-size: var(--font-size-heading-md);
-      }
+    p {
+      color: var(--text-muted);
+      font-size: var(--font-size-caption);
     }
+  }
 
-    .project-link {
-      margin-block-start: 0;
-      padding-block-start: max(
-        0rem,
-        calc(var(--card-action-gap) - var(--metadata-gap))
-      );
-    }
+  .projects__description .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-block-start: calc(var(--card-action-gap) - var(--space-2));
+    font-weight: var(--font-weight-emphasis);
+    letter-spacing: var(--letter-spacing-emphasis);
+  }
 
-    a:focus-visible {
-      outline-offset: 2px;
+  .project-link__icon {
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .projects__image-link {
+    display: block;
+  }
+
+  .is-paged .projects__image-link {
+    cursor: grab;
+  }
+
+  .is-dragging .projects__image-link {
+    cursor: inherit;
+  }
+
+  .projects__image {
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+    border-radius: var(--border-radius-in);
+  }
+
+  @media (orientation: portrait) and (width < 49rem),
+    (orientation: portrait) and (56rem <= width < 75rem) and (height >= 75rem) {
+    .projects__image {
+      aspect-ratio: 4 / 5;
     }
   }
 
   @media (width >= 75rem), (width >= 49rem) and (height >= 49rem) {
-    .project-card .project-link {
-      margin-block-start: auto;
+    .home-content {
+      --home-copy-columns: 5;
+    }
+
+    .project-carousel__header {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-block-end: calc(var(--section-heading-gap) + var(--space-2));
+    }
+
+    .project-carousel__controls:not([hidden]) {
+      margin-inline: auto var(--carousel-arrow-outset);
+    }
+
+    .projects__image-link {
+      grid-column: 1 / span calc(12 - var(--home-copy-columns));
+      grid-row: 1;
+    }
+
+    .projects__description {
+      grid-column: span var(--home-copy-columns) / -1;
+      grid-row: 1;
     }
   }
 
-  /* En móvil, el enlace de la imagen cubre toda la celda. Los enlaces
-     originales siguen disponibles para teclado, sin anidar elementos <a>. */
+  @media (width >= 75rem) {
+    .projects__description h3 {
+      font-size: clamp(var(--font-size-heading-md), 2.3vw, var(--font-size-heading-lg));
+    }
+  }
+
   @media (width < 75rem) and ((width < 49rem) or (height < 49rem)) {
-    /* Completa la ventana de lectura para alinear también la última tarjeta. */
-    .project-carousel__track::after {
-      content: "";
-      flex: 0 0 max(0px, calc(100% - var(--carousel-card-width)));
-      margin-inline-start: calc(-1 * var(--layout-gap));
+    /* Conserva el eje de la fila y amplía un píxel a cada lado. */
+    .project-carousel__markers [data-visible] {
+      block-size: 0.125rem;
+      transform: scaleY(2);
     }
 
-    .project-card {
+    .project-card:not([hidden]) {
       position: relative;
+      row-gap: calc(var(--copy-gap) + var(--space-2));
     }
 
-    .project-card > .projects__image-link {
-      position: static;
-
-      &::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 1;
-      }
-
-      &:focus-visible {
-        outline: none;
-      }
-
-      &:focus-visible::before {
-        outline: 2px solid var(--accent);
-        outline-offset: 2px;
-      }
-    }
-  }
-
-  /* En pantallas con ratón, el hover recupera el brillo original de la foto.
-     Móvil y dispositivos sin hover mantienen siempre el brillo normal. */
-  .projects__image-link {
-    position: relative;
-  }
-
-  @media (hover: hover) and (pointer: fine) and (
-    (width >= 75rem) or ((width >= 49rem) and (height >= 49rem))
-  ) {
-    .projects__image-link .projects__image {
-      filter: brightness(0.9);
+    /* El enlace de texto amplía su área al bloque y la imagen conserva su enlace. */
+    .projects__description .project-link::after {
+      content: "";
+      position: absolute;
+      inset: 0;
     }
 
-    .projects__image-link:hover .projects__image,
-    .projects__image-link:focus-visible .projects__image {
-      filter: brightness(1);
+    .projects__image-link {
+      position: relative;
+      z-index: 1;
     }
   }
 
@@ -1540,6 +1451,10 @@
     [data-reveal="rise"].is-revealed:not(:focus-within) {
       animation: reveal-rise var(--motion-reveal) var(--motion-ease-out)
         calc(var(--motion-stagger) * var(--reveal-slot, 0)) backwards;
+    }
+
+    .project-card.is-changing:not(:has(:focus-visible)) {
+      animation: reveal-rise var(--motion-reveal) var(--motion-ease-out);
     }
 
     .mobile-menu.active .mobile-menu__list > li {
