@@ -5,6 +5,11 @@ const reducedMotionPreference = window.matchMedia(
   "(prefers-reduced-motion: reduce)",
 );
 
+// Keep this in sync with the wide navigation media query in style.css.
+const wideLayout = window.matchMedia(
+  "(width >= 75rem), (width >= 49rem) and (height >= 49rem)",
+);
+
 class PortfolioApp {
   constructor() {
     this.hamburger = document.querySelector(".hamburger");
@@ -99,9 +104,7 @@ class PortfolioApp {
     this.body.style.top = "";
     window.scrollTo({ top: parseInt(scrollY || "0", 10) * -1, behavior: "instant" });
 
-    const focusTarget = window.matchMedia(
-      "(width >= calc(755 / 16 * 1rem))",
-    ).matches
+    const focusTarget = wideLayout.matches
       ? document.querySelector(".desktop-nav a")
       : this.hamburger;
     focusTarget?.focus({ preventScroll: true });
@@ -109,7 +112,7 @@ class PortfolioApp {
 
   handleResize() {
     if (
-      window.matchMedia("(width >= calc(755 / 16 * 1rem))").matches &&
+      wideLayout.matches &&
       this.mobileMenu.classList.contains("active")
     ) {
       this.closeMobileMenu();
@@ -559,8 +562,9 @@ class ProjectCarousel {
   updateBleed() {
     // Keep both scroll edges at the usable viewport; padding preserves the gutters.
     const bounds = this.root.getBoundingClientRect();
+    const pageEnd = document.body.getBoundingClientRect().right;
     const start = Math.max(0, bounds.left);
-    const end = Math.max(0, document.documentElement.clientWidth - bounds.right);
+    const end = Math.max(0, pageEnd - bounds.right);
     this.root.style.setProperty("--carousel-bleed-start", `${start}px`);
     this.root.style.setProperty("--carousel-bleed-end", `${end}px`);
     if (this.motionTarget !== null) this.stopMotion();
