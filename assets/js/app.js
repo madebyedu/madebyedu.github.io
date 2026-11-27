@@ -295,7 +295,7 @@ class HomeComposition {
   }
 }
 
-// A single project changes in place, with the same controls for every input mode.
+// The wide carousel swaps projects in place. The narrow carousel scrolls between them.
 class ProjectCarousel {
   constructor(root) {
     this.track = root.querySelector(".project-carousel__track");
@@ -307,14 +307,32 @@ class ProjectCarousel {
     if (!this.track || !this.controls || this.cards.length < 2) return;
 
     this.returnKey = `portfolio:carousel:${location.pathname}`;
-    this.markers = this.cards.map(() => document.createElement("span"));
+    this.markers = this.cards.map((card, index) => {
+      const marker = document.createElement("span");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.setAttribute("aria-label", card.querySelector("h2").textContent.trim());
+      button.setAttribute("aria-controls", this.track.id);
+      button.addEventListener("click", () => this.show(index, true));
+      marker.append(button);
+      return marker;
+    });
     root.querySelector("[data-carousel-markers]").append(...this.markers);
     this.controls.hidden = false;
     this.track.tabIndex = 0;
-    this.track.classList.add("is-paged");
-
     const saved = this.restoredProject();
-    this.show(saved?.card ?? 0);
+    this.index = saved?.card ?? 0;
+    this.updateLayout();
+    wideLayout.addEventListener("change", () => this.updateLayout());
+    if ("onscrollend" in this.track) {
+      this.track.addEventListener("scrollend", () => this.settleScroll());
+    } else {
+      let settleTimer;
+      this.track.addEventListener("scroll", () => {
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(() => this.settleScroll(), 150);
+      });
+    }
     if (saved?.focusLink && document.activeElement === document.body) {
       const target = saved.focusLink === "image" ? ".projects__image-link" : ".project-link";
       this.cards[this.index].querySelector(target)?.focus({ preventScroll: true });
@@ -329,25 +347,98 @@ class ProjectCarousel {
   }
 
   show(index, animate = false) {
-    const nextIndex = Math.max(0, Math.min(index, this.cards.length - 1));
+    const count = this.cards.length;
+    const nextIndex = (index + count) % count;
+    if (!wideLayout.matches) {
+      this.scrollToSlide(this.slides[index + 1], animate);
+    }
     if (this.index === nextIndex) return;
-    if (this.cards[this.index]?.contains(document.activeElement)) {
+    if (wideLayout.matches && this.cards[this.index].contains(document.activeElement)) {
       this.track.focus({ preventScroll: true });
     }
     this.index = nextIndex;
+    this.render(animate);
+  }
+
+  render(animate = false) {
+    const paged = wideLayout.matches;
     this.cards.forEach((card, i) => {
-      card.hidden = i !== this.index;
-      card.classList.toggle("is-changing", animate && !card.hidden);
-      this.markers[i].toggleAttribute("data-visible", !card.hidden);
+      const current = i === this.index;
+      card.hidden = paged && !current;
+      card.classList.toggle("is-changing", paged && animate && current);
+      this.markers[i].toggleAttribute("data-visible", current);
+      this.markers[i].firstElementChild.setAttribute("aria-current", String(current));
     });
-    // Load the immediate neighbours so the next gesture has an image ready.
-    for (const card of this.cards.slice(Math.max(0, this.index - 1), this.index + 2)) {
-      card.querySelector("img").loading = "eager";
+    const count = this.cards.length;
+    for (const offset of [-1, 0, 1]) {
+      this.cards[(this.index + offset + count) % count].querySelector("img").loading = "eager";
     }
-    const title = this.cards[this.index].querySelector("h3").textContent.trim();
-    this.position.textContent = `${this.index + 1} / ${this.cards.length} · ${title}`;
-    this.previous.setAttribute("aria-disabled", String(this.index === 0));
-    this.next.setAttribute("aria-disabled", String(this.index === this.cards.length - 1));
+    const title = this.cards[this.index].querySelector("h2").textContent.trim();
+    this.position.textContent = `${this.index + 1} / ${count} · ${title}`;
+  }
+
+  updateLayout() {
+    const paged = wideLayout.matches;
+    this.track.classList.toggle("is-paged", paged);
+    this.track.classList.toggle("is-scrolling", !paged);
+    this.track.classList.remove("is-dragging");
+
+    if (paged) {
+      this.copies?.forEach((copy) => copy.remove());
+      if (this.cards.some((card, i) => i !== this.index && card.contains(document.activeElement))) {
+        this.track.focus({ preventScroll: true });
+      }
+    } else {
+      // The extra card after the first copy keeps the next project's preview visible.
+      this.copies ??= [this.cards.length - 1, 0, 1].map((index) => this.copyCard(index));
+      const [last, first, preview] = this.copies;
+      this.track.prepend(last);
+      this.track.append(first, preview);
+      preview.classList.add("is-preview");
+      this.slides = [last, ...this.cards, first];
+    }
+    this.render();
+    if (!paged) this.scrollToSlide(this.cards[this.index]);
+  }
+
+  copyCard(index) {
+    const copy = this.cards[index].cloneNode(true);
+    copy.hidden = false;
+    copy.classList.remove("is-changing");
+    copy.dataset.carouselCopy = index;
+    copy.setAttribute("aria-hidden", "true");
+    copy.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
+    copy.querySelectorAll("a").forEach((link) => { link.tabIndex = -1; });
+    return copy;
+  }
+
+  scrollToSlide(slide, animate = false) {
+    this.track.scrollTo({
+      left: slide.offsetLeft,
+      behavior: animate && !reducedMotionPreference.matches ? "smooth" : "instant",
+    });
+  }
+
+  nearestSlide(left = this.track.scrollLeft) {
+    return this.slides.reduce((nearest, slide) =>
+      Math.abs(slide.offsetLeft - left) < Math.abs(nearest.offsetLeft - left) ? slide : nearest,
+    );
+  }
+
+  settleScroll() {
+    if (wideLayout.matches || this.track.classList.contains("is-dragging")) return;
+    const slide = this.nearestSlide();
+    const index = this.cardIndex(slide);
+    if (slide !== this.cards[index]) this.scrollToSlide(this.cards[index]);
+    if (this.index === index) return;
+    this.index = index;
+    this.render();
+  }
+
+  cardIndex(card) {
+    return card.dataset.carouselCopy === undefined
+      ? this.cards.indexOf(card)
+      : Number(card.dataset.carouselCopy);
   }
 
   step(direction) {
@@ -375,7 +466,7 @@ class ProjectCarousel {
 
     const entry = {
       project: link.href,
-      card: this.index,
+      card: this.cardIndex(link.closest(".project-card")),
       focusLink: event.detail === 0
         ? (link.classList.contains("projects__image-link") ? "image" : "action")
         : null,
@@ -421,8 +512,12 @@ class ProjectCarousel {
       suppressClick = false;
       if (!event.isPrimary || event.button !== 0 ||
           event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) return;
+      if (!wideLayout.matches && event.pointerType !== "mouse") return;
       const { left, right } = this.track.getBoundingClientRect();
-      gesture = { id: event.pointerId, x: event.clientX, y: event.clientY, left, right, horizontal: false };
+      gesture = {
+        id: event.pointerId, x: event.clientX, y: event.clientY, left, right,
+        scrollLeft: this.track.scrollLeft, horizontal: false,
+      };
     });
     this.track.addEventListener("pointermove", (event) => {
       if (gesture?.id !== event.pointerId) return;
@@ -440,34 +535,38 @@ class ProjectCarousel {
         if (event.pointerType === "mouse") this.track.setPointerCapture(event.pointerId);
         this.track.classList.add("is-dragging");
       }
-      const edge = dx < 0 ? gesture.left : gesture.right;
-      const distanceToEdge = Math.abs(gesture.x - edge);
-      const opacity = dx ? Math.max(0, 1 - x / distanceToEdge) : 1;
-      this.track.style.setProperty("--drag-opacity", opacity);
+      if (wideLayout.matches) {
+        const edge = dx < 0 ? gesture.left : gesture.right;
+        const distanceToEdge = Math.abs(gesture.x - edge);
+        const opacity = dx ? Math.max(0, 1 - x / distanceToEdge) : 1;
+        this.track.style.setProperty("--drag-opacity", opacity);
+      } else {
+        this.track.scrollLeft = gesture.scrollLeft - dx;
+      }
       event.preventDefault();
     });
     const endGesture = (event) => {
       if (gesture?.id !== event.pointerId) return;
       const dx = event.clientX - gesture.x;
-      if (gesture.horizontal && event.type === "pointerup") {
+      this.track.classList.remove("is-dragging");
+      this.track.style.removeProperty("--drag-opacity");
+      if (gesture.horizontal && !wideLayout.matches) {
+        let slide = this.nearestSlide();
+        const start = this.nearestSlide(gesture.scrollLeft);
+        suppressClick = event.type === "pointerup";
+        if (suppressClick && Math.abs(dx) >= swipeThreshold && slide === start) {
+          const adjacent = this.slides.indexOf(start) - Math.sign(dx);
+          slide = this.slides[adjacent] ?? slide;
+        }
+        this.scrollToSlide(slide, true);
+      } else if (gesture.horizontal && event.type === "pointerup") {
         suppressClick = true;
         const reachedEdge = dx < 0 ? event.clientX <= gesture.left : event.clientX >= gesture.right;
         if (dx && (Math.abs(dx) >= swipeThreshold || reachedEdge)) {
-          const direction = dx < 0 ? 1 : -1;
-          if (this.cards[this.index + direction]) {
-            this.step(direction);
-          } else if (!reducedMotionPreference.matches) {
-            const card = this.cards[this.index];
-            card.classList.remove("is-changing");
-            // Apply the removal before replaying the animation on the same card.
-            void card.offsetWidth;
-            card.classList.add("is-changing");
-          }
+          this.step(dx < 0 ? 1 : -1);
         }
       }
       gesture = null;
-      this.track.classList.remove("is-dragging");
-      this.track.style.removeProperty("--drag-opacity");
     };
     for (const type of ["pointerup", "pointercancel", "lostpointercapture"]) {
       this.track.addEventListener(type, endGesture);
@@ -489,7 +588,7 @@ class ProjectCarousel {
     let consumed = false;
     this.track.addEventListener("wheel", (event) => {
       // Vertical scrolling and pinch-to-zoom keep their native behaviour.
-      if (event.ctrlKey || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+      if (!wideLayout.matches || event.ctrlKey || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
       event.preventDefault();
       if (event.timeStamp - lastEvent > 160) {
         delta = 0;
